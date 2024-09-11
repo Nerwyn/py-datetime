@@ -1,4 +1,5 @@
-import { PyTime, PyDate } from '.';
+import { PyDate, PyTime } from '.';
+import { PyDatetimeDict } from '../models';
 export declare class PyDatetime {
     year?: number;
     month?: number;
@@ -8,7 +9,7 @@ export declare class PyDatetime {
     second?: number;
     millisecond?: number;
     utc?: boolean;
-    constructor(year?: number | PyDate | PyDatetime | Date, month?: number, day?: number, hour?: number, minute?: number, second?: number, millisecond?: number, utc?: boolean);
+    constructor(year?: number | PyDatetimeDict | Date, month?: number, day?: number, hour?: number, minute?: number, second?: number, millisecond?: number, utc?: boolean);
     replace(year?: number, month?: number, day?: number, hour?: number, minute?: number, second?: number, millisecond?: number): PyDatetime;
     get jsDate(): Date;
     str(): string;

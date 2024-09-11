@@ -1,3 +1,4 @@
+import { PyTimedeltaDict } from '../models';
 export declare class PyTimedelta {
     days?: number;
     seconds?: number;
@@ -5,7 +6,7 @@ export declare class PyTimedelta {
     minutes?: number;
     hours?: number;
     weeks?: number;
-    constructor(days?: number, seconds?: number, milliseconds?: number, minutes?: number, hours?: number, weeks?: number);
+    constructor(days?: number | PyTimedeltaDict, seconds?: number, milliseconds?: number, minutes?: number, hours?: number, weeks?: number);
     get __totalMillis(): number;
     str(): string;
     valueOf(): number;

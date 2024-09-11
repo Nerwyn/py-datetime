@@ -1,6 +1,6 @@
-import { PyTime, PyDate } from '.';
-import { DatetimeIntervals } from '../models';
 import * as d3TimeFormat from 'd3-time-format';
+import { PyDate, PyTime } from '.';
+import { DatetimeIntervals, } from '../models';
 export class PyDatetime {
     constructor(year, month, day, hour, minute, second, millisecond, utc) {
         let args = {};
@@ -10,8 +10,7 @@ export class PyDatetime {
             // much more unlikely than having gotten an epoch passed in. convert that to date
             year = new Date(year);
         }
-        if ((year instanceof PyDate || year instanceof PyDatetime) &&
-            year?.year &&
+        if (year?.year &&
             year?.month &&
             year?.day) {
             const ts = year;
@@ -35,7 +34,15 @@ export class PyDatetime {
             };
         }
         else {
-            args = { year, month, day, hour, minute, second, millisecond };
+            args = {
+                year: year,
+                month,
+                day,
+                hour,
+                minute,
+                second,
+                millisecond,
+            };
         }
         Object.assign(this, args);
     }
@@ -50,7 +57,7 @@ export class PyDatetime {
         }
         const newTs = new PyDatetime(this);
         Object.entries(args).forEach(([key, val]) => {
-            if (val != null) {
+            if (val) {
                 newTs[key] = val;
             }
         });

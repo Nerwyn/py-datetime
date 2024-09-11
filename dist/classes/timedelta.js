@@ -1,40 +1,38 @@
-import { toMillis, TimeDeltaIntervals } from '../models';
 import * as d3TimeFormat from 'd3-time-format';
+import { TimedeltaIntervals, toMillis, } from '../models';
 export class PyTimedelta {
     constructor(days, seconds, milliseconds, minutes, hours, weeks) {
         let args = {
-            weeks,
-            days,
-            hours,
-            minutes,
+            days: days,
             seconds,
             milliseconds,
+            minutes,
+            hours,
+            weeks,
         };
-        if (typeof days != 'number') {
+        if (days != null && typeof days != 'number') {
             // we have a dict
             args = days;
         }
         else if (Math.abs(days) > 900) {
             // we have millis, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds
-            let totalMillis = days;
+            let totalMillis = days ?? 0;
             args = {};
-            TimeDeltaIntervals.forEach((key) => {
-                if (key != 'weeks') {
-                    const multiplier = toMillis[key];
-                    const val = Math.floor(totalMillis / multiplier);
-                    if (val) {
-                        args[key] = val;
-                        totalMillis -= val * multiplier;
-                    }
+            TimedeltaIntervals.forEach((key) => {
+                const multiplier = toMillis[key];
+                const val = Math.floor(totalMillis / multiplier);
+                if (val) {
+                    args[key] = val;
+                    totalMillis -= val * multiplier;
                 }
             });
         }
-        TimeDeltaIntervals.forEach((key) => {
+        TimedeltaIntervals.forEach((key) => {
             this[key] = args[key] || 0;
         });
     }
     get __totalMillis() {
-        let millis = TimeDeltaIntervals.map((field) => this[field] *
+        let millis = TimedeltaIntervals.map((field) => this[field] *
             toMillis[field]);
         return millis.reduce((total, current) => total + current);
     }

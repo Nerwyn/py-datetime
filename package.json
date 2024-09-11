@@ -1,38 +1,53 @@
 {
-    "name": "py-datetime",
-    "type": "module",
-    "version": "0.10.0",
-    "description": "Datetime handling the python way (or as close as possible)",
-    "main": "./dist/index.js",
-    "scripts": {
-        "test": "ts-mocha"
-    },
-    "dependencies": {
-        "d3-time-format": "^4.1.0"
-    },
-    "devDependencies": {
-        "@types/d3-time-format": "^4.0.3",
-        "@types/mocha": "^10.0.7",
-        "@types/node": "^22.5.4",
-        "mocha": "^9.2.0",
-        "ts-mocha": "10.0.0",
-        "ts-node": "^10.9.2"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tstriker/py-datetime.git"
-    },
-    "keywords": [
-        "datetime",
-        "python",
-        "date",
-        "time",
-        "timedelta"
-    ],
-    "author": "Tom Striker",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/tstriker/py-datetime/issues"
-    },
-    "homepage": "https://github.com/tstriker/py-datetime#readme"
+	"name": "py-datetime",
+	"type": "module",
+	"version": "0.10.0",
+	"description": "Datetime handling the python way (or as close as possible)",
+	"main": "./dist/index.js",
+	"scripts": {
+		"test": "ts-mocha",
+		"build": "tsc",
+		"prelint": "tsc --noemit",
+		"lint": "eslint --fix --config ./.eslintrc.config.cjs"
+	},
+	"lint-staged": {
+		"*": "prettier -w"
+	},
+	"dependencies": {
+		"d3-time-format": "^4.1.0"
+	},
+	"devDependencies": {
+		"@types/d3-time-format": "^4.0.3",
+		"@types/mocha": "^10.0.7",
+		"@types/node": "^22.5.4",
+		"@typescript-eslint/eslint-plugin": "latest",
+		"@typescript-eslint/parser": "latest",
+		"eslint": "latest",
+		"eslint-config-prettier": "latest",
+		"eslint-plugin-prettier": "latest",
+		"lint-staged": "latest",
+		"mocha": "^9.2.0",
+		"prettier": "latest",
+		"prettier-plugin-organize-imports": "latest",
+		"ts-mocha": "10.0.0",
+		"ts-node": "^10.9.2",
+		"tsx": "^4.19.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tstriker/py-datetime.git"
+	},
+	"keywords": [
+		"datetime",
+		"python",
+		"date",
+		"time",
+		"timedelta"
+	],
+	"author": "Tom Striker",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/tstriker/py-datetime/issues"
+	},
+	"homepage": "https://github.com/tstriker/py-datetime#readme"
 }

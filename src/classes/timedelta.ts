@@ -1,5 +1,10 @@
-import { toMillis, TimeDeltaInterval, TimeDeltaIntervals } from '../models';
 import * as d3TimeFormat from 'd3-time-format';
+import {
+	PyTimedeltaDict,
+	TimedeltaInterval,
+	TimedeltaIntervals,
+	toMillis,
+} from '../models';
 
 export class PyTimedelta {
 	days?: number;
@@ -10,33 +15,30 @@ export class PyTimedelta {
 	weeks?: number;
 
 	constructor(
-		days?: number | Partial<Record<TimeDeltaInterval, number>>,
+		days?: number | PyTimedeltaDict,
 		seconds?: number,
 		milliseconds?: number,
 		minutes?: number,
 		hours?: number,
-		weeks?: number
+		weeks?: number,
 	) {
-		let args: Record<string, number | undefined> = {
-			weeks,
+		let args: PyTimedeltaDict = {
 			days: days as number,
-			hours,
-			minutes,
 			seconds,
 			milliseconds,
+			minutes,
+			hours,
+			weeks,
 		};
-		if (
-			Object.keys(days as Partial<Record<TimeDeltaInterval, number>>)
-				.length
-		) {
+		if (days != null && typeof days != 'number') {
 			// we have a dict
-			args = days as unknown as Record<string, number | undefined>;
+			args = days as PyTimedeltaDict;
 		} else if (Math.abs(days as number) > 900) {
 			// we have millis, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds
 			let totalMillis = (days as number) ?? 0;
 			args = {};
-			TimeDeltaIntervals.forEach((key) => {
-				const multiplier = toMillis[key as TimeDeltaInterval];
+			TimedeltaIntervals.forEach((key) => {
+				const multiplier = toMillis[key as TimedeltaInterval];
 				const val = Math.floor(totalMillis / multiplier);
 				if (val) {
 					args[key] = val;
@@ -45,23 +47,23 @@ export class PyTimedelta {
 			});
 		}
 
-		TimeDeltaIntervals.forEach((key) => {
+		TimedeltaIntervals.forEach((key) => {
 			this[key] = args[key] || 0;
 		});
 	}
 
 	get __totalMillis(): number {
-		let millis = TimeDeltaIntervals.map(
+		let millis = TimedeltaIntervals.map(
 			(field) =>
 				(this[field as keyof PyTimedelta] as number) *
-				toMillis[field as TimeDeltaInterval]
+				toMillis[field as TimedeltaInterval],
 		);
 		return millis.reduce((total, current) => total + current);
 	}
 
 	str() {
 		return d3TimeFormat.timeFormat('%H:%M:%S.%f')(
-			new Date(this as unknown as number)
+			new Date(this as unknown as number),
 		);
 	}
 

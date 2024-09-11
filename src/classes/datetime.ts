@@ -1,6 +1,11 @@
-import { PyTime, PyDate } from '.';
-import { DateInterval, DatetimeInterval, DatetimeIntervals } from '../models';
 import * as d3TimeFormat from 'd3-time-format';
+import { PyDate, PyTime } from '.';
+import {
+	DateInterval,
+	DatetimeInterval,
+	DatetimeIntervals,
+	PyDatetimeDict,
+} from '../models';
 
 export class PyDatetime {
 	year?: number;
@@ -13,19 +18,16 @@ export class PyDatetime {
 	utc?: boolean;
 
 	constructor(
-		year?: number | PyDate | PyDatetime | Date,
+		year?: number | PyDatetimeDict | Date,
 		month?: number,
 		day?: number,
 		hour?: number,
 		minute?: number,
 		second?: number,
 		millisecond?: number,
-		utc?: boolean
+		utc?: boolean,
 	) {
-		let args: Record<
-			string,
-			number | PyDatetime | PyDate | Date | boolean | undefined
-		> = {};
+		let args: PyDatetimeDict = {};
 		this.utc = utc;
 
 		if (typeof year == 'number' && !month && !day) {
@@ -41,7 +43,9 @@ export class PyDatetime {
 		) {
 			const ts = year as PyDatetime;
 			DatetimeIntervals.forEach((field) => {
-				args[field] = ts[field as DateInterval] as number;
+				args[field as DatetimeInterval] = ts[
+					field as DateInterval
+				] as number;
 			});
 			if ((ts as PyDatetime).utc) {
 				args.utc = (ts as PyDatetime).utc;
@@ -58,7 +62,15 @@ export class PyDatetime {
 				millisecond: ts.getMilliseconds(),
 			};
 		} else {
-			args = { year, month, day, hour, minute, second, millisecond };
+			args = {
+				year: year as number,
+				month,
+				day,
+				hour,
+				minute,
+				second,
+				millisecond,
+			};
 		}
 		Object.assign(this, args);
 	}
@@ -70,7 +82,7 @@ export class PyDatetime {
 		hour?: number,
 		minute?: number,
 		second?: number,
-		millisecond?: number
+		millisecond?: number,
 	) {
 		// returns new date with updated values
 		let args: Record<string, number | undefined> = {};
@@ -100,7 +112,7 @@ export class PyDatetime {
 				this.hour || 0,
 				this.minute || 0,
 				this.second || 0,
-				this.millisecond || 0
+				this.millisecond || 0,
 			);
 		}
 	}
@@ -118,7 +130,7 @@ export class PyDatetime {
 				this.hour || 0,
 				this.minute || 0,
 				this.second || 0,
-				this.millisecond || 0
+				this.millisecond || 0,
 			);
 		} else {
 			return this.jsDate.getTime();
@@ -146,7 +158,7 @@ export class PyDatetime {
 			this.hour,
 			this.minute,
 			this.second,
-			this.millisecond
+			this.millisecond,
 		);
 	}
 
