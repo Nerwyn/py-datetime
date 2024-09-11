@@ -10,7 +10,7 @@ export class PyDatetime {
             // much more unlikely than having gotten an epoch passed in. convert that to date
             year = new Date(year);
         }
-        if (year instanceof PyDatetime &&
+        if ((year instanceof PyDate || year instanceof PyDatetime) &&
             year?.year &&
             year?.month &&
             year?.day) {
@@ -18,7 +18,9 @@ export class PyDatetime {
             DatetimeIntervals.forEach((field) => {
                 args[field] = ts[field];
             });
-            args.utc = ts.utc;
+            if (ts.utc) {
+                args.utc = ts.utc;
+            }
         }
         else if (year instanceof Date) {
             const ts = year;

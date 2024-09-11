@@ -19,11 +19,13 @@ export class PyTimedelta {
             let totalMillis = days;
             args = {};
             TimeDeltaIntervals.forEach((key) => {
-                const multiplier = toMillis[key];
-                const val = Math.floor(totalMillis / multiplier);
-                if (val) {
-                    args[key] = val;
-                    totalMillis -= val * multiplier;
+                if (key != 'weeks') {
+                    const multiplier = toMillis[key];
+                    const val = Math.floor(totalMillis / multiplier);
+                    if (val) {
+                        args[key] = val;
+                        totalMillis -= val * multiplier;
+                    }
                 }
             });
         }

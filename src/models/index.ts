@@ -22,11 +22,11 @@ export const DatetimeIntervals = [...DateIntervals, ...TimeIntervals];
 export type DatetimeInterval = DateInterval | TimeInterval;
 
 export const TimeDeltaIntervals = [
+	'weeks',
+	'days',
+	'hours',
+	'minutes',
 	'seconds',
 	'milliseconds',
-	'minutes',
-	'hours',
-	'days',
-	'weeks',
 ] as const;
 export type TimeDeltaInterval = (typeof TimeDeltaIntervals)[number];

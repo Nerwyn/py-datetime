@@ -1,5 +1,5 @@
 import { PyTime, PyDate } from '.';
-import { DatetimeInterval, DatetimeIntervals } from '../models';
+import { DateInterval, DatetimeInterval, DatetimeIntervals } from '../models';
 import * as d3TimeFormat from 'd3-time-format';
 
 export class PyDatetime {
@@ -35,16 +35,17 @@ export class PyDatetime {
 		}
 
 		if (
-			year instanceof PyDatetime &&
-			year?.year &&
-			year?.month &&
-			year?.day
+			(year as PyDatetime)?.year &&
+			(year as PyDatetime)?.month &&
+			(year as PyDatetime)?.day
 		) {
-			const ts = year;
+			const ts = year as PyDatetime;
 			DatetimeIntervals.forEach((field) => {
-				args[field] = ts[field as keyof PyDatetime] as number;
+				args[field] = ts[field as DateInterval] as number;
 			});
-			args.utc = ts.utc;
+			if ((ts as PyDatetime).utc) {
+				args.utc = (ts as PyDatetime).utc;
+			}
 		} else if (year instanceof Date) {
 			const ts = year;
 			args = {
@@ -81,7 +82,7 @@ export class PyDatetime {
 
 		const newTs = new PyDatetime(this);
 		Object.entries(args).forEach(([key, val]) => {
-			if (val != null) {
+			if (val) {
 				newTs[key as DatetimeInterval] = val as number;
 			}
 		});

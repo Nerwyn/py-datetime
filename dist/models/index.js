@@ -15,10 +15,10 @@ export const TimeIntervals = [
 export const DateIntervals = ['year', 'month', 'day'];
 export const DatetimeIntervals = [...DateIntervals, ...TimeIntervals];
 export const TimeDeltaIntervals = [
+    'weeks',
+    'days',
+    'hours',
+    'minutes',
     'seconds',
     'milliseconds',
-    'minutes',
-    'hours',
-    'days',
-    'weeks',
 ];

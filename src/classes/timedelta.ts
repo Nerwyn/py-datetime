@@ -10,7 +10,7 @@ export class PyTimedelta {
 	weeks?: number;
 
 	constructor(
-		days?: number,
+		days?: number | Partial<Record<TimeDeltaInterval, number>>,
 		seconds?: number,
 		milliseconds?: number,
 		minutes?: number,
@@ -19,18 +19,21 @@ export class PyTimedelta {
 	) {
 		let args: Record<string, number | undefined> = {
 			weeks,
-			days,
+			days: days as number,
 			hours,
 			minutes,
 			seconds,
 			milliseconds,
 		};
-		if (typeof days != 'number') {
+		if (
+			Object.keys(days as Partial<Record<TimeDeltaInterval, number>>)
+				.length
+		) {
 			// we have a dict
 			args = days as unknown as Record<string, number | undefined>;
-		} else if (Math.abs(days) > 900) {
+		} else if (Math.abs(days as number) > 900) {
 			// we have millis, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds
-			let totalMillis = days;
+			let totalMillis = (days as number) ?? 0;
 			args = {};
 			TimeDeltaIntervals.forEach((key) => {
 				const multiplier = toMillis[key as TimeDeltaInterval];

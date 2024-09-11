@@ -107,7 +107,7 @@ describe('dt.timedelta', function () {
 		equalDates(
 			dt.datetime(
 				Number(dt.datetime(2020, 3, 12, 10, 10, 10, 10)) -
-					Number(dt.timedelta(0, 10))
+					Number(dt.timedelta({ seconds: 10 }))
 			),
 			dt.datetime(2020, 3, 12, 10, 10, 0, 10)
 		);
@@ -117,7 +117,7 @@ describe('dt.timedelta', function () {
 		equalDates(
 			dt.datetime(
 				Number(dt.datetime(2020, 3, 15)) -
-					Number(dt.timedelta(0, 0, 0, 0, 0, 2))
+					Number(dt.timedelta({ weeks: 2 }))
 			),
 			dt.datetime(2020, 3, 1)
 		);
