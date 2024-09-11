@@ -1,8 +1,9 @@
 import assert from 'assert';
-import dt from '../src';
+import dt from '../src/index.ts';
+import { PyDatetime } from '../src/classes';
 
-function equalDates(...args: (Date | typeof dt.datetime)[]) {
-	let toTest: number[] = [];
+function equalDates(...args: (Date | PyDatetime)[]) {
+	const toTest: number[] = [];
 	args.forEach((arg) => {
 		if (arg instanceof Date) {
 			toTest.push(arg.getTime());
@@ -10,7 +11,8 @@ function equalDates(...args: (Date | typeof dt.datetime)[]) {
 			toTest.push(arg.jsDate.getTime());
 		}
 	});
-	assert.equal(...toTest);
+
+	assert.equal(toTest[0], toTest[1]);
 }
 
 describe('dt.datetime', function () {
@@ -18,7 +20,7 @@ describe('dt.datetime', function () {
 		it('via dt.datetime.now()', function () {
 			// to test if .now() returns now we just check that they are within 0.1 sec of each other
 			let dtNow = dt.datetime.now().jsDate;
-			assert.ok(dtNow - new Date() < 100);
+			assert.ok(dtNow.getTime() - new Date().getTime() < 100);
 		});
 
 		it('via strptime()', function () {
@@ -81,7 +83,9 @@ describe('dt.datetime', function () {
 describe('dt.timedelta', function () {
 	it('dt.datetime - dt.timedelta(days) = dt.datetime', function () {
 		equalDates(
-			dt.datetime(dt.datetime(2020, 3, 12) - dt.timedelta(3)),
+			dt.datetime(
+				Number(dt.datetime(2020, 3, 12)) - Number(dt.timedelta(3))
+			),
 			dt.datetime(2020, 3, 9)
 		);
 	});
@@ -92,8 +96,8 @@ describe('dt.timedelta', function () {
 		// the argument order in timedelta is not random - days + seconds is the main usecase
 		equalDates(
 			dt.datetime(
-				dt.datetime(2020, 3, 12, 10, 10, 10, 10) -
-					dt.timedelta(1, 2, 3, 4, 5)
+				Number(dt.datetime(2020, 3, 12, 10, 10, 10, 10)) -
+					Number(dt.timedelta(1, 2, 3, 4, 5))
 			),
 			dt.datetime(2020, 3, 11, 5, 6, 8, 7)
 		);
@@ -102,8 +106,8 @@ describe('dt.timedelta', function () {
 	it('dt.datetime - dt.timedelta({seconds: 10})', function () {
 		equalDates(
 			dt.datetime(
-				dt.datetime(2020, 3, 12, 10, 10, 10, 10) -
-					dt.timedelta({ seconds: 10 })
+				Number(dt.datetime(2020, 3, 12, 10, 10, 10, 10)) -
+					Number(dt.timedelta(0, 10))
 			),
 			dt.datetime(2020, 3, 12, 10, 10, 0, 10)
 		);
@@ -111,15 +115,18 @@ describe('dt.timedelta', function () {
 
 	it('dt.datetime - dt.timedelta({weeks: 2})', function () {
 		equalDates(
-			dt.datetime(dt.datetime(2020, 3, 15) - dt.timedelta({ weeks: 2 })),
+			dt.datetime(
+				Number(dt.datetime(2020, 3, 15)) -
+					Number(dt.timedelta(0, 0, 0, 0, 0, 2))
+			),
 			dt.datetime(2020, 3, 1)
 		);
 	});
 
 	it('dt.datetime - dt.date', function () {
 		assert.equal(
-			dt.datetime(2020, 1, 11, 12) - dt.date(2020, 1, 1),
-			dt.timedelta({ days: 10, hours: 12 }).__totalMillis
+			Number(dt.datetime(2020, 1, 11, 12)) - Number(dt.date(2020, 1, 1)),
+			dt.timedelta(10, 12).__totalMillis
 		);
 	});
 });

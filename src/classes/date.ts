@@ -9,7 +9,7 @@ export class PyDate {
 		Object.assign(this, { year, month, day });
 	}
 
-	get jsDate(): Date {
+	get jsDate() {
 		return new Date(this.year!, this.month! - 1, this.day);
 	}
 
