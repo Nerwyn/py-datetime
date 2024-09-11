@@ -1,6 +1,6 @@
 import assert from 'assert';
-import dt from '../src/index.ts';
 import { PyDatetime } from '../src/classes';
+import dt from '../src/index.ts';
 
 function equalDates(...args: (Date | PyDatetime)[]) {
 	const toTest: number[] = [];
@@ -26,7 +26,7 @@ describe('dt.datetime', function () {
 		it('via strptime()', function () {
 			equalDates(
 				dt.datetime.strptime('2020-04-12', '%Y-%m-%d'),
-				new Date(2020, 3, 12)
+				new Date(2020, 3, 12),
 			);
 		});
 
@@ -49,16 +49,16 @@ describe('dt.datetime', function () {
 			equalDates(
 				dt.datetime.combine(
 					dt.datetime(2020, 3, 3, 10, 10),
-					dt.time(5, 6)
+					dt.time(5, 6),
 				),
-				dt.datetime(2020, 3, 3, 5, 6)
+				dt.datetime(2020, 3, 3, 5, 6),
 			);
 		});
 
 		it('date + time', function () {
 			equalDates(
 				dt.datetime.combine(dt.date(2020, 1, 2), dt.time(7, 8)),
-				dt.datetime(2020, 1, 2, 7, 8)
+				dt.datetime(2020, 1, 2, 7, 8),
 			);
 		});
 	});
@@ -67,14 +67,14 @@ describe('dt.datetime', function () {
 		it('datetime.time', function () {
 			assert.equal(
 				dt.datetime(2020, 3, 6, 1, 2, 3, 4).time().__totalMillis,
-				dt.time(1, 2, 3, 4).__totalMillis
+				dt.time(1, 2, 3, 4).__totalMillis,
 			);
 		});
 
 		it('datetime.date', function () {
 			assert.equal(
 				dt.datetime(2020, 3, 6, 1, 2, 3, 4).date().__totalMillis,
-				dt.date(2020, 3, 6).__totalMillis
+				dt.date(2020, 3, 6).__totalMillis,
 			);
 		});
 	});
@@ -84,9 +84,9 @@ describe('dt.timedelta', function () {
 	it('dt.datetime - dt.timedelta(days) = dt.datetime', function () {
 		equalDates(
 			dt.datetime(
-				dt.datetime(2020, 3, 12).valueOf() - dt.timedelta(3).valueOf()
+				dt.datetime(2020, 3, 12).valueOf() - dt.timedelta(3).valueOf(),
 			),
-			dt.datetime(2020, 3, 9)
+			dt.datetime(2020, 3, 9),
 		);
 	});
 
@@ -97,9 +97,9 @@ describe('dt.timedelta', function () {
 		equalDates(
 			dt.datetime(
 				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
-					dt.timedelta(1, 2, 3, 4, 5).valueOf()
+					dt.timedelta(1, 2, 3, 4, 5).valueOf(),
 			),
-			dt.datetime(2020, 3, 11, 5, 6, 8, 7)
+			dt.datetime(2020, 3, 11, 5, 6, 8, 7),
 		);
 	});
 
@@ -107,9 +107,9 @@ describe('dt.timedelta', function () {
 		equalDates(
 			dt.datetime(
 				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
-					dt.timedelta({ seconds: 10 }).valueOf()
+					dt.timedelta({ seconds: 10 }).valueOf(),
 			),
-			dt.datetime(2020, 3, 12, 10, 10, 0, 10)
+			dt.datetime(2020, 3, 12, 10, 10, 0, 10),
 		);
 	});
 
@@ -118,23 +118,17 @@ describe('dt.timedelta', function () {
 		equalDates(
 			dt.datetime(
 				dt.datetime(2020, 4, 15).valueOf() -
-					dt.timedelta({ weeks: 2 }).valueOf()
+					dt.timedelta({ weeks: 2 }).valueOf(),
 			),
-			dt.datetime(2020, 4, 1)
+			dt.datetime(2020, 4, 1),
 		);
 	});
 
 	it('dt.datetime - dt.date', function () {
-		console.log(
-			dt.timedelta(
-				dt.datetime(2020, 1, 11, 12).valueOf() -
-					dt.date(2020, 1, 1).valueOf()
-			)
-		);
 		assert.equal(
 			dt.datetime(2020, 1, 11, 12).valueOf() -
 				dt.date(2020, 1, 1).valueOf(),
-			dt.timedelta({ days: 10, hours: 12 }).__totalMillis
+			dt.timedelta({ days: 10, hours: 12 }).__totalMillis,
 		);
 	});
 });
@@ -143,7 +137,7 @@ describe('str', function () {
 	it('dt.datetime.str()', function () {
 		assert.equal(
 			dt.datetime(2020, 3, 2, 5, 6, 7, 8).str(),
-			'2020-03-02 05:06:07.008000'
+			'2020-03-02 05:06:07.008000',
 		);
 	});
 	it('dt.date.str()', function () {
