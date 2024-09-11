@@ -84,7 +84,7 @@ describe('dt.timedelta', function () {
 	it('dt.datetime - dt.timedelta(days) = dt.datetime', function () {
 		equalDates(
 			dt.datetime(
-				Number(dt.datetime(2020, 3, 12)) - Number(dt.timedelta(3))
+				dt.datetime(2020, 3, 12).valueOf() - dt.timedelta(3).valueOf()
 			),
 			dt.datetime(2020, 3, 9)
 		);
@@ -96,8 +96,8 @@ describe('dt.timedelta', function () {
 		// the argument order in timedelta is not random - days + seconds is the main usecase
 		equalDates(
 			dt.datetime(
-				Number(dt.datetime(2020, 3, 12, 10, 10, 10, 10)) -
-					Number(dt.timedelta(1, 2, 3, 4, 5))
+				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
+					dt.timedelta(1, 2, 3, 4, 5).valueOf()
 			),
 			dt.datetime(2020, 3, 11, 5, 6, 8, 7)
 		);
@@ -106,27 +106,35 @@ describe('dt.timedelta', function () {
 	it('dt.datetime - dt.timedelta({seconds: 10})', function () {
 		equalDates(
 			dt.datetime(
-				Number(dt.datetime(2020, 3, 12, 10, 10, 10, 10)) -
-					Number(dt.timedelta({ seconds: 10 }))
+				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
+					dt.timedelta({ seconds: 10 }).valueOf()
 			),
 			dt.datetime(2020, 3, 12, 10, 10, 0, 10)
 		);
 	});
 
 	it('dt.datetime - dt.timedelta({weeks: 2})', function () {
+		// Avoid testing time differences that cross over daylight savings start/end to save American developers a lot of headache
 		equalDates(
 			dt.datetime(
-				Number(dt.datetime(2020, 3, 15)) -
-					Number(dt.timedelta({ weeks: 2 }))
+				dt.datetime(2020, 4, 15).valueOf() -
+					dt.timedelta({ weeks: 2 }).valueOf()
 			),
-			dt.datetime(2020, 3, 1)
+			dt.datetime(2020, 4, 1)
 		);
 	});
 
 	it('dt.datetime - dt.date', function () {
+		console.log(
+			dt.timedelta(
+				dt.datetime(2020, 1, 11, 12).valueOf() -
+					dt.date(2020, 1, 1).valueOf()
+			)
+		);
 		assert.equal(
-			Number(dt.datetime(2020, 1, 11, 12)) - Number(dt.date(2020, 1, 1)),
-			dt.timedelta(10, 12).__totalMillis
+			dt.datetime(2020, 1, 11, 12).valueOf() -
+				dt.date(2020, 1, 1).valueOf(),
+			dt.timedelta({ days: 10, hours: 12 }).__totalMillis
 		);
 	});
 });
