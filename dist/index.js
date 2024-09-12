@@ -1,4 +1,6 @@
-import { PyTime, PyDate, PyTimedelta, PyDatetime } from './classes';
+export * from './classes';
+export * from './models';
+import { PyDate, PyDatetime, PyTime, PyTimedelta } from './classes';
 import { combine, now, strptime, utc, utcnow } from './functions';
 const date = (...args) => new PyDate(...args);
 const time = (...args) => new PyTime(...args);

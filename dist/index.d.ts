@@ -1,4 +1,6 @@
-import { PyTime, PyDate, PyTimedelta, PyDatetime } from './classes';
+export * from './classes';
+export * from './models';
+import { PyDate, PyDatetime, PyTime, PyTimedelta } from './classes';
 declare const dt: {
     date: (year?: number | undefined, month?: number | undefined, day?: number | undefined) => PyDate;
     time: (hour?: number | Partial<Record<"hour" | "minute" | "second" | "millisecond", number>> | undefined, minute?: number | undefined, second?: number | undefined, millisecond?: number | undefined) => PyTime;
