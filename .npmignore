@@ -1,2 +1,13 @@
 node_modules
 test
+src
+githooks
+.eslint.config.cjs
+.gitignore
+.mocharc.json
+.prettierignore
+.prettierrc
+CHANGELOG
+LICENSE
+README.md
+tsconfig.json
