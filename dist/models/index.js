@@ -1,12 +1,15 @@
-export const TimeIntervals = [
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.toMillis = exports.TimedeltaIntervals = exports.DatetimeIntervals = exports.DateIntervals = exports.TimeIntervals = void 0;
+exports.TimeIntervals = [
     'hour',
     'minute',
     'second',
     'millisecond',
 ];
-export const DateIntervals = ['year', 'month', 'day'];
-export const DatetimeIntervals = [...DateIntervals, ...TimeIntervals];
-export const TimedeltaIntervals = [
+exports.DateIntervals = ['year', 'month', 'day'];
+exports.DatetimeIntervals = [...exports.DateIntervals, ...exports.TimeIntervals];
+exports.TimedeltaIntervals = [
     'weeks',
     'days',
     'hours',
@@ -14,7 +17,7 @@ export const TimedeltaIntervals = [
     'seconds',
     'milliseconds',
 ];
-export const toMillis = {
+exports.toMillis = {
     milliseconds: 1,
     seconds: 1000,
     minutes: 1000 * 60,
