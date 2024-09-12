@@ -131,6 +131,34 @@ describe('dt.timedelta', function () {
 			dt.timedelta({ days: 10, hours: 12 }).__totalMillis,
 		);
 	});
+
+	it('dt.timedelta({weeks: 2}) string representation', function () {
+		assert.equal(
+			dt.timedelta({ weeks: 2 }).str(),
+			'14 days, 0:00:00.000000',
+		);
+	});
+
+	it('dt.timedelta({hours: 25}) string representation', function () {
+		assert.equal(
+			dt.timedelta({ hours: 25 }).str(),
+			'1 day, 1:00:00.000000',
+		);
+	});
+
+	it('dt.timedelta({hours: 23, minutes: 22, seconds: 21, milliseconds: 120}) string representation', function () {
+		assert.equal(
+			dt
+				.timedelta({
+					hours: 23,
+					minutes: 22,
+					seconds: 21,
+					milliseconds: 120,
+				})
+				.str(),
+			'23:22:21.120000',
+		);
+	});
 });
 
 describe('str', function () {

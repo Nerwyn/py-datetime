@@ -37,7 +37,10 @@ export class PyTimedelta {
         return millis.reduce((total, current) => total + current);
     }
     str() {
-        return d3TimeFormat.timeFormat('%H:%M:%S.%f')(new Date(this));
+        const ONE_DAY = 86400000;
+        const days = Math.floor(this.valueOf() / ONE_DAY);
+        const dayString = days > 0 ? `${days} day${days > 1 ? 's,' : ','}` : '';
+        return `${dayString} ${d3TimeFormat.utcFormat('%-H:%M:%S.%f')(new Date(this.valueOf()))}`.trim();
     }
     valueOf() {
         return this.__totalMillis;
