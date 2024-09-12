@@ -14,7 +14,7 @@ module.exports = {
 	},
 	output: {
 		path: path.resolve(__dirname, './dist'),
-		filename: '[name].js',
+		filename: '[name].min.js',
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js'],
@@ -24,6 +24,11 @@ module.exports = {
 			{
 				test: /\.tsx?$/,
 				loader: 'ts-loader',
+			},
+			{
+				test: /\.(d.ts)$/,
+				include: [path.join(__dirname, 'src')],
+				loader: 'null-loader',
 			},
 		],
 	},

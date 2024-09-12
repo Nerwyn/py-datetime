@@ -23,6 +23,12 @@ then
   exit 1
 fi
 
+npm run minify
+if [ $? -ne 0 ]
+then
+  exit 1
+fi
+
 git add dist/
 if [ $? -ne 0 ]
 then
