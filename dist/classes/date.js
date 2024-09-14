@@ -1,6 +1,9 @@
 import * as d3TimeFormat from 'd3-time-format';
 export class PyDate {
     constructor(year, month, day) {
+        this.year = 0;
+        this.month = 1;
+        this.day = 1;
         Object.assign(this, { year, month, day });
     }
     get jsDate() {

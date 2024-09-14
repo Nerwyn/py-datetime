@@ -1,9 +1,9 @@
 import * as d3TimeFormat from 'd3-time-format';
 
 export class PyDate {
-	year?: number;
-	month?: number;
-	day?: number;
+	year: number = 0;
+	month: number = 1;
+	day: number = 1;
 
 	constructor(year?: number, month?: number, day?: number) {
 		Object.assign(this, { year, month, day });

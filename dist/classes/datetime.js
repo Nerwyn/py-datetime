@@ -3,8 +3,16 @@ import { PyDate, PyTime } from '.';
 import { DatetimeIntervals, } from '../models';
 export class PyDatetime {
     constructor(year, month, day, hour, minute, second, millisecond, utc) {
+        this.year = 0;
+        this.month = 1;
+        this.day = 1;
+        this.hour = 0;
+        this.minute = 0;
+        this.second = 0;
+        this.millisecond = 0;
+        this.utc = false;
         let args = {};
-        this.utc = utc;
+        this.utc = utc ?? false;
         if (typeof year == 'number' && !month && !day) {
             // while a dt.datetime(2020) is perfectly valid, it's quite unlikely.
             // much more unlikely than having gotten an epoch passed in. convert that to date

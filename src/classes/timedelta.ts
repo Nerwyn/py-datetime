@@ -7,12 +7,12 @@ import {
 } from '../models';
 
 export class PyTimedelta {
-	days?: number;
-	seconds?: number;
-	milliseconds?: number;
-	minutes?: number;
-	hours?: number;
-	weeks?: number;
+	days: number = 0;
+	seconds: number = 0;
+	milliseconds: number = 0;
+	minutes: number = 0;
+	hours: number = 0;
+	weeks: number = 0;
 
 	constructor(
 		days?: number | PyTimedeltaDict,

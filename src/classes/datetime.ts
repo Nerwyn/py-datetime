@@ -8,14 +8,14 @@ import {
 } from '../models';
 
 export class PyDatetime {
-	year?: number;
-	month?: number;
-	day?: number;
-	hour?: number;
-	minute?: number;
-	second?: number;
-	millisecond?: number;
-	utc?: boolean;
+	year: number = 0;
+	month: number = 1;
+	day: number = 1;
+	hour: number = 0;
+	minute: number = 0;
+	second: number = 0;
+	millisecond: number = 0;
+	utc: boolean = false;
 
 	constructor(
 		year?: number | PyDatetimeDict | Date,
@@ -28,7 +28,7 @@ export class PyDatetime {
 		utc?: boolean,
 	) {
 		let args: PyDatetimeDict = {};
-		this.utc = utc;
+		this.utc = utc ?? false;
 
 		if (typeof year == 'number' && !month && !day) {
 			// while a dt.datetime(2020) is perfectly valid, it's quite unlikely.
@@ -43,9 +43,7 @@ export class PyDatetime {
 		) {
 			const ts = year as PyDatetime;
 			DatetimeIntervals.forEach((field) => {
-				args[field as DatetimeInterval] = ts[
-					field as DateInterval
-				] as number;
+				args[field as DatetimeInterval] = ts[field as DateInterval];
 			});
 			if ((ts as PyDatetime).utc) {
 				args.utc = (ts as PyDatetime).utc;
