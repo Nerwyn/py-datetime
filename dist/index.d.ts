@@ -11,9 +11,9 @@ declare const dt: {
         }> | undefined, month?: number | undefined, day?: number | undefined, hour?: number | undefined, minute?: number | undefined, second?: number | undefined, millisecond?: number | undefined, utc?: boolean | undefined): PyDatetime;
         now(): PyDatetime;
         utcnow(): PyDatetime;
-        utc(ts: number | PyDatetime | Date): PyDatetime;
+        utc(ts: number | PyDate | PyDatetime | Date): PyDatetime;
         combine(date: PyDate | PyDatetime, time: PyTime): PyDatetime;
-        strptime(dateString: string, format: string, is_utc?: boolean | undefined): PyDatetime;
+        strptime(dateString: string, format: string, isUtc?: boolean | undefined): PyDatetime;
     };
 };
 export default dt;

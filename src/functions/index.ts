@@ -1,5 +1,5 @@
-import { PyDate, PyTime, PyDatetime } from '../classes';
 import * as d3TimeFormat from 'd3-time-format';
+import { PyDate, PyDatetime, PyTime } from '../classes';
 
 export function now() {
 	return new PyDatetime(new Date());
@@ -9,12 +9,12 @@ export function utcnow() {
 	return utc(new Date());
 }
 
-export function utc(ts: number | PyDatetime | Date) {
+export function utc(ts: number | PyDatetime | PyDate | Date) {
 	if (typeof ts == 'number') {
 		// while a dt.datetime(2020) is perfectly valid, it's quite unlikely.
 		// much more unlikely than having gotten an epoch passed in. convert that to date
 		ts = new Date(ts);
-	} else if (ts instanceof PyDatetime) {
+	} else if (ts instanceof PyDatetime || ts instanceof PyDate) {
 		ts = ts.jsDate;
 	}
 	return new PyDatetime(
@@ -25,7 +25,7 @@ export function utc(ts: number | PyDatetime | Date) {
 		ts.getUTCMinutes(),
 		ts.getUTCSeconds(),
 		ts.getUTCMilliseconds(),
-		true
+		true,
 	);
 }
 
@@ -38,12 +38,12 @@ export function combine(date: PyDate | PyDatetime, time: PyTime) {
 export function strptime(
 	dateString: string,
 	format: string,
-	is_utc: boolean = false
+	isUtc: boolean = false,
 ) {
-	const parser = is_utc ? d3TimeFormat.utcParse : d3TimeFormat.timeParse;
+	const parser = isUtc ? d3TimeFormat.utcParse : d3TimeFormat.timeParse;
 	const parsed = parser(format)(dateString);
 	if (!parsed) {
 		throw `ValueError: time data '${dateString}' does not match format '${format}'`;
 	}
-	return is_utc ? utc(parsed) : new PyDatetime(parsed);
+	return isUtc ? utc(parsed) : new PyDatetime(parsed);
 }
