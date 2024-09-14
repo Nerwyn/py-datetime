@@ -6,8 +6,8 @@
 	"main": "./dist/index.js",
 	"scripts": {
 		"test": "ts-mocha",
-		"build-tsc": "tsc",
-		"build": "npx webpack",
+		"build": "tsc",
+		"webpack": "npx webpack",
 		"prelint": "tsc --noemit",
 		"lint": "eslint --fix --config ./.eslintrc.config.cjs"
 	},
