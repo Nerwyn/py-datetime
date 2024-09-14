@@ -15,6 +15,10 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, './dist'),
 		filename: '[name].min.js',
+		library: {
+			type: 'commonjs-module',
+			name: 'py-datetime',
+		},
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js'],
