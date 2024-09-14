@@ -1,10 +1,9 @@
 # 0.10.0
 
 - Port to TypeScript and split into multiple files.
-- Includes models for date and time intervals and dictionary inputs.
+  - Includes models for date and time intervals and dictionary inputs.
 - Add pre-commit build pipeline to run eslint and prettier, compile TypeScript, run tests, and add compiled JS and type definitions to commit.
-  - Has to be enabled locally by setting `hooksPath = ./githooks` in your local `.git/config` [core] section and possibly setting `githooks/pre-commit` to executable.
-- Add a webpacked version of distributable for standalone use or environments that do not work well with es modules like jest.
+  - Has to be enabled locally by setting `hooksPath = ./githooks` in your local `.git/config` [core] section and possibly setting `githooks/pre-commit` to executable depending on operating system.
 - Fix weeks not being used in timedelta decontruction.
 - Fix timedelta string representation when longer than one day and add tests.
 - Fix a test that would fail in some daylight savings time countries due to extra hour.
