@@ -116,7 +116,9 @@ export class PyDatetime {
 	}
 
 	str() {
-		return this.strftime('%Y-%m-%d %H:%M:%S.%f');
+		return this.strftime(
+			`%Y-%m-%d %H:%M:%S${this.millisecond ? '.%f' : ''}`,
+		);
 	}
 
 	valueOf() {

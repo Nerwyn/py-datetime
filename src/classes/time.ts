@@ -33,9 +33,9 @@ export class PyTime {
 	str() {
 		// we have to set the date to today to avoid any daylight saving nonsense
 		const ts = dt.datetime.combine(dt.datetime.now(), this);
-		return d3TimeFormat.timeFormat('%H:%M:%S.%f')(
-			new Date(ts.valueOf() * 1000),
-		);
+		return d3TimeFormat.timeFormat(
+			`%H:%M:%S${this.millisecond ? '.%f' : ''}`,
+		)(new Date(ts.valueOf() * 1000));
 	}
 
 	valueOf() {

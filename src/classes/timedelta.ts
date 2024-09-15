@@ -53,9 +53,9 @@ export class PyTimedelta {
 	str() {
 		const days = Math.floor(this.valueOf() / toSeconds.days);
 		const dayString = days > 0 ? `${days} day${days > 1 ? 's,' : ','}` : '';
-		const timeString = d3TimeFormat.utcFormat('%-H:%M:%S.%f')(
-			new Date(this.valueOf() * 1000),
-		);
+		const timeString = d3TimeFormat.utcFormat(
+			`%-H:%M:%S${this.milliseconds ? '.%f' : ''}`,
+		)(new Date(this.valueOf() * 1000));
 		return `${dayString} ${timeString}`.trim();
 	}
 

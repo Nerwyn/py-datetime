@@ -133,16 +133,17 @@ describe('dt.timedelta', function () {
 	});
 
 	it('dt.timedelta({weeks: 2}) string representation', function () {
-		assert.equal(
-			dt.timedelta({ weeks: 2 }).str(),
-			'14 days, 0:00:00.000000',
-		);
+		assert.equal(dt.timedelta({ weeks: 2 }).str(), '14 days, 0:00:00');
 	});
 
 	it('dt.timedelta({hours: 25}) string representation', function () {
+		assert.equal(dt.timedelta({ hours: 25 }).str(), '1 day, 1:00:00');
+	});
+
+	it('dt.timedelta({hours: 12, seconds: 24, milliseconds: 13}) string representation', function () {
 		assert.equal(
-			dt.timedelta({ hours: 25 }).str(),
-			'1 day, 1:00:00.000000',
+			dt.timedelta({ hours: 12, seconds: 24, milliseconds: 13 }).str(),
+			'12:00:24.013000',
 		);
 	});
 
