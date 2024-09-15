@@ -6,11 +6,11 @@ const date = (...args) => new PyDate(...args);
 const time = (...args) => new PyTime(...args);
 const timedelta = (...args) => new PyTimedelta(...args);
 const datetime = (...args) => new PyDatetime(...args);
-datetime.now = () => now();
-datetime.utcnow = () => utcnow();
-datetime.utc = (...args) => utc(...args);
-datetime.combine = (...args) => combine(...args);
-datetime.strptime = (...args) => strptime(...args);
+datetime.now = now;
+datetime.utcnow = utcnow;
+datetime.utc = utc;
+datetime.combine = combine;
+datetime.strptime = strptime;
 const dt = {
     date,
     time,

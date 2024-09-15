@@ -1,6 +1,7 @@
 export * from './classes';
 export * from './models';
 import { PyDate, PyDatetime, PyTime, PyTimedelta } from './classes';
+import { combine, now, strptime, utc, utcnow } from './functions';
 declare const dt: {
     date: (year?: number | undefined, month?: number | undefined, day?: number | undefined) => PyDate;
     time: (hour?: number | Partial<Record<"hour" | "minute" | "second" | "millisecond", number>> | undefined, minute?: number | undefined, second?: number | undefined, millisecond?: number | undefined) => PyTime;
@@ -9,11 +10,11 @@ declare const dt: {
         (year?: number | Date | Partial<Record<"hour" | "minute" | "second" | "millisecond" | "year" | "month" | "day", number> & {
             utc: boolean;
         }> | undefined, month?: number | undefined, day?: number | undefined, hour?: number | undefined, minute?: number | undefined, second?: number | undefined, millisecond?: number | undefined, utc?: boolean | undefined): PyDatetime;
-        now(): PyDatetime;
-        utcnow(): PyDatetime;
-        utc(ts: number | PyDate | PyDatetime | Date): PyDatetime;
-        combine(date: PyDate | PyDatetime, time: PyTime): PyDatetime;
-        strptime(dateString: string, format: string, isUtc?: boolean | undefined): PyDatetime;
+        now: typeof now;
+        utcnow: typeof utcnow;
+        utc: typeof utc;
+        combine: typeof combine;
+        strptime: typeof strptime;
     };
 };
 export default dt;

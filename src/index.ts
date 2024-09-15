@@ -13,11 +13,11 @@ const timedelta = (...args: ConstructorParameters<typeof PyTimedelta>) =>
 const datetime = (...args: ConstructorParameters<typeof PyDatetime>) =>
 	new PyDatetime(...args);
 
-datetime.now = () => now();
-datetime.utcnow = () => utcnow();
-datetime.utc = (...args: Parameters<typeof utc>) => utc(...args);
-datetime.combine = (...args: Parameters<typeof combine>) => combine(...args);
-datetime.strptime = (...args: Parameters<typeof strptime>) => strptime(...args);
+datetime.now = now;
+datetime.utcnow = utcnow;
+datetime.utc = utc;
+datetime.combine = combine;
+datetime.strptime = strptime;
 
 const dt = {
 	date,
