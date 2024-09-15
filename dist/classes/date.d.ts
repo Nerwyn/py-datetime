@@ -7,7 +7,6 @@ export declare class PyDate {
     str(): string;
     weekday(): number;
     isoweekday(): number;
-    get __totalMillis(): number;
     valueOf(): number;
     toString(): string;
     toJSON(): string;

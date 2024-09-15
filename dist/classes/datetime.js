@@ -16,7 +16,7 @@ export class PyDatetime {
         if (typeof year == 'number' && !month && !day) {
             // while a dt.datetime(2020) is perfectly valid, it's quite unlikely.
             // much more unlikely than having gotten an epoch passed in. convert that to date
-            year = new Date(year);
+            year = new Date(year * 1000);
         }
         if (year?.year &&
             year?.month &&
@@ -73,7 +73,7 @@ export class PyDatetime {
     }
     get jsDate() {
         if (this.utc) {
-            return new Date(this.valueOf());
+            return new Date(this.valueOf() * 1000);
         }
         else {
             return new Date(this.year, this.month - 1, this.day || 1, this.hour || 0, this.minute || 0, this.second || 0, this.millisecond || 0);
@@ -83,12 +83,14 @@ export class PyDatetime {
         return this.strftime('%Y-%m-%d %H:%M:%S.%f');
     }
     valueOf() {
+        let value;
         if (this.utc) {
-            return Date.UTC(this.year, this.month - 1, this.day || 1, this.hour || 0, this.minute || 0, this.second || 0, this.millisecond || 0);
+            value = Date.UTC(this.year, this.month - 1, this.day || 1, this.hour || 0, this.minute || 0, this.second || 0, this.millisecond || 0);
         }
         else {
-            return this.jsDate.getTime();
+            value = this.jsDate.getTime();
         }
+        return value / 1000;
     }
     toString() {
         return this.str();

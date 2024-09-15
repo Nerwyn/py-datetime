@@ -12,7 +12,7 @@ function equalDates(...args: (Date | PyDatetime)[]) {
 		}
 	});
 
-	assert.equal(toTest[0], toTest[1]);
+	assert.deepStrictEqual(toTest[0], toTest[1]);
 }
 
 describe('dt.datetime', function () {
@@ -39,9 +39,9 @@ describe('dt.datetime', function () {
 			equalDates(dt.datetime(date), date);
 		});
 
-		it('via dt.datetime(millis)', function () {
+		it('via dt.datetime(seconds)', function () {
 			let date = new Date();
-			equalDates(dt.datetime(date.getTime()), date);
+			equalDates(dt.datetime(date.getTime() / 1000), date);
 		});
 	});
 	describe('combine', function () {
@@ -65,16 +65,16 @@ describe('dt.datetime', function () {
 
 	describe('combine', function () {
 		it('datetime.time', function () {
-			assert.equal(
-				dt.datetime(2020, 3, 6, 1, 2, 3, 4).time().__totalMillis,
-				dt.time(1, 2, 3, 4).__totalMillis,
+			assert.deepStrictEqual(
+				dt.datetime(2020, 3, 6, 1, 2, 3, 4).time(),
+				dt.time(1, 2, 3, 4),
 			);
 		});
 
 		it('datetime.date', function () {
-			assert.equal(
-				dt.datetime(2020, 3, 6, 1, 2, 3, 4).date().__totalMillis,
-				dt.date(2020, 3, 6).__totalMillis,
+			assert.deepStrictEqual(
+				dt.datetime(2020, 3, 6, 1, 2, 3, 4).date(),
+				dt.date(2020, 3, 6),
 			);
 		});
 	});
@@ -128,7 +128,7 @@ describe('dt.timedelta', function () {
 		assert.equal(
 			dt.datetime(2020, 1, 11, 12).valueOf() -
 				dt.date(2020, 1, 1).valueOf(),
-			dt.timedelta({ days: 10, hours: 12 }).__totalMillis,
+			dt.timedelta({ days: 10, hours: 12 }),
 		);
 	});
 

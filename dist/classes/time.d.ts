@@ -6,7 +6,6 @@ export declare class PyTime {
     millisecond: number;
     constructor(hour?: number | PyTimeDict, minute?: number, second?: number, millisecond?: number);
     str(): string;
-    get __totalMillis(): number;
     valueOf(): number;
     toString(): string;
     toJSON(): string;

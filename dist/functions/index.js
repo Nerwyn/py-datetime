@@ -10,7 +10,7 @@ export function utc(ts) {
     if (typeof ts == 'number') {
         // while a dt.datetime(2020) is perfectly valid, it's quite unlikely.
         // much more unlikely than having gotten an epoch passed in. convert that to date
-        ts = new Date(ts);
+        ts = new Date(ts * 1000);
     }
     else if (ts instanceof PyDatetime || ts instanceof PyDate) {
         ts = ts.jsDate;

@@ -33,7 +33,7 @@ export class PyDatetime {
 		if (typeof year == 'number' && !month && !day) {
 			// while a dt.datetime(2020) is perfectly valid, it's quite unlikely.
 			// much more unlikely than having gotten an epoch passed in. convert that to date
-			year = new Date(year);
+			year = new Date(year * 1000);
 		}
 
 		if (
@@ -101,7 +101,7 @@ export class PyDatetime {
 
 	get jsDate(): Date {
 		if (this.utc) {
-			return new Date(this.valueOf());
+			return new Date(this.valueOf() * 1000);
 		} else {
 			return new Date(
 				this.year!,
@@ -120,8 +120,9 @@ export class PyDatetime {
 	}
 
 	valueOf() {
+		let value: number;
 		if (this.utc) {
-			return Date.UTC(
+			value = Date.UTC(
 				this.year!,
 				this.month! - 1,
 				this.day || 1,
@@ -131,8 +132,9 @@ export class PyDatetime {
 				this.millisecond || 0,
 			);
 		} else {
-			return this.jsDate.getTime();
+			value = this.jsDate.getTime();
 		}
+		return value / 1000;
 	}
 
 	toString() {

@@ -26,12 +26,8 @@ export class PyDate {
 		return this.weekday() + 1;
 	}
 
-	get __totalMillis() {
-		return this.jsDate.getTime();
-	}
-
 	valueOf() {
-		return this.__totalMillis;
+		return this.jsDate.getTime() / 1000;
 	}
 
 	toString() {

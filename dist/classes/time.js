@@ -1,6 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
-import { TimeIntervals, toMillis } from '../models';
+import { TimeIntervals, toSeconds } from '../models';
 export class PyTime {
     constructor(hour, minute, second, millisecond) {
         this.hour = 0;
@@ -25,16 +25,13 @@ export class PyTime {
     str() {
         // we have to set the date to today to avoid any daylight saving nonsense
         const ts = dt.datetime.combine(dt.datetime.now(), this);
-        return d3TimeFormat.timeFormat('%H:%M:%S.%f')(new Date(ts));
-    }
-    get __totalMillis() {
-        return (this.hour * toMillis.hours +
-            this.minute * toMillis.minutes +
-            this.second * toMillis.seconds +
-            this.millisecond);
+        return d3TimeFormat.timeFormat('%H:%M:%S.%f')(new Date(ts.valueOf() * 1000));
     }
     valueOf() {
-        return this.__totalMillis;
+        return (this.hour * toSeconds.hours +
+            this.minute * toSeconds.minutes +
+            this.second * toSeconds.seconds +
+            this.millisecond * toSeconds.milliseconds);
     }
     toString() {
         return this.str();

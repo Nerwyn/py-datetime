@@ -4,6 +4,7 @@
   - Includes models for date and time intervals and dictionary inputs.
 - Add pre-commit build pipeline to run eslint and prettier, compile TypeScript, run tests, and add compiled JS and type definitions to commit.
   - Has to be enabled locally by setting `hooksPath = ./githooks` in your local `.git/config` [core] section and possibly setting `githooks/pre-commit` to executable depending on operating system.
+- Change timestamp value units from milliseconds to seconds to match Python, along with all internal calculation logic to use seconds.
 - Fix weeks not being used in timedelta decontruction.
 - Fix timedelta string representation when longer than one day and add tests.
 - Fix a test that would fail in some daylight savings time countries due to extra hour.

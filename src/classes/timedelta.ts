@@ -3,7 +3,7 @@ import {
 	PyTimedeltaDict,
 	TimedeltaInterval,
 	TimedeltaIntervals,
-	toMillis,
+	toSeconds,
 } from '../models';
 
 export class PyTimedelta {
@@ -34,16 +34,14 @@ export class PyTimedelta {
 			// we have a dict
 			args = days as PyTimedeltaDict;
 		} else if (Math.abs(days as number) > 900) {
-			// we have millis, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds
-			let totalMillis = (days as number) ?? 0;
+			// we have seconds, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds
+			let totalSeconds = (days as number) ?? 0;
 			args = {};
 			TimedeltaIntervals.forEach((key) => {
-				const multiplier = toMillis[key as TimedeltaInterval];
-				const val = Math.floor(totalMillis / multiplier);
-				if (val) {
-					args[key] = val;
-					totalMillis -= val * multiplier;
-				}
+				const multiplier = toSeconds[key as TimedeltaInterval];
+				const value = Math.floor(totalSeconds / multiplier);
+				args[key] = value;
+				totalSeconds -= value * multiplier;
 			});
 		}
 
@@ -52,25 +50,22 @@ export class PyTimedelta {
 		});
 	}
 
-	get __totalMillis(): number {
-		let millis = TimedeltaIntervals.map(
-			(field) =>
-				(this[field as keyof PyTimedelta] as number) *
-				toMillis[field as TimedeltaInterval],
-		);
-		return millis.reduce((total, current) => total + current);
-	}
-
 	str() {
-		const ONE_DAY = 86400000;
-		const days = Math.floor(this.valueOf() / ONE_DAY);
+		const days = Math.floor(this.valueOf() / toSeconds.days);
 		const dayString = days > 0 ? `${days} day${days > 1 ? 's,' : ','}` : '';
-
-		return `${dayString} ${d3TimeFormat.utcFormat('%-H:%M:%S.%f')(new Date(this.valueOf()))}`.trim();
+		const timeString = d3TimeFormat.utcFormat('%-H:%M:%S.%f')(
+			new Date(this.valueOf() * 1000),
+		);
+		return `${dayString} ${timeString}`.trim();
 	}
 
 	valueOf() {
-		return this.__totalMillis;
+		let seconds = TimedeltaIntervals.map(
+			(field) =>
+				(this[field as keyof PyTimedelta] as number) *
+				toSeconds[field as TimedeltaInterval],
+		);
+		return seconds.reduce((total, current) => total + current);
 	}
 
 	toString() {
@@ -79,9 +74,5 @@ export class PyTimedelta {
 
 	toJSON() {
 		return this.str();
-	}
-
-	totalSeconds() {
-		return this.__totalMillis / 1000;
 	}
 }
