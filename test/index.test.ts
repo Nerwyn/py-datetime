@@ -131,23 +131,36 @@ describe('dt.timedelta', function () {
 			dt.timedelta({ days: 10, hours: 12 }),
 		);
 	});
+});
 
-	it('dt.timedelta({weeks: 2}) string representation', function () {
+describe('str', function () {
+	it('dt.datetime.str()', function () {
+		assert.equal(
+			dt.datetime(2020, 3, 2, 5, 6, 7, 8).str(),
+			'2020-03-02 05:06:07.008000',
+		);
+		assert.equal(
+			dt.datetime(2020, 3, 2, 5, 6, 7).str(),
+			'2020-03-02 05:06:07',
+		);
+	});
+
+	it('dt.date.str()', function () {
+		assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
+	});
+
+	it('dt.time.str()', function () {
+		assert.equal(dt.time(5, 6, 7, 8).str(), '05:06:07.008000');
+		assert.equal(dt.time(5, 6, 7).str(), '05:06:07');
+	});
+
+	it('dt.timedelta().str()', function () {
 		assert.equal(dt.timedelta({ weeks: 2 }).str(), '14 days, 0:00:00');
-	});
-
-	it('dt.timedelta({hours: 25}) string representation', function () {
 		assert.equal(dt.timedelta({ hours: 25 }).str(), '1 day, 1:00:00');
-	});
-
-	it('dt.timedelta({hours: 12, seconds: 24, milliseconds: 13}) string representation', function () {
 		assert.equal(
 			dt.timedelta({ hours: 12, seconds: 24, milliseconds: 13 }).str(),
 			'12:00:24.013000',
 		);
-	});
-
-	it('dt.timedelta({hours: 23, minutes: 22, seconds: 21, milliseconds: 120}) string representation', function () {
 		assert.equal(
 			dt
 				.timedelta({
@@ -159,20 +172,5 @@ describe('dt.timedelta', function () {
 				.str(),
 			'23:22:21.120000',
 		);
-	});
-});
-
-describe('str', function () {
-	it('dt.datetime.str()', function () {
-		assert.equal(
-			dt.datetime(2020, 3, 2, 5, 6, 7, 8).str(),
-			'2020-03-02 05:06:07.008000',
-		);
-	});
-	it('dt.date.str()', function () {
-		assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
-	});
-	it('dt.time.str()', function () {
-		assert.equal(dt.time(5, 6, 7, 8).str(), '05:06:07.008000');
 	});
 });
