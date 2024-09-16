@@ -9,6 +9,7 @@ export declare class PyTimedelta {
     constructor(days?: number | PyTimedeltaDict, seconds?: number, milliseconds?: number, minutes?: number, hours?: number, weeks?: number);
     str(): string;
     valueOf(): number;
+    totalSeconds(): number;
     toString(): string;
     toJSON(): string;
 }

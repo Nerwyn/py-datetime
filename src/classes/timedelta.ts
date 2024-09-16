@@ -68,6 +68,10 @@ export class PyTimedelta {
 		return seconds.reduce((total, current) => total + current);
 	}
 
+	totalSeconds() {
+		return this.valueOf();
+	}
+
 	toString() {
 		return this.str();
 	}

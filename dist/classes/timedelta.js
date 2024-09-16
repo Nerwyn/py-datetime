@@ -46,6 +46,9 @@ export class PyTimedelta {
             toSeconds[field]);
         return seconds.reduce((total, current) => total + current);
     }
+    totalSeconds() {
+        return this.valueOf();
+    }
     toString() {
         return this.str();
     }
