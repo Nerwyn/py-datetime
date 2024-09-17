@@ -10,9 +10,6 @@ export class PyTimedelta {
 	days: number = 0;
 	seconds: number = 0;
 	milliseconds: number = 0;
-	minutes: number = 0;
-	hours: number = 0;
-	weeks: number = 0;
 
 	constructor(
 		days?: number | PyTimedeltaDict,
@@ -45,14 +42,28 @@ export class PyTimedelta {
 			});
 		}
 
+		// Get total seconds from args and then deconstruct into days, seconds, milliseconds
+		// Python does days, seconds, microseconds but JS does not support microsecond precision for Date
+		let totalSeconds = 0;
 		TimedeltaIntervals.forEach((key) => {
-			this[key] = args[key] || 0;
+			totalSeconds += (args[key] ?? 0) * toSeconds[key];
 		});
+		if (totalSeconds.toString().includes('.')) {
+			// To avoid floating point imprecision errors
+			this.milliseconds =
+				parseFloat(`0.${totalSeconds.toString().split('.')[1]}`) /
+				toSeconds.milliseconds;
+			totalSeconds = Math.floor(totalSeconds);
+		}
+		this.days = Math.floor(totalSeconds / toSeconds.days);
+		this.seconds = totalSeconds - this.days * toSeconds.days;
 	}
 
 	str() {
-		const days = Math.floor(this.valueOf() / toSeconds.days);
-		const dayString = days > 0 ? `${days} day${days > 1 ? 's,' : ','}` : '';
+		const dayString =
+			this.days > 0
+				? `${this.days} day${this.days > 1 ? 's,' : ','}`
+				: '';
 		const timeString = d3TimeFormat.utcFormat(
 			`%-H:%M:%S${this.milliseconds ? '.%f' : ''}`,
 		)(new Date(this.valueOf() * 1000));
@@ -60,12 +71,11 @@ export class PyTimedelta {
 	}
 
 	valueOf() {
-		let seconds = TimedeltaIntervals.map(
-			(field) =>
-				(this[field as keyof PyTimedelta] as number) *
-				toSeconds[field as TimedeltaInterval],
+		return (
+			this.days * toSeconds.days +
+			this.seconds +
+			this.milliseconds * toSeconds.milliseconds
 		);
-		return seconds.reduce((total, current) => total + current);
 	}
 
 	totalSeconds() {

@@ -113,6 +113,26 @@ describe('dt.timedelta', function () {
 		);
 	});
 
+	it('dt.datetime - dt.timedelta({hours: 2.4})', function () {
+		equalDates(
+			dt.datetime(
+				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
+					dt.timedelta({ hours: 2.4 }).valueOf(),
+			),
+			dt.datetime(2020, 3, 12, 7, 46, 10, 10),
+		);
+	});
+
+	it('dt.datetime - dt.timedelta({seconds: 2.4})', function () {
+		equalDates(
+			dt.datetime(
+				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
+					dt.timedelta({ seconds: 2.4 }).valueOf(),
+			),
+			dt.datetime(2020, 3, 12, 10, 10, 7, 610),
+		);
+	});
+
 	it('dt.datetime - dt.timedelta({weeks: 2})', function () {
 		// Avoid testing time differences that cross over daylight savings start/end to save American developers a lot of headache
 		equalDates(
@@ -130,6 +150,12 @@ describe('dt.timedelta', function () {
 				dt.date(2020, 1, 1).valueOf(),
 			dt.timedelta({ days: 10, hours: 12 }),
 		);
+	});
+
+	it('dt.timedelta float input', function () {
+		const td = dt.timedelta({ seconds: 2.4 });
+		assert.equal(td.seconds, 2);
+		assert.equal(td.milliseconds, 400);
 	});
 });
 
@@ -172,5 +198,6 @@ describe('str', function () {
 				.str(),
 			'23:22:21.120000',
 		);
+		assert.equal(dt.timedelta({ seconds: 2.4 }).str(), '0:00:02.400000');
 	});
 });
