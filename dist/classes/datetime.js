@@ -1,5 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import { date, time } from '.';
+import { isParams } from '../functions';
 import { DatetimeIntervals, } from '../models';
 export class datetime {
     constructor(year, month, day, hour, minute, second, millisecond, utc) {
@@ -57,7 +58,7 @@ export class datetime {
     replace(year, month, day, hour, minute, second, millisecond) {
         // returns new date with updated values
         let args = {};
-        if (year && typeof year != 'number') {
+        if (isParams(year)) {
             args = year;
         }
         else {

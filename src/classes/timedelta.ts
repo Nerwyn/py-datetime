@@ -1,4 +1,5 @@
 import * as d3TimeFormat from 'd3-time-format';
+import { isParams } from '../functions';
 import {
 	TimedeltaInterval,
 	TimedeltaIntervals,
@@ -27,8 +28,7 @@ export class timedelta {
 			hours,
 			weeks,
 		};
-		if (days != null && typeof days != 'number') {
-			// we have a dict
+		if (isParams(days)) {
 			args = days as TimedeltaParams;
 		} else if (Math.abs(days as number) > 900) {
 			// we have seconds, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds

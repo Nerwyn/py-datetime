@@ -1,5 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import { date, time } from '.';
+import { isParams } from '../functions';
 import {
 	DateInterval,
 	DatetimeInterval,
@@ -83,9 +84,9 @@ export class datetime {
 		millisecond?: number,
 	) {
 		// returns new date with updated values
-		let args: Record<string, number | undefined> = {};
-		if (year && typeof year != 'number') {
-			args = year;
+		let args: DatetimeParams = {};
+		if (isParams(year)) {
+			args = year as DatetimeParams;
 		} else {
 			args = { year, month, day, hour, minute, second, millisecond };
 		}

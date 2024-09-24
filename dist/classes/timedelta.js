@@ -1,4 +1,5 @@
 import * as d3TimeFormat from 'd3-time-format';
+import { isParams } from '../functions';
 import { TimedeltaIntervals, toSeconds, } from '../models';
 export class timedelta {
     constructor(days, seconds, milliseconds, minutes, hours, weeks) {
@@ -13,8 +14,7 @@ export class timedelta {
             hours,
             weeks,
         };
-        if (days != null && typeof days != 'number') {
-            // we have a dict
+        if (isParams(days)) {
             args = days;
         }
         else if (Math.abs(days) > 900) {

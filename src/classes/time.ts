@@ -1,5 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
+import { isParams } from '../functions';
 import { TimeIntervals, TimeParams, toSeconds } from '../models';
 
 export class time {
@@ -14,15 +15,14 @@ export class time {
 		second?: number,
 		millisecond?: number,
 	) {
-		let args: TimeParams | number = {
+		let args: TimeParams = {
 			hour: hour as number,
 			minute,
 			second,
 			millisecond,
 		};
-		if (hour != null && typeof hour != 'number') {
-			// we have a dict
-			args = hour;
+		if (isParams(hour)) {
+			args = hour as TimeParams;
 		}
 		TimeIntervals.forEach((field) => {
 			args[field] = args[field] || 0;

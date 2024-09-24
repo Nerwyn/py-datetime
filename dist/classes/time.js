@@ -1,5 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
+import { isParams } from '../functions';
 import { TimeIntervals, toSeconds } from '../models';
 export class time {
     constructor(hour, minute, second, millisecond) {
@@ -13,8 +14,7 @@ export class time {
             second,
             millisecond,
         };
-        if (hour != null && typeof hour != 'number') {
-            // we have a dict
+        if (isParams(hour)) {
             args = hour;
         }
         TimeIntervals.forEach((field) => {
