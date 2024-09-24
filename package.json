@@ -1,5 +1,5 @@
 {
-	"name": "py-datetime",
+	"name": "ts-py-datetime",
 	"type": "module",
 	"version": "0.10.0",
 	"description": "Datetime handling the python way (or as close as possible)",
@@ -34,7 +34,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/tstriker/py-datetime.git"
+		"url": "git+https://github.com/Nerwyn/ts-py-datetime.git"
 	},
 	"keywords": [
 		"datetime",
@@ -44,9 +44,17 @@
 		"timedelta"
 	],
 	"author": "Tom Striker",
+	"contributors": [
+		{
+			"name": "Tom Striker"
+		},
+		{
+			"name": "Nerwyn Singh"
+		}
+	],
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/tstriker/py-datetime/issues"
+		"url": "https://github.com/Nerwyn/ts-py-datetime/issues"
 	},
-	"homepage": "https://github.com/tstriker/py-datetime#readme"
+	"homepage": "https://github.com/Nerwyn/ts-py-datetime#readme"
 }
