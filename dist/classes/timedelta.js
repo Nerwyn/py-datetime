@@ -1,6 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
-import { isParams } from '../functions';
 import { TimedeltaIntervals, toSeconds, } from '../models';
+import { isParams } from '../utils/utils';
 import { base } from './base';
 export class timedelta extends base {
     constructor(days, seconds, milliseconds, minutes, hours, weeks) {

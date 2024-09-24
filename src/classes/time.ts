@@ -1,7 +1,7 @@
 import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
-import { isParams } from '../functions';
 import { TimeIntervals, TimeParams, toSeconds } from '../models';
+import { isParams } from '../utils/utils';
 import { base } from './base';
 
 export class time extends base {

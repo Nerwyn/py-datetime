@@ -4,7 +4,7 @@ export type TimeParams = Partial<Record<TimeInterval, number>>;
 export declare const DateIntervals: readonly ["year", "month", "day"];
 export type DateInterval = (typeof DateIntervals)[number];
 export type DateParams = Partial<Record<DateInterval, number>>;
-export declare const DatetimeIntervals: ("year" | "month" | "day" | "hour" | "minute" | "second" | "millisecond")[];
+export declare const DatetimeIntervals: ("hour" | "minute" | "second" | "millisecond" | "year" | "month" | "day")[];
 export type DatetimeInterval = (typeof DatetimeIntervals)[number];
 export type DatetimeParams = Partial<Record<DatetimeInterval, number> & {
     utc: boolean;

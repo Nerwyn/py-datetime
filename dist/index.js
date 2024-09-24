@@ -1,10 +1,14 @@
 export * from './classes';
 export * from './models';
 import { date as pydate, datetime as pydatetime, time as pytime, timedelta as pytimedelta, } from './classes';
-import { combine, now, strptime, utc, utcnow } from './functions';
+import { combine, now, strptime, utc, utcnow } from './utils/datetime';
+import { resolution, max as tdmax, min as tdmin } from './utils/timedelta';
 const date = (...args) => new pydate(...args);
 const time = (...args) => new pytime(...args);
 const timedelta = (...args) => new pytimedelta(...args);
+timedelta.min = tdmin;
+timedelta.max = tdmax;
+timedelta.resolution = resolution;
 const datetime = (...args) => new pydatetime(...args);
 datetime.now = now;
 datetime.utcnow = utcnow;

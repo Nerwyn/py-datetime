@@ -1,11 +1,11 @@
 import * as d3TimeFormat from 'd3-time-format';
-import { isParams } from '../functions';
 import {
 	TimedeltaInterval,
 	TimedeltaIntervals,
 	TimedeltaParams,
 	toSeconds,
 } from '../models';
+import { isParams } from '../utils/utils';
 import { base } from './base';
 
 export class timedelta extends base {

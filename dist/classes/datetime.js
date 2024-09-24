@@ -1,7 +1,7 @@
 import * as d3TimeFormat from 'd3-time-format';
 import { date, time } from '.';
-import { isParams } from '../functions';
 import { DatetimeIntervals, } from '../models';
+import { isParams } from '../utils/utils';
 import { base } from './base';
 export class datetime extends base {
     constructor(year, month, day, hour, minute, second, millisecond, utc) {
