@@ -7,11 +7,18 @@ import {
 	time as pytime,
 	timedelta as pytimedelta,
 } from './classes';
+import { fromisoformat, fromordinal, fromtimestamp, today } from './utils/date';
 import { combine, now, strptime, utc, utcnow } from './utils/datetime';
 import { resolution, max as tdmax, min as tdmin } from './utils/timedelta';
 
 const date = (...args: ConstructorParameters<typeof pydate>) =>
 	new pydate(...args);
+
+date.today = today;
+date.fromtimestamp = fromtimestamp;
+date.fromordinal = fromordinal;
+date.fromisoformat = fromisoformat;
+
 const time = (...args: ConstructorParameters<typeof pytime>) =>
 	new pytime(...args);
 const timedelta = (...args: ConstructorParameters<typeof pytimedelta>) =>

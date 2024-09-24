@@ -1,6 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import { date, time } from '.';
-import { DatetimeIntervals, } from '../models';
+import { DatetimeIntervals } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
 export class datetime extends base {
@@ -21,28 +21,21 @@ export class datetime extends base {
             // much more unlikely than having gotten an epoch passed in. convert that to date
             year = new Date(year * 1000);
         }
-        if (year?.year &&
-            year?.month &&
-            year?.day) {
-            const ts = year;
-            DatetimeIntervals.forEach((field) => {
-                args[field] = ts[field];
-            });
-            if (ts.utc) {
-                args.utc = ts.utc;
-            }
-        }
-        else if (year instanceof Date) {
-            const ts = year;
+        if (year instanceof Date) {
+            // JS Date
             args = {
-                year: ts.getFullYear(),
-                month: ts.getMonth() + 1,
-                day: ts.getDate(),
-                hour: ts.getHours(),
-                minute: ts.getMinutes(),
-                second: ts.getSeconds(),
-                millisecond: ts.getMilliseconds(),
+                year: year.getFullYear(),
+                month: year.getMonth() + 1,
+                day: year.getDate(),
+                hour: year.getHours(),
+                minute: year.getMinutes(),
+                second: year.getSeconds(),
+                millisecond: year.getMilliseconds(),
             };
+        }
+        else if (isParams(year)) {
+            // datetime or date
+            args = year;
         }
         else {
             args = {
@@ -54,6 +47,14 @@ export class datetime extends base {
                 second,
                 millisecond,
             };
+        }
+        if (!args.year || !args.month || !args.day) {
+            throw SyntaxError('Missing required argument year, month, or day');
+        }
+        for (const arg in DatetimeIntervals) {
+            if (args[arg] ?? 0 % 1 != 0) {
+                throw TypeError('Float cannot be interpreted as an integer');
+            }
         }
         Object.assign(this, args);
     }

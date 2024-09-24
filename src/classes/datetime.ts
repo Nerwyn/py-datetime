@@ -1,11 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import { date, time } from '.';
-import {
-	DateInterval,
-	DatetimeInterval,
-	DatetimeIntervals,
-	DatetimeParams,
-} from '../models';
+import { DatetimeInterval, DatetimeIntervals, DatetimeParams } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
 
@@ -39,29 +34,20 @@ export class datetime extends base {
 			year = new Date(year * 1000);
 		}
 
-		if (
-			(year as datetime)?.year &&
-			(year as datetime)?.month &&
-			(year as datetime)?.day
-		) {
-			const ts = year as datetime;
-			DatetimeIntervals.forEach((field) => {
-				args[field as DatetimeInterval] = ts[field as DateInterval];
-			});
-			if ((ts as datetime).utc) {
-				args.utc = (ts as datetime).utc;
-			}
-		} else if (year instanceof Date) {
-			const ts = year;
+		if (year instanceof Date) {
+			// JS Date
 			args = {
-				year: ts.getFullYear(),
-				month: ts.getMonth() + 1,
-				day: ts.getDate(),
-				hour: ts.getHours(),
-				minute: ts.getMinutes(),
-				second: ts.getSeconds(),
-				millisecond: ts.getMilliseconds(),
+				year: year.getFullYear(),
+				month: year.getMonth() + 1,
+				day: year.getDate(),
+				hour: year.getHours(),
+				minute: year.getMinutes(),
+				second: year.getSeconds(),
+				millisecond: year.getMilliseconds(),
 			};
+		} else if (isParams(year)) {
+			// datetime or date
+			args = year as datetime;
 		} else {
 			args = {
 				year: year as number,
@@ -73,6 +59,16 @@ export class datetime extends base {
 				millisecond,
 			};
 		}
+
+		if (!args.year || !args.month || !args.day) {
+			throw SyntaxError('Missing required argument year, month, or day');
+		}
+		for (const arg in DatetimeIntervals) {
+			if (args[arg as DatetimeInterval] ?? 0 % 1 != 0) {
+				throw TypeError('Float cannot be interpreted as an integer');
+			}
+		}
+
 		Object.assign(this, args);
 	}
 
