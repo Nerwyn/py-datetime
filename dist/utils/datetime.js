@@ -27,7 +27,7 @@ export function strptime(dateString, format, utc = false) {
     const parser = utc ? d3TimeFormat.utcParse : d3TimeFormat.timeParse;
     const parsed = parser(format)(dateString);
     if (!parsed) {
-        throw `ValueError: time data '${dateString}' does not match format '${format}'`;
+        throw Error(`'${dateString}' does not match format '${format}'`);
     }
     return utc ? dt.datetime.utc(parsed) : new datetime(parsed);
 }
