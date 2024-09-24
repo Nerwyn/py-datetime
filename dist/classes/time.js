@@ -1,7 +1,7 @@
 import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
 import { TimeIntervals, toSeconds } from '../models';
-export class PyTime {
+export class time {
     constructor(hour, minute, second, millisecond) {
         this.hour = 0;
         this.minute = 0;

@@ -1,6 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import { TimedeltaIntervals, toSeconds, } from '../models';
-export class PyTimedelta {
+export class timedelta {
     constructor(days, seconds, milliseconds, minutes, hours, weeks) {
         this.days = 0;
         this.seconds = 0;

@@ -1,4 +1,4 @@
-export declare class PyDate {
+export declare class date {
     year: number;
     month: number;
     day: number;

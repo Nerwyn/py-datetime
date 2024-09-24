@@ -1,13 +1,13 @@
 import * as d3TimeFormat from 'd3-time-format';
-import { PyDate, PyTime } from '.';
+import { date, time } from '.';
 import {
 	DateInterval,
 	DatetimeInterval,
 	DatetimeIntervals,
-	PyDatetimeDict,
+	DatetimeParams,
 } from '../models';
 
-export class PyDatetime {
+export class datetime {
 	year: number = 0;
 	month: number = 1;
 	day: number = 1;
@@ -18,7 +18,7 @@ export class PyDatetime {
 	utc: boolean = false;
 
 	constructor(
-		year?: number | PyDatetimeDict | Date,
+		year?: number | DatetimeParams | Date,
 		month?: number,
 		day?: number,
 		hour?: number,
@@ -27,7 +27,7 @@ export class PyDatetime {
 		millisecond?: number,
 		utc?: boolean,
 	) {
-		let args: PyDatetimeDict = {};
+		let args: DatetimeParams = {};
 		this.utc = utc ?? false;
 
 		if (typeof year == 'number' && !month && !day) {
@@ -37,16 +37,16 @@ export class PyDatetime {
 		}
 
 		if (
-			(year as PyDatetime)?.year &&
-			(year as PyDatetime)?.month &&
-			(year as PyDatetime)?.day
+			(year as datetime)?.year &&
+			(year as datetime)?.month &&
+			(year as datetime)?.day
 		) {
-			const ts = year as PyDatetime;
+			const ts = year as datetime;
 			DatetimeIntervals.forEach((field) => {
 				args[field as DatetimeInterval] = ts[field as DateInterval];
 			});
-			if ((ts as PyDatetime).utc) {
-				args.utc = (ts as PyDatetime).utc;
+			if ((ts as datetime).utc) {
+				args.utc = (ts as datetime).utc;
 			}
 		} else if (year instanceof Date) {
 			const ts = year;
@@ -90,7 +90,7 @@ export class PyDatetime {
 			args = { year, month, day, hour, minute, second, millisecond };
 		}
 
-		const newTs = new PyDatetime(this);
+		const newTs = new datetime(this);
 		Object.entries(args).forEach(([key, val]) => {
 			if (val) {
 				newTs[key as DatetimeInterval] = val as number;
@@ -156,16 +156,11 @@ export class PyDatetime {
 	}
 
 	time() {
-		return new PyTime(
-			this.hour,
-			this.minute,
-			this.second,
-			this.millisecond,
-		);
+		return new time(this.hour, this.minute, this.second, this.millisecond);
 	}
 
 	date() {
-		return new PyDate(this.year, this.month, this.day);
+		return new date(this.year, this.month, this.day);
 	}
 
 	weekday() {

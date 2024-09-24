@@ -1,25 +1,25 @@
 import * as d3TimeFormat from 'd3-time-format';
 import {
-	PyTimedeltaDict,
 	TimedeltaInterval,
 	TimedeltaIntervals,
+	TimedeltaParams,
 	toSeconds,
 } from '../models';
 
-export class PyTimedelta {
+export class timedelta {
 	days: number = 0;
 	seconds: number = 0;
 	milliseconds: number = 0;
 
 	constructor(
-		days?: number | PyTimedeltaDict,
+		days?: number | TimedeltaParams,
 		seconds?: number,
 		milliseconds?: number,
 		minutes?: number,
 		hours?: number,
 		weeks?: number,
 	) {
-		let args: PyTimedeltaDict = {
+		let args: TimedeltaParams = {
 			days: days as number,
 			seconds,
 			milliseconds,
@@ -29,7 +29,7 @@ export class PyTimedelta {
 		};
 		if (days != null && typeof days != 'number') {
 			// we have a dict
-			args = days as PyTimedeltaDict;
+			args = days as TimedeltaParams;
 		} else if (Math.abs(days as number) > 900) {
 			// we have seconds, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds
 			let totalSeconds = (days as number) ?? 0;

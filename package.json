@@ -5,7 +5,7 @@
 	"description": "Datetime handling the python way (or as close as possible)",
 	"main": "./dist/index.js",
 	"scripts": {
-		"test": "ts-mocha",
+		"test": "ts-mocha 'tests/**/*.test.ts'",
 		"build": "tsc",
 		"prelint": "tsc --noemit",
 		"lint": "eslint --fix --config ./.eslintrc.config.cjs",

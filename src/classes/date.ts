@@ -1,6 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 
-export class PyDate {
+export class date {
 	year: number = 0;
 	month: number = 1;
 	day: number = 1;

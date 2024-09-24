@@ -1,20 +1,20 @@
 import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
-import { PyTimeDict, TimeIntervals, toSeconds } from '../models';
+import { TimeIntervals, TimeParams, toSeconds } from '../models';
 
-export class PyTime {
+export class time {
 	hour: number = 0;
 	minute: number = 0;
 	second: number = 0;
 	millisecond: number = 0;
 
 	constructor(
-		hour?: number | PyTimeDict,
+		hour?: number | TimeParams,
 		minute?: number,
 		second?: number,
 		millisecond?: number,
 	) {
-		let args: PyTimeDict | number = {
+		let args: TimeParams | number = {
 			hour: hour as number,
 			minute,
 			second,

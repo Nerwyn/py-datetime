@@ -1,7 +1,7 @@
 import * as d3TimeFormat from 'd3-time-format';
-import { PyDate, PyTime } from '.';
+import { date, time } from '.';
 import { DatetimeIntervals, } from '../models';
-export class PyDatetime {
+export class datetime {
     constructor(year, month, day, hour, minute, second, millisecond, utc) {
         this.year = 0;
         this.month = 1;
@@ -63,7 +63,7 @@ export class PyDatetime {
         else {
             args = { year, month, day, hour, minute, second, millisecond };
         }
-        const newTs = new PyDatetime(this);
+        const newTs = new datetime(this);
         Object.entries(args).forEach(([key, val]) => {
             if (val) {
                 newTs[key] = val;
@@ -107,10 +107,10 @@ export class PyDatetime {
         }
     }
     time() {
-        return new PyTime(this.hour, this.minute, this.second, this.millisecond);
+        return new time(this.hour, this.minute, this.second, this.millisecond);
     }
     date() {
-        return new PyDate(this.year, this.month, this.day);
+        return new date(this.year, this.month, this.day);
     }
     weekday() {
         // javascript week starts on sunday, while python one starts on monday

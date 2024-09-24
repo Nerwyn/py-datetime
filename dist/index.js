@@ -1,11 +1,11 @@
 export * from './classes';
 export * from './models';
-import { PyDate, PyDatetime, PyTime, PyTimedelta } from './classes';
+import { date as pydate, datetime as pydatetime, time as pytime, timedelta as pytimedelta, } from './classes';
 import { combine, now, strptime, utc, utcnow } from './functions';
-const date = (...args) => new PyDate(...args);
-const time = (...args) => new PyTime(...args);
-const timedelta = (...args) => new PyTimedelta(...args);
-const datetime = (...args) => new PyDatetime(...args);
+const date = (...args) => new pydate(...args);
+const time = (...args) => new pytime(...args);
+const timedelta = (...args) => new pytimedelta(...args);
+const datetime = (...args) => new pydatetime(...args);
 datetime.now = now;
 datetime.utcnow = utcnow;
 datetime.utc = utc;

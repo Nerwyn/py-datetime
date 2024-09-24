@@ -1,5 +1,5 @@
 import * as d3TimeFormat from 'd3-time-format';
-export class PyDate {
+export class date {
     constructor(year, month, day) {
         this.year = 0;
         this.month = 1;

@@ -5,15 +5,15 @@ export const TimeIntervals = [
 	'millisecond',
 ] as const;
 export type TimeInterval = (typeof TimeIntervals)[number];
-export type PyTimeDict = Partial<Record<TimeInterval, number>>;
+export type TimeParams = Partial<Record<TimeInterval, number>>;
 
 export const DateIntervals = ['year', 'month', 'day'] as const;
 export type DateInterval = (typeof DateIntervals)[number];
-export type PyDateDict = Partial<Record<DateInterval, number>>;
+export type DateParams = Partial<Record<DateInterval, number>>;
 
 export const DatetimeIntervals = [...DateIntervals, ...TimeIntervals];
 export type DatetimeInterval = (typeof DatetimeIntervals)[number];
-export type PyDatetimeDict = Partial<
+export type DatetimeParams = Partial<
 	Record<DatetimeInterval, number> & { utc: boolean }
 >;
 
@@ -26,7 +26,7 @@ export const TimedeltaIntervals = [
 	'milliseconds',
 ] as const;
 export type TimedeltaInterval = (typeof TimedeltaIntervals)[number];
-export type PyTimedeltaDict = Partial<Record<TimedeltaInterval, number>>;
+export type TimedeltaParams = Partial<Record<TimedeltaInterval, number>>;
 
 export const toSeconds: Record<TimedeltaInterval, number> = {
 	weeks: 60 * 60 * 24 * 7,
