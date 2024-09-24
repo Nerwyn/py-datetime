@@ -9,7 +9,7 @@
 		"build": "tsc",
 		"prelint": "tsc --noemit",
 		"lint": "eslint --fix --config ./.eslintrc.config.cjs",
-		"setup-githooks": "git config --add core.hooksPath githooks"
+		"setup": "git config --add core.hooksPath githooks && npm i"
 	},
 	"lint-staged": {
 		"*": "prettier -w"
