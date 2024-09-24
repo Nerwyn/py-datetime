@@ -65,7 +65,15 @@ export class datetime extends base {
             args = year;
         }
         else {
-            args = { year, month, day, hour, minute, second, millisecond };
+            args = {
+                year: year,
+                month,
+                day,
+                hour,
+                minute,
+                second,
+                millisecond,
+            };
         }
         const newTs = new datetime(this);
         Object.entries(args).forEach(([key, val]) => {

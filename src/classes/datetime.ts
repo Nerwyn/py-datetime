@@ -73,7 +73,7 @@ export class datetime extends base {
 	}
 
 	replace(
-		year?: number,
+		year?: number | DatetimeParams,
 		month?: number,
 		day?: number,
 		hour?: number,
@@ -86,7 +86,15 @@ export class datetime extends base {
 		if (isParams(year)) {
 			args = year as DatetimeParams;
 		} else {
-			args = { year, month, day, hour, minute, second, millisecond };
+			args = {
+				year: year as number,
+				month,
+				day,
+				hour,
+				minute,
+				second,
+				millisecond,
+			};
 		}
 
 		const newTs = new datetime(this);

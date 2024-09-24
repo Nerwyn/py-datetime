@@ -19,9 +19,10 @@ export function utc(ts) {
     return new datetime(ts.getUTCFullYear(), ts.getUTCMonth() + 1, ts.getUTCDate(), ts.getUTCHours(), ts.getUTCMinutes(), ts.getUTCSeconds(), ts.getUTCMilliseconds(), true);
 }
 export function combine(date, time) {
-    const dt = new datetime(date);
-    Object.assign(dt, time);
-    return dt;
+    return new datetime({
+        ...date,
+        ...time,
+    });
 }
 export function strptime(dateString, format, utc = false) {
     const parser = utc ? d3TimeFormat.utcParse : d3TimeFormat.timeParse;

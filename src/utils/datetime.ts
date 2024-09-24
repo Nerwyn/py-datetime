@@ -31,9 +31,10 @@ export function utc(ts: number | datetime | date | Date) {
 }
 
 export function combine(date: date | datetime, time: time) {
-	const dt = new datetime(date);
-	Object.assign(dt, time);
-	return dt;
+	return new datetime({
+		...date,
+		...time,
+	});
 }
 
 export function strptime(
