@@ -14,10 +14,16 @@ export function fromordinal(ordinal) {
     return dt.date(d.year, d.month, d.day);
 }
 export function fromisoformat(dateString) {
-    // const formats = ['%Y-%m-%d', '%Y%m%d', '%Y-W%W-%w'];
-    const d = d3TimeFormat.isoParse(dateString);
+    const formats = ['%Y-%m-%d', '%Y%m%d', '%Y-W%W-%w', '%YW%W%w'];
+    let d = null;
+    for (const format of formats) {
+        d = d3TimeFormat.utcParse(format)(dateString);
+        if (d) {
+            break;
+        }
+    }
     if (d) {
-        return dt.date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+        return dt.date(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
     }
     throw SyntaxError('Unable to parse date string');
 }
