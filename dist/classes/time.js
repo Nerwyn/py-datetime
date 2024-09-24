@@ -2,8 +2,10 @@ import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
 import { isParams } from '../functions';
 import { TimeIntervals, toSeconds } from '../models';
-export class time {
+import { base } from './base';
+export class time extends base {
     constructor(hour, minute, second, millisecond) {
+        super();
         this.hour = 0;
         this.minute = 0;
         this.second = 0;
@@ -32,11 +34,5 @@ export class time {
             this.minute * toSeconds.minutes +
             this.second * toSeconds.seconds +
             this.millisecond * toSeconds.milliseconds);
-    }
-    toString() {
-        return this.str();
-    }
-    toJSON() {
-        return this.str();
     }
 }

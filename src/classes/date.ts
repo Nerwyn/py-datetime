@@ -1,11 +1,13 @@
 import * as d3TimeFormat from 'd3-time-format';
+import { base } from './base';
 
-export class date {
+export class date extends base {
 	year: number = 0;
 	month: number = 1;
 	day: number = 1;
 
 	constructor(year?: number, month?: number, day?: number) {
+		super();
 		Object.assign(this, { year, month, day });
 	}
 
@@ -28,13 +30,5 @@ export class date {
 
 	valueOf() {
 		return this.jsDate.getTime() / 1000;
-	}
-
-	toString() {
-		return this.str();
-	}
-
-	toJSON() {
-		return this.str();
 	}
 }

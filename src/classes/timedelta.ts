@@ -6,11 +6,12 @@ import {
 	TimedeltaParams,
 	toSeconds,
 } from '../models';
+import { base } from './base';
 
-export class timedelta {
-	days: number = 0;
-	seconds: number = 0;
-	milliseconds: number = 0;
+export class timedelta extends base {
+	readonly days: number = 0;
+	readonly seconds: number = 0;
+	readonly milliseconds: number = 0;
 
 	constructor(
 		days?: number | TimedeltaParams,
@@ -20,6 +21,7 @@ export class timedelta {
 		hours?: number,
 		weeks?: number,
 	) {
+		super();
 		let args: TimedeltaParams = {
 			days: days as number,
 			seconds,
@@ -70,6 +72,24 @@ export class timedelta {
 		return `${dayString} ${timeString}`.trim();
 	}
 
+	abs() {
+		return Math.abs(this.valueOf());
+	}
+
+	repr() {
+		const units: string[] = [];
+		if (this.days) {
+			units.push(`days=${this.days}`);
+		}
+		if (this.seconds) {
+			units.push(`seconds=${this.seconds}`);
+		}
+		if (this.milliseconds) {
+			units.push(`milliseconds=${this.milliseconds}`);
+		}
+		return `datetime.timedelta(${units.join(', ')})`;
+	}
+
 	valueOf() {
 		return (
 			this.days * toSeconds.days +
@@ -81,12 +101,7 @@ export class timedelta {
 	totalSeconds() {
 		return this.valueOf();
 	}
-
-	toString() {
-		return this.str();
-	}
-
-	toJSON() {
-		return this.str();
+	total_seconds() {
+		return this.totalSeconds();
 	}
 }

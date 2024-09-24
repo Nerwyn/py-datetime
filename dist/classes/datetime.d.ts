@@ -1,6 +1,7 @@
 import { date, time } from '.';
 import { DatetimeParams } from '../models';
-export declare class datetime {
+import { base } from './base';
+export declare class datetime extends base {
     year: number;
     month: number;
     day: number;
@@ -14,8 +15,6 @@ export declare class datetime {
     get jsDate(): Date;
     str(): string;
     valueOf(): number;
-    toString(): string;
-    toJSON(): string;
     strftime(format: string): string;
     time(): time;
     date(): date;

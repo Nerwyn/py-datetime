@@ -2,8 +2,9 @@ import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
 import { isParams } from '../functions';
 import { TimeIntervals, TimeParams, toSeconds } from '../models';
+import { base } from './base';
 
-export class time {
+export class time extends base {
 	hour: number = 0;
 	minute: number = 0;
 	second: number = 0;
@@ -15,6 +16,7 @@ export class time {
 		second?: number,
 		millisecond?: number,
 	) {
+		super();
 		let args: TimeParams = {
 			hour: hour as number,
 			minute,
@@ -45,13 +47,5 @@ export class time {
 			this.second * toSeconds.seconds +
 			this.millisecond * toSeconds.milliseconds
 		);
-	}
-
-	toString() {
-		return this.str();
-	}
-
-	toJSON() {
-		return this.str();
 	}
 }

@@ -1,5 +1,6 @@
 import { TimeParams } from '../models';
-export declare class time {
+import { base } from './base';
+export declare class time extends base {
     hour: number;
     minute: number;
     second: number;
@@ -7,6 +8,4 @@ export declare class time {
     constructor(hour?: number | TimeParams, minute?: number, second?: number, millisecond?: number);
     str(): string;
     valueOf(): number;
-    toString(): string;
-    toJSON(): string;
 }

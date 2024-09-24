@@ -7,8 +7,9 @@ import {
 	DatetimeIntervals,
 	DatetimeParams,
 } from '../models';
+import { base } from './base';
 
-export class datetime {
+export class datetime extends base {
 	year: number = 0;
 	month: number = 1;
 	day: number = 1;
@@ -28,6 +29,7 @@ export class datetime {
 		millisecond?: number,
 		utc?: boolean,
 	) {
+		super();
 		let args: DatetimeParams = {};
 		this.utc = utc ?? false;
 
@@ -138,14 +140,6 @@ export class datetime {
 			value = this.jsDate.getTime();
 		}
 		return value / 1000;
-	}
-
-	toString() {
-		return this.str();
-	}
-
-	toJSON() {
-		return this.str();
 	}
 
 	strftime(format: string) {

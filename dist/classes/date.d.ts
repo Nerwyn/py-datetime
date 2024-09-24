@@ -1,4 +1,5 @@
-export declare class date {
+import { base } from './base';
+export declare class date extends base {
     year: number;
     month: number;
     day: number;
@@ -8,6 +9,4 @@ export declare class date {
     weekday(): number;
     isoweekday(): number;
     valueOf(): number;
-    toString(): string;
-    toJSON(): string;
 }

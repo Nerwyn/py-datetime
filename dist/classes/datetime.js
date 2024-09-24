@@ -2,8 +2,10 @@ import * as d3TimeFormat from 'd3-time-format';
 import { date, time } from '.';
 import { isParams } from '../functions';
 import { DatetimeIntervals, } from '../models';
-export class datetime {
+import { base } from './base';
+export class datetime extends base {
     constructor(year, month, day, hour, minute, second, millisecond, utc) {
+        super();
         this.year = 0;
         this.month = 1;
         this.day = 1;
@@ -92,12 +94,6 @@ export class datetime {
             value = this.jsDate.getTime();
         }
         return value / 1000;
-    }
-    toString() {
-        return this.str();
-    }
-    toJSON() {
-        return this.str();
     }
     strftime(format) {
         if (this.utc) {
