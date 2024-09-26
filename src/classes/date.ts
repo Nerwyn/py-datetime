@@ -1,5 +1,7 @@
 import * as d3TimeFormat from 'd3-time-format';
+import { DateParams, DatetimeParams } from '../models';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
+import { isParams } from '../utils/utils';
 import { base } from './base';
 
 export class date extends base {
@@ -31,6 +33,28 @@ export class date extends base {
 
 	str() {
 		return d3TimeFormat.timeFormat('%Y-%m-%d')(this.jsDate);
+	}
+
+	replace(
+		year: number | DateParams = this.year,
+		month: number = this.month,
+		day = this.day,
+	) {
+		let args: DatetimeParams;
+		if (isParams(year)) {
+			args = year as DatetimeParams;
+		} else {
+			args = {
+				year: year as number,
+				month,
+				day,
+			};
+		}
+		return new date(
+			args.year ?? this.year,
+			args.month ?? this.month,
+			args.day ?? this.day,
+		);
 	}
 
 	weekday() {

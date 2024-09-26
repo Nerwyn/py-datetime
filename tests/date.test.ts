@@ -47,6 +47,12 @@ describe('fromisoformat', () => {
 	});
 });
 
+describe('fromordinal', () => {
+	it('should return a date given an proleptic Gregorian calendar ordinal', () => {
+		assert.equal(dt.date.fromordinal(365205).valueOf(), -30581953438);
+	});
+});
+
 describe('fromisocalendar', () => {
 	it('should return a date from a year, week, and day', () => {
 		assert.equal(dt.date.fromisocalendar(1950, 7, 3).valueOf(), -627246000);
@@ -69,5 +75,13 @@ describe('min, max, resolution', () => {
 describe('str', () => {
 	it('dt.date.str()', () => {
 		assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
+	});
+});
+
+describe('replace', () => {
+	it('should return a date with values replaced', () => {
+		assert.equal(dt.date(1992, 4, 24).replace(1990), 640929600);
+		assert.equal(dt.date(1992, 4, 24).replace(undefined, 8), 714628800);
+		assert.equal(dt.date(1992, 4, 24).replace({ day: 14 }), 703224000);
 	});
 });

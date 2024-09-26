@@ -17,6 +17,25 @@ export function fromtimestamp(timestamp: number) {
 	return dt.date(d.year, d.month, d.day);
 }
 
+export function fromordinal(ordinal: number) {
+	const MINYEAR_ORDINAL = 36160;
+	const MAXYEAR_ORDINAL = 3652059;
+	if (ordinal < MINYEAR_ORDINAL || ordinal > MAXYEAR_ORDINAL) {
+		// MINYEAR and MAXYEAR
+		throw RangeError(`ordinal ${ordinal} is out of range`);
+	}
+	console.log(min.valueOf());
+	console.log(dt.timedelta({ days: ordinal - MINYEAR_ORDINAL }).valueOf());
+	console.log(
+		min.valueOf() +
+			dt.timedelta({ days: ordinal - MINYEAR_ORDINAL }).valueOf(),
+	);
+	return dt.date.fromtimestamp(
+		min.valueOf() +
+			dt.timedelta({ days: ordinal - MINYEAR_ORDINAL }).valueOf(),
+	);
+}
+
 export function fromisoformat(dateString: string) {
 	const formats = ['%Y-%m-%d', '%Y%m%d', '%Y-W%W-%w', '%YW%W%w'];
 	let d: Date | null = null;

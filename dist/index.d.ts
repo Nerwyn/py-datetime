@@ -1,7 +1,7 @@
 export * from './classes';
 export * from './models';
 import { date as pydate, datetime as pydatetime, time as pytime, timedelta as pytimedelta } from './classes';
-import { fromisocalendar, fromisoformat, fromtimestamp, today } from './utils/date';
+import { fromisocalendar, fromisoformat, fromordinal, fromtimestamp, today } from './utils/date';
 import { combine, now, strptime, utc, utcnow } from './utils/datetime';
 declare const dt: {
     date: {
@@ -11,6 +11,7 @@ declare const dt: {
         resolution: pytimedelta;
         today: typeof today;
         fromtimestamp: typeof fromtimestamp;
+        fromordinal: typeof fromordinal;
         fromisoformat: typeof fromisoformat;
         fromisocalendar: typeof fromisocalendar;
     };

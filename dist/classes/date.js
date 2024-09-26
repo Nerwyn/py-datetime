@@ -1,5 +1,6 @@
 import * as d3TimeFormat from 'd3-time-format';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
+import { isParams } from '../utils/utils';
 import { base } from './base';
 export class date extends base {
     constructor(year, month, day) {
@@ -23,6 +24,20 @@ export class date extends base {
     }
     str() {
         return d3TimeFormat.timeFormat('%Y-%m-%d')(this.jsDate);
+    }
+    replace(year = this.year, month = this.month, day = this.day) {
+        let args;
+        if (isParams(year)) {
+            args = year;
+        }
+        else {
+            args = {
+                year: year,
+                month,
+                day,
+            };
+        }
+        return new date(args.year ?? this.year, args.month ?? this.month, args.day ?? this.day);
     }
     weekday() {
         // javascript week starts on sunday, while python one starts on monday

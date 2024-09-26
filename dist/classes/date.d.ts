@@ -1,3 +1,4 @@
+import { DateParams } from '../models';
 import { base } from './base';
 export declare class date extends base {
     static readonly min = -2177434800;
@@ -9,6 +10,7 @@ export declare class date extends base {
     constructor(year: number, month: number, day: number);
     get jsDate(): Date;
     str(): string;
+    replace(year?: number | DateParams, month?: number, day?: number): date;
     weekday(): number;
     isoweekday(): number;
     valueOf(): number;

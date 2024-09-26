@@ -13,6 +13,7 @@ import {
 	resolution as dresolution,
 	fromisocalendar,
 	fromisoformat,
+	fromordinal,
 	fromtimestamp,
 	today,
 } from './utils/date';
@@ -31,6 +32,7 @@ date.max = dmax;
 date.resolution = dresolution;
 date.today = today;
 date.fromtimestamp = fromtimestamp;
+date.fromordinal = fromordinal;
 date.fromisoformat = fromisoformat;
 date.fromisocalendar = fromisocalendar;
 
