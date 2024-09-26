@@ -55,13 +55,13 @@ describe('fromisocalendar', () => {
 
 describe('min, max, resolution', () => {
 	it('should return the min, max, and resolution', () => {
-		assert.equal(dt.date.min.valueOf(), -2208970800);
+		assert.equal(dt.date.min.valueOf(), -59011441438);
 		assert.equal(dt.date.max.valueOf(), 253402232400);
 		assert.equal(dt.date.resolution.valueOf(), 86400);
 	});
 
 	it('should restrict inputs to the min and max range', () => {
-		assert.throws(() => dt.date(1899, 12, 31));
+		assert.throws(() => dt.date(99, 12, 31));
 		assert.throws(() => dt.date(10000, 1, 1));
 	});
 });
