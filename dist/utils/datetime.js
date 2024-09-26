@@ -32,3 +32,5 @@ export function strptime(dateString, format, utc = false) {
     }
     return utc ? dt.datetime.utc(parsed) : new datetime(parsed);
 }
+export const MINYEAR = 1;
+export const MAXYEAR = 9999;

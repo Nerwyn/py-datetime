@@ -27,3 +27,5 @@ export function fromisoformat(dateString) {
     }
     throw SyntaxError('Unable to parse date string');
 }
+export function fromisocalendar(year, week, day) {
+}

@@ -5,9 +5,6 @@ import { base } from './base';
 export class timedelta extends base {
     constructor(days, seconds, milliseconds, minutes, hours, weeks) {
         super();
-        this.min = -86399999913600;
-        this.max = 86400000000000;
-        this.resolution = 1;
         this.days = 0;
         this.seconds = 0;
         this.milliseconds = 0;
@@ -39,6 +36,9 @@ export class timedelta extends base {
         TimedeltaIntervals.forEach((key) => {
             totalSeconds += (args[key] ?? 0) * toSeconds[key];
         });
+        if (totalSeconds < timedelta.min || totalSeconds > timedelta.max) {
+            throw RangeError('value out of range, must have magnitude less than 999999999 days');
+        }
         if (totalSeconds.toString().includes('.')) {
             // To avoid floating point imprecision errors
             this.milliseconds = Math.floor(parseFloat(`0.${totalSeconds.toString().split('.')[1]}`) /
@@ -83,3 +83,6 @@ export class timedelta extends base {
         return this.totalSeconds();
     }
 }
+timedelta.min = -86399999913600;
+timedelta.max = 86400000000000;
+timedelta.resolution = 0.001;

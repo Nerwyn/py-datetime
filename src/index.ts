@@ -8,12 +8,22 @@ import {
 	timedelta as pytimedelta,
 } from './classes';
 import { fromisoformat, fromordinal, fromtimestamp, today } from './utils/date';
-import { combine, now, strptime, utc, utcnow } from './utils/datetime';
+import {
+	combine,
+	MAXYEAR,
+	MINYEAR,
+	now,
+	strptime,
+	utc,
+	utcnow,
+} from './utils/datetime';
 import { resolution, max as tdmax, min as tdmin } from './utils/timedelta';
 
 const date = (...args: ConstructorParameters<typeof pydate>) =>
 	new pydate(...args);
 
+date.MINYEAR = MINYEAR;
+date.MAXYEAR = MAXYEAR;
 date.today = today;
 date.fromtimestamp = fromtimestamp;
 date.fromordinal = fromordinal;

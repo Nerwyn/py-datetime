@@ -87,9 +87,15 @@ describe('float input', () => {
 
 describe('min, max, resolution', () => {
 	it('should return the min, max, and resolution as attributes', () => {
+		console.log(dt.timedelta.max.valueOf());
 		assert.equal(dt.timedelta.min.valueOf(), -86399999913600);
 		assert.equal(dt.timedelta.max.valueOf(), 86400000000000);
 		assert.equal(dt.timedelta.resolution.valueOf(), 0.001);
+	});
+
+	it('should restrict inputs to the min and max range', () => {
+		assert.throws(() => dt.timedelta({ days: 1000000000, seconds: 1 }));
+		assert.throws(() => dt.timedelta({ days: -1000000000 }));
 	});
 });
 

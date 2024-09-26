@@ -1,9 +1,9 @@
 import { TimedeltaParams } from '../models';
 import { base } from './base';
 export declare class timedelta extends base {
-    readonly min: number;
-    readonly max: number;
-    readonly resolution: number;
+    static readonly min: number;
+    static readonly max: number;
+    static readonly resolution: number;
     readonly days: number;
     readonly seconds: number;
     readonly milliseconds: number;

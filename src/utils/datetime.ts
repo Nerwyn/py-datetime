@@ -49,3 +49,7 @@ export function strptime(
 	}
 	return utc ? dt.datetime.utc(parsed) : new datetime(parsed);
 }
+
+export const MINYEAR = 1;
+
+export const MAXYEAR = 9999;

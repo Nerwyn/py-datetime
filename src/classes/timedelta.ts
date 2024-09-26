@@ -9,9 +9,9 @@ import { isParams } from '../utils/utils';
 import { base } from './base';
 
 export class timedelta extends base {
-	readonly min: number = -86399999913600;
-	readonly max: number = 86400000000000;
-	readonly resolution: number = 1;
+	static readonly min: number = -86399999913600;
+	static readonly max: number = 86400000000000;
+	static readonly resolution: number = 0.001;
 
 	readonly days: number = 0;
 	readonly seconds: number = 0;
@@ -54,6 +54,13 @@ export class timedelta extends base {
 		TimedeltaIntervals.forEach((key) => {
 			totalSeconds += (args[key] ?? 0) * toSeconds[key];
 		});
+
+		if (totalSeconds < timedelta.min || totalSeconds > timedelta.max) {
+			throw RangeError(
+				'value out of range, must have magnitude less than 999999999 days',
+			);
+		}
+
 		if (totalSeconds.toString().includes('.')) {
 			// To avoid floating point imprecision errors
 			this.milliseconds = Math.floor(

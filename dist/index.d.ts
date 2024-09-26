@@ -5,7 +5,9 @@ import { fromisoformat, fromordinal, fromtimestamp, today } from './utils/date';
 import { combine, now, strptime, utc, utcnow } from './utils/datetime';
 declare const dt: {
     date: {
-        (year?: number | undefined, month?: number | undefined, day?: number | undefined): pydate;
+        (year: number, month: number, day: number): pydate;
+        MINYEAR: number;
+        MAXYEAR: number;
         today: typeof today;
         fromtimestamp: typeof fromtimestamp;
         fromordinal: typeof fromordinal;

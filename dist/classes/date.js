@@ -1,4 +1,5 @@
 import * as d3TimeFormat from 'd3-time-format';
+import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { base } from './base';
 export class date extends base {
     constructor(year, month, day) {
@@ -6,6 +7,15 @@ export class date extends base {
         this.year = 0;
         this.month = 1;
         this.day = 1;
+        if (year < MINYEAR || year > MAXYEAR) {
+            throw RangeError(`year ${year} is out of range`);
+        }
+        if (month < 1 || month > 12) {
+            throw RangeError(`month ${month} is out of range`);
+        }
+        if (day < 1 || day > new Date(year, month, 0).getDate()) {
+            throw RangeError(`day ${day} is out of range for month`);
+        }
         Object.assign(this, { year, month, day });
     }
     get jsDate() {
@@ -25,3 +35,5 @@ export class date extends base {
         return this.jsDate.getTime() / 1000;
     }
 }
+date.MINYEAR = MINYEAR;
+date.MAXYEAR = MAXYEAR;
