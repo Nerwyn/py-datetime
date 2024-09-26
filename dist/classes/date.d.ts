@@ -11,7 +11,11 @@ export declare class date extends base {
     get jsDate(): Date;
     str(): string;
     replace(year?: number | DateParams, month?: number, day?: number): date;
+    toordinal(): number;
     weekday(): number;
     isoweekday(): number;
+    isocalendar(): number[];
+    ctime(): string;
+    strftime(format: string): string;
     valueOf(): number;
 }

@@ -1,4 +1,5 @@
 import * as d3TimeFormat from 'd3-time-format';
+import { toSeconds } from '../models';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
 import { base } from './base';
@@ -39,12 +40,27 @@ export class date extends base {
         }
         return new date(args.year ?? this.year, args.month ?? this.month, args.day ?? this.day);
     }
+    toordinal() {
+        return this.valueOf() / toSeconds.days;
+    }
     weekday() {
         // javascript week starts on sunday, while python one starts on monday
         return (this.jsDate.getDay() + 6) % 7;
     }
     isoweekday() {
         return this.weekday() + 1;
+    }
+    isocalendar() {
+        const [year, week, weekday] = d3TimeFormat
+            .utcFormat('%G-%V-%u')(this.jsDate)
+            .split('-');
+        return [Number(year), Number(week), Number(weekday)];
+    }
+    ctime() {
+        return d3TimeFormat.timeFormat('%a %b 00:00:00 %Y')(this.jsDate);
+    }
+    strftime(format) {
+        return d3TimeFormat.timeFormat(format)(this.jsDate);
     }
     valueOf() {
         return this.jsDate.getTime() / 1000;

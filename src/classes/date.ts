@@ -1,5 +1,5 @@
 import * as d3TimeFormat from 'd3-time-format';
-import { DateParams, DatetimeParams } from '../models';
+import { DateParams, DatetimeParams, toSeconds } from '../models';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
 import { base } from './base';
@@ -57,6 +57,10 @@ export class date extends base {
 		);
 	}
 
+	toordinal() {
+		return this.valueOf() / toSeconds.days;
+	}
+
 	weekday() {
 		// javascript week starts on sunday, while python one starts on monday
 		return (this.jsDate.getDay() + 6) % 7;
@@ -64,6 +68,21 @@ export class date extends base {
 
 	isoweekday() {
 		return this.weekday() + 1;
+	}
+
+	isocalendar() {
+		const [year, week, weekday] = d3TimeFormat
+			.utcFormat('%G-%V-%u')(this.jsDate)
+			.split('-');
+		return [Number(year), Number(week), Number(weekday)];
+	}
+
+	ctime() {
+		return d3TimeFormat.timeFormat('%a %b 00:00:00 %Y')(this.jsDate);
+	}
+
+	strftime(format: string) {
+		return d3TimeFormat.timeFormat(format)(this.jsDate);
 	}
 
 	valueOf() {
