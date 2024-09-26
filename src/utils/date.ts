@@ -1,5 +1,11 @@
 import * as d3TimeFormat from 'd3-time-format';
 import dt from '..';
+import { date, timedelta } from '../classes';
+import { MAXYEAR, MINYEAR } from './datetime';
+
+export const min = new date(MINYEAR, 1, 1);
+export const max = new date(MAXYEAR, 12, 31);
+export const resolution = new timedelta({ days: 1 });
 
 export function today() {
 	const today = dt.datetime.now();
@@ -8,14 +14,6 @@ export function today() {
 
 export function fromtimestamp(timestamp: number) {
 	const d = dt.datetime(timestamp);
-	return dt.date(d.year, d.month, d.day);
-}
-
-export function fromordinal(ordinal: number) {
-	const d = dt.datetime(
-		dt.datetime(0, 0, 0).valueOf() +
-			dt.timedelta({ days: ordinal }).valueOf(),
-	);
 	return dt.date(d.year, d.month, d.day);
 }
 
@@ -32,4 +30,9 @@ export function fromisoformat(dateString: string) {
 		return dt.date(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
 	}
 	throw SyntaxError('Unable to parse date string');
+}
+
+export function fromisocalendar(year: number, week: number, day: number) {
+	const d = dt.datetime.strptime(`${year}-W${week}-${day}`, '%Y-W%W-%w');
+	return dt.date(d.year, d.month, d.day);
 }

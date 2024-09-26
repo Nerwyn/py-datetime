@@ -170,4 +170,8 @@ export class datetime extends base {
 	isoweekday() {
 		return this.weekday() + 1;
 	}
+
+	timestamp() {
+		return this.valueOf();
+	}
 }

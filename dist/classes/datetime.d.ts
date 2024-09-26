@@ -20,4 +20,5 @@ export declare class datetime extends base {
     date(): date;
     weekday(): number;
     isoweekday(): number;
+    timestamp(): number;
 }

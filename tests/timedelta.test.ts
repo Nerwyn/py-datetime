@@ -86,8 +86,7 @@ describe('float input', () => {
 });
 
 describe('min, max, resolution', () => {
-	it('should return the min, max, and resolution as attributes', () => {
-		console.log(dt.timedelta.max.valueOf());
+	it('should return the min, max, and resolution', () => {
 		assert.equal(dt.timedelta.min.valueOf(), -86399999913600);
 		assert.equal(dt.timedelta.max.valueOf(), 86400000000000);
 		assert.equal(dt.timedelta.resolution.valueOf(), 0.001);

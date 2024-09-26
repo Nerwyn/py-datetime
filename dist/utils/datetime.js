@@ -32,5 +32,5 @@ export function strptime(dateString, format, utc = false) {
     }
     return utc ? dt.datetime.utc(parsed) : new datetime(parsed);
 }
-export const MINYEAR = 1;
+export const MINYEAR = 1900; // JS Date thinks two digit years are 1900s, which makes calculating older dates difficult
 export const MAXYEAR = 9999;

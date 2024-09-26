@@ -4,7 +4,7 @@ import { base } from './base';
 export class date extends base {
     constructor(year, month, day) {
         super();
-        this.year = 0;
+        this.year = 1;
         this.month = 1;
         this.day = 1;
         if (year < MINYEAR || year > MAXYEAR) {
@@ -35,5 +35,6 @@ export class date extends base {
         return this.jsDate.getTime() / 1000;
     }
 }
-date.MINYEAR = MINYEAR;
-date.MAXYEAR = MAXYEAR;
+date.min = -2177434800;
+date.max = 253402232400;
+date.resolution = 86400;

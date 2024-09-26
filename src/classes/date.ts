@@ -3,12 +3,13 @@ import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { base } from './base';
 
 export class date extends base {
-	static readonly MINYEAR = MINYEAR;
-	static readonly MAXYEAR = MAXYEAR;
+	static readonly min = -2177434800;
+	static readonly max = 253402232400;
+	static readonly resolution = 86400;
 
-	year: number = 0;
-	month: number = 1;
-	day: number = 1;
+	readonly year: number = 1;
+	readonly month: number = 1;
+	readonly day: number = 1;
 
 	constructor(year: number, month: number, day: number) {
 		super();
