@@ -5,6 +5,9 @@ import { base } from './base';
 export class timedelta extends base {
     constructor(days, seconds, milliseconds, minutes, hours, weeks) {
         super();
+        this.min = -86399999913600;
+        this.max = 86400000000000;
+        this.resolution = 1;
         this.days = 0;
         this.seconds = 0;
         this.milliseconds = 0;
@@ -38,9 +41,8 @@ export class timedelta extends base {
         });
         if (totalSeconds.toString().includes('.')) {
             // To avoid floating point imprecision errors
-            this.milliseconds =
-                parseFloat(`0.${totalSeconds.toString().split('.')[1]}`) /
-                    toSeconds.milliseconds;
+            this.milliseconds = Math.floor(parseFloat(`0.${totalSeconds.toString().split('.')[1]}`) /
+                toSeconds.milliseconds);
             totalSeconds = Math.floor(totalSeconds);
         }
         this.days = Math.floor(totalSeconds / toSeconds.days);

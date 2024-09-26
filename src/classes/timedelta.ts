@@ -9,6 +9,10 @@ import { isParams } from '../utils/utils';
 import { base } from './base';
 
 export class timedelta extends base {
+	readonly min: number = -86399999913600;
+	readonly max: number = 86400000000000;
+	readonly resolution: number = 1;
+
 	readonly days: number = 0;
 	readonly seconds: number = 0;
 	readonly milliseconds: number = 0;
@@ -52,9 +56,10 @@ export class timedelta extends base {
 		});
 		if (totalSeconds.toString().includes('.')) {
 			// To avoid floating point imprecision errors
-			this.milliseconds =
+			this.milliseconds = Math.floor(
 				parseFloat(`0.${totalSeconds.toString().split('.')[1]}`) /
-				toSeconds.milliseconds;
+					toSeconds.milliseconds,
+			);
 			totalSeconds = Math.floor(totalSeconds);
 		}
 		this.days = Math.floor(totalSeconds / toSeconds.days);

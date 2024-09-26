@@ -1,6 +1,6 @@
 import { timedelta } from '../classes';
 
-export const min = new timedelta(-999999999);
+export const min = new timedelta({ days: -999999999 });
 
 export const max = new timedelta({
 	days: 999999999,
