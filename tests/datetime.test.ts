@@ -92,8 +92,6 @@ describe('fromjsdate', () => {
 describe('utcfromjsdate', () => {
 	it('should return the UTC datetime corresponding to the JS Date', () => {
 		let date = new Date(1512415125 * 1000);
-		console.log(date);
-		console.log(dt.datetime.utcfromjsdate(date));
 		assert.equal(dt.datetime.utcfromjsdate(date).hour, 19);
 		assert.equal(dt.datetime.utcfromjsdate(date).utc, true);
 	});
@@ -206,7 +204,6 @@ describe('isocalendar', () => {
 
 describe('isoformat', () => {
 	it('should return a string representing the date in ISO 8601 format', () => {
-		// assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
 		it('should use the auto format by default', () => {
 			assert.equal(
 				dt.datetime(2020, 3, 2, 5, 6, 7, 8).isoformat(),

@@ -10,7 +10,7 @@ export class date extends base {
 	static readonly max: number = 253402232400;
 	static readonly resolution: number = 86400;
 
-	readonly year: number = 1;
+	readonly year: number = 1970;
 	readonly month: number = 1;
 	readonly day: number = 1;
 
@@ -77,7 +77,7 @@ export class date extends base {
 	}
 
 	isoformat() {
-		return d3.timeFormat('%Y-%m-%d')(this.jsDate);
+		return d3.utcFormat('%Y-%m-%d')(this.jsDate);
 	}
 
 	str() {

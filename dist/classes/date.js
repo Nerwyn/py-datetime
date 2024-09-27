@@ -7,7 +7,7 @@ import { timedelta } from './timedelta';
 export class date extends base {
     constructor(year, month, day) {
         super();
-        this.year = 1;
+        this.year = 1970;
         this.month = 1;
         this.day = 1;
         if (!Number.isInteger(year) || year < MINYEAR || year > MAXYEAR) {
@@ -53,7 +53,7 @@ export class date extends base {
         return [Number(year), Number(week), Number(weekday)];
     }
     isoformat() {
-        return d3.timeFormat('%Y-%m-%d')(this.jsDate);
+        return d3.utcFormat('%Y-%m-%d')(this.jsDate);
     }
     str() {
         return this.isoformat();

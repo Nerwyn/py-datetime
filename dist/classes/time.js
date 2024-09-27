@@ -1,5 +1,4 @@
 import * as d3 from 'd3-time-format';
-import dt from '..';
 import { toSeconds } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
@@ -17,6 +16,7 @@ export class time extends base {
             millisecond,
         };
         if (isParams(hour)) {
+            delete args.hour;
             Object.assign(args, hour);
         }
         for (const arg in args) {
@@ -38,16 +38,55 @@ export class time extends base {
         }
         Object.assign(this, args);
     }
+    replace(hour = this.hour, minute = this.minute, second = this.second, millisecond = this.millisecond) {
+        let args = {
+            hour: hour,
+            minute,
+            second,
+            millisecond,
+        };
+        if (isParams(hour)) {
+            delete args.hour;
+            Object.assign(args, hour);
+        }
+        return new time(args.hour ?? this.hour, args.minute ?? this.minute, args.second ?? this.second, args.millisecond ?? this.millisecond);
+    }
+    isoformat(timespec = 'auto') {
+        let format;
+        switch (timespec) {
+            case 'hours':
+                format = `%H`;
+                break;
+            case 'minutes':
+                format = `%H:%M`;
+                break;
+            case 'seconds':
+                format = `%H:%M:%S`;
+                break;
+            case 'milliseconds':
+                format = `%H:%M:%S.%f`;
+                break;
+            case 'auto':
+            default:
+                format = `%H:%M:%S${this.millisecond ? '.%f' : ''}`;
+                break;
+        }
+        return this.strftime(format);
+    }
     str() {
-        // we have to set the date to today to avoid any daylight saving nonsense
-        const ts = dt.datetime.combine(dt.datetime.now(), this);
-        return d3.timeFormat(`%H:%M:%S${this.millisecond ? '.%f' : ''}`)(new Date(ts.valueOf() * 1000));
+        return this.isoformat();
+    }
+    strftime(format) {
+        return d3.utcFormat(format)(this.jsDate);
     }
     valueOf() {
         return (this.hour * toSeconds.hours +
             this.minute * toSeconds.minutes +
             this.second * toSeconds.seconds +
             this.millisecond * toSeconds.milliseconds);
+    }
+    get jsDate() {
+        return new Date(this.valueOf() * 1000);
     }
 }
 time.min = 0;
