@@ -22,16 +22,14 @@ export class date extends base {
         Object.assign(this, { year, month, day });
     }
     replace(year = this.year, month = this.month, day = this.day) {
-        let args;
+        const args = {
+            year: year,
+            month,
+            day,
+        };
         if (isParams(year)) {
-            args = year;
-        }
-        else {
-            args = {
-                year: year,
-                month,
-                day,
-            };
+            delete args.year;
+            Object.assign(args, year);
         }
         return new date(args.year ?? this.year, args.month ?? this.month, args.day ?? this.day);
     }

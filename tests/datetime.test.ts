@@ -3,8 +3,59 @@ import { equalDates } from '.';
 import dt from '../src/index.ts';
 
 describe('construction', () => {
-	it('via dt.datetime(year, month, day)', () => {
+	it('should require year, month, and day', () => {
 		equalDates(dt.datetime(2020, 4, 12), new Date(2020, 3, 12));
+		assert.throws(() => dt.datetime(2020, 4));
+		assert.throws(() => dt.datetime({ month: 12, day: 19 }));
+	});
+
+	it('should optionally allow hour, minute, second, milliecond, and utc', () => {
+		equalDates(dt.datetime(2020, 4, 12, 7), new Date(2020, 3, 12, 7));
+		equalDates(
+			dt.datetime(2020, 4, 12, 7, 13),
+			new Date(2020, 3, 12, 7, 13),
+		);
+		equalDates(
+			dt.datetime({
+				year: 2020,
+				month: 4,
+				day: 12,
+				second: 32,
+				millisecond: 974,
+			}),
+			new Date(2020, 3, 12, 0, 0, 32, 974),
+		);
+		assert.equal(
+			dt
+				.datetime({
+					year: 2020,
+					month: 4,
+					day: 12,
+					utc: true,
+				})
+				.valueOf(),
+			Date.UTC(2020, 3, 12) / 1000,
+		);
+	});
+
+	it('should only allow integer numbers', () => {
+		assert.throws(() => dt.datetime(2020, 4, 12, 22.2));
+	});
+
+	it('should restrict inputs to ranges', () => {
+		assert.throws(() => dt.datetime(99, 11, 4, 0, 5, 23, 997));
+		assert.throws(() => dt.datetime(10000, 11, 4, 0, 5, 23, 997));
+		assert.throws(() => dt.datetime(2020, 0, 4, 0, 5, 23, 997));
+		assert.throws(() => dt.datetime(2020, 13, 4, 0, 5, 23, 997));
+		assert.throws(() => dt.datetime(2020, 11, 0, 0, 5, 23, 997));
+		assert.throws(() => dt.datetime(2020, 11, 32, 0, 5, 23, 997));
+		assert.throws(() => dt.datetime(2020, 2, 30, 0, 5, 23, 997));
+		assert.throws(() => dt.datetime(2020, 11, 4, -1, 5, 23, 997));
+		assert.throws(() => dt.datetime(2020, 11, 4, 25, 5, 23, 997));
+		assert.throws(() => dt.datetime(2020, 11, 4, 0, -1, 23, 997));
+		assert.throws(() => dt.datetime(2020, 11, 4, 0, 61, 23, 997));
+		assert.throws(() => dt.datetime(2020, 11, 4, 0, 5, -1, -1));
+		assert.throws(() => dt.datetime(2020, 11, 4, 0, 5, 61, 1000));
 	});
 });
 
@@ -12,7 +63,7 @@ describe('now', () => {
 	it('should return the current local datetime', () => {
 		// to test if .now() returns now we just check that they are within 0.1 sec of each other
 		let dtNow = dt.datetime.now().jsDate;
-		assert.ok(dtNow.getTime() - new Date().getTime() < 100);
+		assert(dtNow.getTime() - new Date().getTime() < 100);
 	});
 });
 

@@ -1,12 +1,12 @@
 import * as d3 from 'd3-time-format';
 import { date, time } from '.';
-import { DatetimeIntervals, } from '../models';
+import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
 import { base } from './base';
 export class datetime extends base {
-    constructor(year, month, day, hour, minute, second, millisecond, utc) {
+    constructor(year, month, day, hour = 0, minute = 0, second = 0, millisecond = 0, utc = false) {
         super();
-        this.year = 0;
+        this.year = 1970;
         this.month = 1;
         this.day = 1;
         this.hour = 0;
@@ -14,48 +14,66 @@ export class datetime extends base {
         this.second = 0;
         this.millisecond = 0;
         this.utc = false;
-        let args = {};
+        const args = {
+            year: year,
+            month,
+            day,
+            hour,
+            minute,
+            second,
+            millisecond,
+            utc,
+        };
         if (isParams(year)) {
-            args = year;
-            this.utc = args.utc ?? false;
+            delete args.year;
+            Object.assign(args, year);
         }
-        else {
-            args = {
-                year: year,
-                month,
-                day,
-                hour,
-                minute,
-                second,
-                millisecond,
-            };
-            this.utc = utc ?? false;
+        for (const arg in args) {
+            if (arg != 'utc' &&
+                !Number.isInteger(args[arg] ?? 0)) {
+                throw TypeError("'float' object cannot be interpreted as an integer");
+            }
         }
         if (!args.year || !args.month || !args.day) {
             throw SyntaxError('Missing required argument year, month, or day');
         }
-        for (const arg in DatetimeIntervals) {
-            if (args[arg] ?? 0 % 1 != 0) {
-                throw TypeError('Float cannot be interpreted as an integer');
-            }
+        if (args.year < MINYEAR || args.year > MAXYEAR) {
+            throw RangeError(`year ${args.year} is out of range`);
+        }
+        if (args.month < 1 || args.month > 12) {
+            throw RangeError(`month ${args.month} is out of range`);
+        }
+        if (args.day < 1 ||
+            args.day > new Date(args.year, args.month, 0).getDate()) {
+            throw RangeError(`day ${day} is out of range for month`);
+        }
+        if ((args.hour ?? 0) < 0 || (args.hour ?? 0) > 23) {
+            throw RangeError('hour must be in 0..23');
+        }
+        if ((args.minute ?? 0) < 0 || (args.minute ?? 0) > 59) {
+            throw RangeError('minute must be in 0..59');
+        }
+        if ((args.second ?? 0) < 0 || (args.second ?? 0) > 59) {
+            throw RangeError('second must be in 0..59');
+        }
+        if ((args.millisecond ?? 0) < 0 || (args.millisecond ?? 0) > 999) {
+            throw RangeError('millisecond must be in 0..999');
         }
         Object.assign(this, args);
     }
     replace(year = this.year, month = this.month, day = this.day, hour = this.hour, minute = this.minute, second = this.second, millisecond = this.millisecond) {
-        let args = {};
+        const args = {
+            year: year,
+            month,
+            day,
+            hour,
+            minute,
+            second,
+            millisecond,
+        };
         if (isParams(year)) {
-            args = year;
-        }
-        else {
-            args = {
-                year: year,
-                month,
-                day,
-                hour,
-                minute,
-                second,
-                millisecond,
-            };
+            delete args.year;
+            Object.assign(args, year);
         }
         return new datetime({
             year: args.year ?? this.year,
@@ -99,20 +117,13 @@ export class datetime extends base {
         return [Number(year), Number(week), Number(weekday)];
     }
     isoformat(sep = 'T', timespec = 'auto') {
-        let args;
+        const args = {
+            sep: sep,
+            timespec,
+        };
         if (isParams(sep)) {
-            // args = sep as ISOFormatParams;
-            args = {
-                sep: 'T',
-                timespec: 'auto',
-                ...sep,
-            };
-        }
-        else {
-            args = {
-                sep: sep,
-                timespec,
-            };
+            delete args.sep;
+            Object.assign(args, sep);
         }
         let format;
         switch (args.timespec) {

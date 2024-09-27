@@ -5,16 +5,20 @@ import { isParams } from '../utils/utils';
 import { base } from './base';
 
 export class time extends base {
-	hour: number = 0;
-	minute: number = 0;
-	second: number = 0;
-	millisecond: number = 0;
+	static readonly min: number = 0;
+	static readonly max: number = 86399.999;
+	static readonly resolution: number = 0.001;
+
+	readonly hour: number = 0;
+	readonly minute: number = 0;
+	readonly second: number = 0;
+	readonly millisecond: number = 0;
 
 	constructor(
-		hour?: number | TimeParams,
-		minute?: number,
-		second?: number,
-		millisecond?: number,
+		hour: number | TimeParams = 0,
+		minute: number = 0,
+		second: number = 0,
+		millisecond: number = 0,
 	) {
 		super();
 		let args: TimeParams = {
@@ -24,11 +28,13 @@ export class time extends base {
 			millisecond,
 		};
 		if (isParams(hour)) {
-			args = hour as TimeParams;
+			Object.assign(args, hour);
 		}
+
 		TimeIntervals.forEach((field) => {
 			args[field] = args[field] || 0;
 		});
+
 		Object.assign(this, args);
 	}
 

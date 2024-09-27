@@ -1,16 +1,11 @@
 import * as d3 from 'd3-time-format';
-import {
-	TimedeltaInterval,
-	TimedeltaIntervals,
-	TimedeltaParams,
-	toSeconds,
-} from '../models';
+import { TimedeltaIntervals, TimedeltaParams, toSeconds } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
 
 export class timedelta extends base {
 	static readonly min: number = -86399999913600;
-	static readonly max: number = 86400000000000;
+	static readonly max: number = 86399999999999.999;
 	static readonly resolution: number = 0.001;
 
 	readonly days: number = 0;
@@ -18,12 +13,12 @@ export class timedelta extends base {
 	readonly milliseconds: number = 0;
 
 	constructor(
-		days?: number | TimedeltaParams,
-		seconds?: number,
-		milliseconds?: number,
-		minutes?: number,
-		hours?: number,
-		weeks?: number,
+		days: number | TimedeltaParams = 0,
+		seconds: number = 0,
+		milliseconds: number = 0,
+		minutes: number = 0,
+		hours: number = 0,
+		weeks: number = 0,
 	) {
 		super();
 		let args: TimedeltaParams = {
@@ -35,17 +30,8 @@ export class timedelta extends base {
 			weeks,
 		};
 		if (isParams(days)) {
-			args = days as TimedeltaParams;
-		} else if (Math.abs(days as number) > 900) {
-			// we have seconds, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds
-			let totalSeconds = (days as number) ?? 0;
-			args = {};
-			TimedeltaIntervals.forEach((key) => {
-				const multiplier = toSeconds[key as TimedeltaInterval];
-				const value = Math.floor(totalSeconds / multiplier);
-				args[key] = value;
-				totalSeconds -= value * multiplier;
-			});
+			delete args.days;
+			Object.assign(args, days);
 		}
 
 		// Get total seconds from args and then deconstruct into days, seconds, milliseconds

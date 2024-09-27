@@ -1,9 +1,9 @@
 import * as d3 from 'd3-time-format';
-import { TimedeltaIntervals, toSeconds, } from '../models';
+import { TimedeltaIntervals, toSeconds } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
 export class timedelta extends base {
-    constructor(days, seconds, milliseconds, minutes, hours, weeks) {
+    constructor(days = 0, seconds = 0, milliseconds = 0, minutes = 0, hours = 0, weeks = 0) {
         super();
         this.days = 0;
         this.seconds = 0;
@@ -17,18 +17,8 @@ export class timedelta extends base {
             weeks,
         };
         if (isParams(days)) {
-            args = days;
-        }
-        else if (Math.abs(days) > 900) {
-            // we have seconds, let's deconstruct into weeks, days, hours, minutes, seconds, milliseconds
-            let totalSeconds = days ?? 0;
-            args = {};
-            TimedeltaIntervals.forEach((key) => {
-                const multiplier = toSeconds[key];
-                const value = Math.floor(totalSeconds / multiplier);
-                args[key] = value;
-                totalSeconds -= value * multiplier;
-            });
+            delete args.days;
+            Object.assign(args, days);
         }
         // Get total seconds from args and then deconstruct into days, seconds, milliseconds
         // Python does days, seconds, microseconds but JS does not support microsecond precision for Date
@@ -81,5 +71,5 @@ export class timedelta extends base {
     }
 }
 timedelta.min = -86399999913600;
-timedelta.max = 86400000000000;
+timedelta.max = 86399999999999.999;
 timedelta.resolution = 0.001;

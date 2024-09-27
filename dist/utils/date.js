@@ -21,14 +21,6 @@ export function fromordinal(ordinal) {
         dt.timedelta({ days: ordinal - MINYEAR_ORDINAL }).valueOf());
 }
 export function fromisoformat(date_string) {
-    // const formats = ['%Y-%m-%d', '%Y%m%d', '%G-W%V-%u'];
-    // let d: Date | null = null;
-    // for (const format of formats) {
-    // 	d = d3TimeFormat.utcParse(format)(date_string);
-    // 	if (d) {
-    // 		break;
-    // 	}
-    // }
     const d = d3.isoParse(date_string);
     if (d) {
         return dt.date(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate());

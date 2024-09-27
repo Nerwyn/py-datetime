@@ -4,7 +4,7 @@ import { TimeIntervals, toSeconds } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
 export class time extends base {
-    constructor(hour, minute, second, millisecond) {
+    constructor(hour = 0, minute = 0, second = 0, millisecond = 0) {
         super();
         this.hour = 0;
         this.minute = 0;
@@ -17,7 +17,7 @@ export class time extends base {
             millisecond,
         };
         if (isParams(hour)) {
-            args = hour;
+            Object.assign(args, hour);
         }
         TimeIntervals.forEach((field) => {
             args[field] = args[field] || 0;
@@ -36,3 +36,6 @@ export class time extends base {
             this.millisecond * toSeconds.milliseconds);
     }
 }
+time.min = 0;
+time.max = 86399.999;
+time.resolution = 0.001;

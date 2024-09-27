@@ -32,11 +32,19 @@ import {
 	utcfromtimestamp,
 	utcnow,
 } from './utils/datetime';
+import { max as tmax, min as tmin } from './utils/time';
 import {
 	max as tdmax,
 	min as tdmin,
 	resolution as tdresolution,
 } from './utils/timedelta';
+
+const timedelta = (...args: ConstructorParameters<typeof pytimedelta>) =>
+	new pytimedelta(...args);
+
+timedelta.min = tdmin;
+timedelta.max = tdmax;
+timedelta.resolution = tdresolution;
 
 const date = (...args: ConstructorParameters<typeof pydate>) =>
 	new pydate(...args);
@@ -49,15 +57,6 @@ date.fromtimestamp = dfromtimestamp;
 date.fromordinal = dfromordinal;
 date.fromisoformat = fromisoformat;
 date.fromisocalendar = fromisocalendar;
-
-const time = (...args: ConstructorParameters<typeof pytime>) =>
-	new pytime(...args);
-const timedelta = (...args: ConstructorParameters<typeof pytimedelta>) =>
-	new pytimedelta(...args);
-
-timedelta.min = tdmin;
-timedelta.max = tdmax;
-timedelta.resolution = tdresolution;
 
 const datetime = (...args: ConstructorParameters<typeof pydatetime>) =>
 	new pydatetime(...args);
@@ -78,10 +77,17 @@ datetime.fromisoformat = dtfromisoformat;
 datetime.fromisocalendar = dtfromisocalendar;
 datetime.strptime = strptime;
 
+const time = (...args: ConstructorParameters<typeof pytime>) =>
+	new pytime(...args);
+
+time.min = tmin;
+time.max = tmax;
+time.resolution = tdresolution;
+
 const dt = {
-	date,
-	time,
 	timedelta,
+	date,
 	datetime,
+	time,
 };
 export default dt;
