@@ -2,7 +2,7 @@ import assert from 'assert';
 import { equalDates } from '.';
 import dt from '../src/index.ts';
 
-describe('construction', () => {
+describe('constructor', () => {
 	it('should require year, month, and day', () => {
 		equalDates(dt.datetime(2020, 4, 12), new Date(2020, 3, 12));
 		assert.throws(() => dt.datetime(2020, 4));
@@ -38,7 +38,7 @@ describe('construction', () => {
 		);
 	});
 
-	it('should only allow integer numbers', () => {
+	it('should only allow integers', () => {
 		assert.throws(() => dt.datetime(2020, 4, 12, 22.2));
 	});
 

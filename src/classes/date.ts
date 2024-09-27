@@ -16,13 +16,17 @@ export class date extends base {
 
 	constructor(year: number, month: number, day: number) {
 		super();
-		if (year < MINYEAR || year > MAXYEAR) {
+		if (!Number.isInteger(year) || year < MINYEAR || year > MAXYEAR) {
 			throw RangeError(`year ${year} is out of range`);
 		}
-		if (month < 1 || month > 12) {
+		if (!Number.isInteger(month) || month < 1 || month > 12) {
 			throw RangeError(`month ${month} is out of range`);
 		}
-		if (day < 1 || day > new Date(year, month, 0).getDate()) {
+		if (
+			!Number.isInteger(day) ||
+			day < 1 ||
+			day > new Date(year, month, 0).getDate()
+		) {
 			throw RangeError(`day ${day} is out of range for month`);
 		}
 		Object.assign(this, { year, month, day });

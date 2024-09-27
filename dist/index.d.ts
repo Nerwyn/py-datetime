@@ -3,6 +3,7 @@ export * from './models';
 import { date as pydate, datetime as pydatetime, time as pytime, timedelta as pytimedelta } from './classes';
 import { fromordinal as dfromordinal, fromtimestamp as dfromtimestamp, fromisocalendar, fromisoformat, today } from './utils/date';
 import { combine, fromisocalendar as dtfromisocalendar, fromisoformat as dtfromisoformat, fromordinal as dtfromordinal, fromtimestamp as dtfromtimestamp, fromjsdate, now, strptime, utcfromjsdate, utcfromtimestamp, utcnow } from './utils/datetime';
+import { fromisoformat as tfromisoformat } from './utils/time';
 declare const dt: {
     timedelta: {
         (days?: number | Partial<Record<"hours" | "minutes" | "seconds" | "milliseconds" | "weeks" | "days", number>> | undefined, seconds?: number | undefined, milliseconds?: number | undefined, minutes?: number | undefined, hours?: number | undefined, weeks?: number | undefined): pytimedelta;
@@ -46,6 +47,7 @@ declare const dt: {
         min: pytime;
         max: pytime;
         resolution: pytimedelta;
+        fromisoformat: typeof tfromisoformat;
     };
 };
 export default dt;

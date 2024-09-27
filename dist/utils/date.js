@@ -7,23 +7,23 @@ export const max = new date(MAXYEAR, 12, 31);
 export const resolution = new timedelta({ days: 1 });
 export function today() {
     const today = dt.datetime.now();
-    return dt.date(today.year, today.month, today.day);
+    return new date(today.year, today.month, today.day);
 }
 export function fromtimestamp(timestamp) {
     const d = dt.datetime.fromtimestamp(timestamp);
-    return dt.date(d.year, d.month, d.day);
+    return new date(d.year, d.month, d.day);
 }
 export function fromordinal(ordinal) {
     if (ordinal < MINYEAR_ORDINAL || ordinal > MAXYEAR_ORDINAL) {
         throw RangeError(`ordinal ${ordinal} is out of range`);
     }
-    return dt.date.fromtimestamp(dt.date.min.valueOf() +
+    return dt.date.fromtimestamp(min.valueOf() +
         dt.timedelta({ days: ordinal - MINYEAR_ORDINAL }).valueOf());
 }
 export function fromisoformat(date_string) {
     const d = d3.isoParse(date_string);
     if (d) {
-        return dt.date(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
+        return new date(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
     }
     throw SyntaxError('Unable to parse date string');
 }

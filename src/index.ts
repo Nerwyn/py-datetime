@@ -32,7 +32,11 @@ import {
 	utcfromtimestamp,
 	utcnow,
 } from './utils/datetime';
-import { max as tmax, min as tmin } from './utils/time';
+import {
+	fromisoformat as tfromisoformat,
+	max as tmax,
+	min as tmin,
+} from './utils/time';
 import {
 	max as tdmax,
 	min as tdmin,
@@ -83,6 +87,7 @@ const time = (...args: ConstructorParameters<typeof pytime>) =>
 time.min = tmin;
 time.max = tmax;
 time.resolution = tdresolution;
+time.fromisoformat = tfromisoformat;
 
 const dt = {
 	timedelta,

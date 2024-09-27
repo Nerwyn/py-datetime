@@ -53,7 +53,7 @@ export class datetime extends base {
 		for (const arg in args) {
 			if (
 				arg != 'utc' &&
-				!Number.isInteger(args[arg as DatetimeInterval] ?? 0)
+				!Number.isInteger(args[arg as DatetimeInterval])
 			) {
 				throw TypeError(
 					"'float' object cannot be interpreted as an integer",

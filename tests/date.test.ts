@@ -1,6 +1,36 @@
 import assert from 'assert';
 import dt from '../src/index.ts';
 
+describe('constructor', () => {
+	it('should require year, month, and day', () => {
+		assert(dt.date(2020, 4, 12));
+		assert.throws(() => dt.date(2020, 4, undefined as unknown as number));
+		assert.throws(() =>
+			dt.date(
+				2000,
+				undefined as unknown as number,
+				undefined as unknown as number,
+			),
+		);
+	});
+
+	it('should only allow integers', () => {
+		assert.throws(() => dt.date(2020, 4, 3.2));
+		assert.throws(() => dt.date(2020, 4.1, 3));
+		assert.throws(() => dt.date(2020.1, 4, 3));
+	});
+
+	it('should restrict inputs to ranges', () => {
+		assert.throws(() => dt.date(99, 4, 3));
+		assert.throws(() => dt.date(10000, 4, 3));
+		assert.throws(() => dt.date(2020, 0, 3));
+		assert.throws(() => dt.date(2020, 13, 3));
+		assert.throws(() => dt.date(2020, 4, 0));
+		assert.throws(() => dt.date(2020, 4, 32));
+		assert.throws(() => dt.date(2020, 2, 30));
+	});
+});
+
 describe('today', () => {
 	it('should be equal to a datetime with no time information', () => {
 		const now = dt.datetime.now();

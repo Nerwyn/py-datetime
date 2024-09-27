@@ -1,6 +1,6 @@
 import * as d3 from 'd3-time-format';
 import dt from '..';
-import { TimeIntervals, toSeconds } from '../models';
+import { toSeconds } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
 export class time extends base {
@@ -19,9 +19,23 @@ export class time extends base {
         if (isParams(hour)) {
             Object.assign(args, hour);
         }
-        TimeIntervals.forEach((field) => {
-            args[field] = args[field] || 0;
-        });
+        for (const arg in args) {
+            if (!Number.isInteger(args[arg])) {
+                throw TypeError("'float' object cannot be interpreted as an integer");
+            }
+        }
+        if ((args.hour ?? 0) < 0 || (args.hour ?? 0) > 23) {
+            throw RangeError('hour must be in 0..23');
+        }
+        if ((args.minute ?? 0) < 0 || (args.minute ?? 0) > 59) {
+            throw RangeError('minute must be in 0..59');
+        }
+        if ((args.second ?? 0) < 0 || (args.second ?? 0) > 59) {
+            throw RangeError('second must be in 0..59');
+        }
+        if ((args.millisecond ?? 0) < 0 || (args.millisecond ?? 0) > 999) {
+            throw RangeError('millisecond must be in 0..999');
+        }
         Object.assign(this, args);
     }
     str() {
