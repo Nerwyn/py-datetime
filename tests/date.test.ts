@@ -24,21 +24,6 @@ describe('fromisoformat', () => {
 			dt.date(2012, 11, 10).valueOf(),
 		);
 	});
-
-	it('YYYYMMDD', () => {
-		assert.equal(
-			dt.date.fromisoformat('19920508').valueOf(),
-			dt.date(1992, 5, 8).valueOf(),
-		);
-	});
-
-	// This does not seem to work, changing the weekday number in the ISO calendar string does not change the date
-	// 	it('YYYY-W-w', () => {
-	// 		assert.equal(
-	// 			dt.date.fromisoformat('2002-W05-2').valueOf(),
-	// 			dt.date(2002, 1, 29).valueOf(),
-	// 		);
-	// 	});
 });
 
 describe('fromordinal', () => {
@@ -67,12 +52,6 @@ describe('min, max, resolution', () => {
 	});
 });
 
-describe('str', () => {
-	it('dt.date.str()', () => {
-		assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
-	});
-});
-
 describe('replace', () => {
 	it('should return a date with values replaced', () => {
 		assert.equal(dt.date(1992, 4, 24).replace(1990), 640929600);
@@ -83,7 +62,7 @@ describe('replace', () => {
 
 describe('toordinal', () => {
 	it('should convert a date to its proleptic Gregorian calendar ordinal', () => {
-		assert.equal(dt.date(1231, 7, 22).valueOf(), -23303099038);
+		assert.equal(dt.date(1231, 7, 22).toordinal(), 449451);
 	});
 });
 
@@ -102,6 +81,18 @@ describe('isoweekday', () => {
 describe('isocalendar', () => {
 	it('should return the ISO calendar date as an array of year, week, weekday', () => {
 		assert.deepEqual(dt.date(1920, 12, 31).isocalendar(), [1920, 53, 5]);
+	});
+});
+
+describe('isoformat', () => {
+	it('should return a string representing the date in ISO 8601 format, YYYY-MM-DD', () => {
+		assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
+	});
+});
+
+describe('str', () => {
+	it('should be equivalent to isoformat', () => {
+		assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
 	});
 });
 

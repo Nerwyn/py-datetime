@@ -1,6 +1,6 @@
-import * as d3TimeFormat from 'd3-time-format';
+import * as d3 from 'd3-time-format';
 import { date, time } from '.';
-import { DatetimeIntervals } from '../models';
+import { DatetimeIntervals, } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
 export class datetime extends base {
@@ -15,27 +15,9 @@ export class datetime extends base {
         this.millisecond = 0;
         this.utc = false;
         let args = {};
-        this.utc = utc ?? false;
-        if (typeof year == 'number' && !month && !day) {
-            // while a dt.datetime(2020) is perfectly valid, it's quite unlikely.
-            // much more unlikely than having gotten an epoch passed in. convert that to date
-            year = new Date(year * 1000);
-        }
-        if (year instanceof Date) {
-            // JS Date
-            args = {
-                year: year.getFullYear(),
-                month: year.getMonth() + 1,
-                day: year.getDate(),
-                hour: year.getHours(),
-                minute: year.getMinutes(),
-                second: year.getSeconds(),
-                millisecond: year.getMilliseconds(),
-            };
-        }
-        else if (isParams(year)) {
-            // datetime or date
+        if (isParams(year)) {
             args = year;
+            this.utc = args.utc ?? false;
         }
         else {
             args = {
@@ -47,6 +29,7 @@ export class datetime extends base {
                 second,
                 millisecond,
             };
+            this.utc = utc ?? false;
         }
         if (!args.year || !args.month || !args.day) {
             throw SyntaxError('Missing required argument year, month, or day');
@@ -58,8 +41,7 @@ export class datetime extends base {
         }
         Object.assign(this, args);
     }
-    replace(year, month, day, hour, minute, second, millisecond) {
-        // returns new date with updated values
+    replace(year = this.year, month = this.month, day = this.day, hour = this.hour, minute = this.minute, second = this.second, millisecond = this.millisecond) {
         let args = {};
         if (isParams(year)) {
             args = year;
@@ -75,26 +57,26 @@ export class datetime extends base {
                 millisecond,
             };
         }
-        const newTs = new datetime(this);
-        Object.entries(args).forEach(([key, val]) => {
-            if (val) {
-                newTs[key] = val;
-            }
+        return new datetime({
+            year: args.year ?? this.year,
+            month: args.month ?? this.month,
+            day: args.day ?? this.day,
+            hour: args.hour ?? this.hour,
+            minute: args.minute ?? this.minute,
+            second: args.second ?? this.second,
+            millisecond: args.millisecond ?? this.millisecond,
         });
-        return newTs;
     }
-    get jsDate() {
-        if (this.utc) {
-            return new Date(this.valueOf() * 1000);
-        }
-        else {
-            return new Date(this.year, this.month - 1, this.day || 1, this.hour || 0, this.minute || 0, this.second || 0, this.millisecond || 0);
-        }
+    date() {
+        return new date(this.year, this.month, this.day);
     }
-    str() {
-        return this.strftime(`%Y-%m-%d %H:%M:%S${this.millisecond ? '.%f' : ''}`);
+    time() {
+        return new time(this.hour, this.minute, this.second, this.millisecond);
     }
-    valueOf() {
+    toordinal() {
+        return this.date().toordinal();
+    }
+    timestamp() {
         let value;
         if (this.utc) {
             value = Date.UTC(this.year, this.month - 1, this.day || 1, this.hour || 0, this.minute || 0, this.second || 0, this.millisecond || 0);
@@ -104,28 +86,82 @@ export class datetime extends base {
         }
         return value / 1000;
     }
-    strftime(format) {
-        if (this.utc) {
-            return d3TimeFormat.utcFormat(format)(this.jsDate);
-        }
-        else {
-            return d3TimeFormat.timeFormat(format)(this.jsDate);
-        }
-    }
-    time() {
-        return new time(this.hour, this.minute, this.second, this.millisecond);
-    }
-    date() {
-        return new date(this.year, this.month, this.day);
-    }
     weekday() {
-        // javascript week starts on sunday, while python one starts on monday
         return this.date().weekday();
     }
     isoweekday() {
         return this.weekday() + 1;
     }
-    timestamp() {
-        return this.valueOf();
+    isocalendar() {
+        const [year, week, weekday] = d3
+            .utcFormat('%G-%V-%u')(this.jsDate)
+            .split('-');
+        return [Number(year), Number(week), Number(weekday)];
+    }
+    isoformat(sep = 'T', timespec = 'auto') {
+        let args;
+        if (isParams(sep)) {
+            // args = sep as ISOFormatParams;
+            args = {
+                sep: 'T',
+                timespec: 'auto',
+                ...sep,
+            };
+        }
+        else {
+            args = {
+                sep: sep,
+                timespec,
+            };
+        }
+        let format;
+        switch (args.timespec) {
+            case 'hours':
+                format = `%Y-%m-%d${args.sep}%H`;
+                break;
+            case 'minutes':
+                format = `%Y-%m-%d${args.sep}%H:%M`;
+                break;
+            case 'seconds':
+                format = `%Y-%m-%d${args.sep}%H:%M:%S`;
+                break;
+            case 'milliseconds':
+                format = `%Y-%m-%d${args.sep}%H:%M:%S.%f`;
+                break;
+            case 'auto':
+            default:
+                format = `%Y-%m-%d${args.sep}%H:%M:%S${this.millisecond ? '.%f' : ''}`;
+                break;
+        }
+        return this.strftime(format);
+    }
+    str() {
+        // TODO change all instances of this to toString() and test
+        return this.isoformat(' ');
+    }
+    ctime() {
+        return d3.timeFormat('%a %b %H:%M:%S %Y')(this.jsDate);
+    }
+    strftime(format) {
+        if (this.utc) {
+            return d3.utcFormat(format)(this.jsDate);
+        }
+        else {
+            return d3.timeFormat(format)(this.jsDate);
+        }
+    }
+    valueOf() {
+        return this.timestamp();
+    }
+    get jsDate() {
+        if (this.utc) {
+            return new Date(this.valueOf() * 1000);
+        }
+        else {
+            return new Date(this.year, this.month - 1, this.day || 1, this.hour || 0, this.minute || 0, this.second || 0, this.millisecond || 0);
+        }
     }
 }
+datetime.min = -59011416000;
+datetime.max = 253402300799.999;
+datetime.resolution = 0.001;

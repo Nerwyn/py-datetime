@@ -1,4 +1,4 @@
-import * as d3TimeFormat from 'd3-time-format';
+import * as d3 from 'd3-time-format';
 import dt from '..';
 import { TimeIntervals, toSeconds } from '../models';
 import { isParams } from '../utils/utils';
@@ -27,7 +27,7 @@ export class time extends base {
     str() {
         // we have to set the date to today to avoid any daylight saving nonsense
         const ts = dt.datetime.combine(dt.datetime.now(), this);
-        return d3TimeFormat.timeFormat(`%H:%M:%S${this.millisecond ? '.%f' : ''}`)(new Date(ts.valueOf() * 1000));
+        return d3.timeFormat(`%H:%M:%S${this.millisecond ? '.%f' : ''}`)(new Date(ts.valueOf() * 1000));
     }
     valueOf() {
         return (this.hour * toSeconds.hours +

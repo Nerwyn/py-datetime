@@ -1,8 +1,9 @@
-import * as d3TimeFormat from 'd3-time-format';
+import * as d3 from 'd3-time-format';
 import { toSeconds } from '../models';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
 import { base } from './base';
+import { timedelta } from './timedelta';
 export class date extends base {
     constructor(year, month, day) {
         super();
@@ -20,12 +21,6 @@ export class date extends base {
         }
         Object.assign(this, { year, month, day });
     }
-    get jsDate() {
-        return new Date(this.year, this.month - 1, this.day);
-    }
-    str() {
-        return d3TimeFormat.timeFormat('%Y-%m-%d')(this.jsDate);
-    }
     replace(year = this.year, month = this.month, day = this.day) {
         let args;
         if (isParams(year)) {
@@ -41,7 +36,8 @@ export class date extends base {
         return new date(args.year ?? this.year, args.month ?? this.month, args.day ?? this.day);
     }
     toordinal() {
-        return this.valueOf() / toSeconds.days;
+        return Math.floor((this.valueOf() + new timedelta({ days: 719163 }).total_seconds()) /
+            toSeconds.days);
     }
     weekday() {
         // javascript week starts on sunday, while python one starts on monday
@@ -51,19 +47,28 @@ export class date extends base {
         return this.weekday() + 1;
     }
     isocalendar() {
-        const [year, week, weekday] = d3TimeFormat
+        const [year, week, weekday] = d3
             .utcFormat('%G-%V-%u')(this.jsDate)
             .split('-');
         return [Number(year), Number(week), Number(weekday)];
     }
+    isoformat() {
+        return d3.timeFormat('%Y-%m-%d')(this.jsDate);
+    }
+    str() {
+        return this.isoformat();
+    }
     ctime() {
-        return d3TimeFormat.timeFormat('%a %b 00:00:00 %Y')(this.jsDate);
+        return d3.timeFormat('%a %b 00:00:00 %Y')(this.jsDate);
     }
     strftime(format) {
-        return d3TimeFormat.timeFormat(format)(this.jsDate);
+        return d3.timeFormat(format)(this.jsDate);
     }
     valueOf() {
         return this.jsDate.getTime() / 1000;
+    }
+    get jsDate() {
+        return new Date(this.year, this.month - 1, this.day);
     }
 }
 date.min = -2177434800;

@@ -1,4 +1,4 @@
-import * as d3TimeFormat from 'd3-time-format';
+import * as d3 from 'd3-time-format';
 import {
 	TimedeltaInterval,
 	TimedeltaIntervals,
@@ -78,7 +78,7 @@ export class timedelta extends base {
 			this.days > 0
 				? `${this.days} day${this.days > 1 ? 's,' : ','}`
 				: '';
-		const timeString = d3TimeFormat.utcFormat(
+		const timeString = d3.utcFormat(
 			`%-H:%M:%S${this.milliseconds ? '.%f' : ''}`,
 		)(new Date(this.valueOf() * 1000));
 		return `${dayString} ${timeString}`.trim();
@@ -110,10 +110,7 @@ export class timedelta extends base {
 		);
 	}
 
-	totalSeconds() {
-		return this.valueOf();
-	}
 	total_seconds() {
-		return this.totalSeconds();
+		return this.valueOf();
 	}
 }

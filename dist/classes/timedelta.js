@@ -1,4 +1,4 @@
-import * as d3TimeFormat from 'd3-time-format';
+import * as d3 from 'd3-time-format';
 import { TimedeltaIntervals, toSeconds, } from '../models';
 import { isParams } from '../utils/utils';
 import { base } from './base';
@@ -52,7 +52,7 @@ export class timedelta extends base {
         const dayString = this.days > 0
             ? `${this.days} day${this.days > 1 ? 's,' : ','}`
             : '';
-        const timeString = d3TimeFormat.utcFormat(`%-H:%M:%S${this.milliseconds ? '.%f' : ''}`)(new Date(this.valueOf() * 1000));
+        const timeString = d3.utcFormat(`%-H:%M:%S${this.milliseconds ? '.%f' : ''}`)(new Date(this.valueOf() * 1000));
         return `${dayString} ${timeString}`.trim();
     }
     abs() {
@@ -76,11 +76,8 @@ export class timedelta extends base {
             this.seconds +
             this.milliseconds * toSeconds.milliseconds);
     }
-    totalSeconds() {
-        return this.valueOf();
-    }
     total_seconds() {
-        return this.totalSeconds();
+        return this.valueOf();
     }
 }
 timedelta.min = -86399999913600;

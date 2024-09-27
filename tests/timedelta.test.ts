@@ -5,7 +5,7 @@ import dt from '../src/index.ts';
 describe('datetime math', () => {
 	it('dt.datetime - dt.timedelta(days) = dt.datetime', () => {
 		equalDates(
-			dt.datetime(
+			dt.datetime.fromtimestamp(
 				dt.datetime(2020, 3, 12).valueOf() - dt.timedelta(3).valueOf(),
 			),
 			dt.datetime(2020, 3, 9),
@@ -17,7 +17,7 @@ describe('datetime math', () => {
 		// dt.timedelta is day, sec, milli, minute, hour
 		// the argument order in timedelta is not random - days + seconds is the main usecase
 		equalDates(
-			dt.datetime(
+			dt.datetime.fromtimestamp(
 				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
 					dt.timedelta(1, 2, 3, 4, 5).valueOf(),
 			),
@@ -27,7 +27,7 @@ describe('datetime math', () => {
 
 	it('dt.datetime - dt.timedelta({seconds: 10})', () => {
 		equalDates(
-			dt.datetime(
+			dt.datetime.fromtimestamp(
 				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
 					dt.timedelta({ seconds: 10 }).valueOf(),
 			),
@@ -37,7 +37,7 @@ describe('datetime math', () => {
 
 	it('dt.datetime - dt.timedelta({hours: 2.4})', () => {
 		equalDates(
-			dt.datetime(
+			dt.datetime.fromtimestamp(
 				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
 					dt.timedelta({ hours: 2.4 }).valueOf(),
 			),
@@ -47,7 +47,7 @@ describe('datetime math', () => {
 
 	it('dt.datetime - dt.timedelta({seconds: 2.4})', () => {
 		equalDates(
-			dt.datetime(
+			dt.datetime.fromtimestamp(
 				dt.datetime(2020, 3, 12, 10, 10, 10, 10).valueOf() -
 					dt.timedelta({ seconds: 2.4 }).valueOf(),
 			),
@@ -58,7 +58,7 @@ describe('datetime math', () => {
 	it('dt.datetime - dt.timedelta({weeks: 2})', () => {
 		// Avoid testing time differences that cross over daylight savings start/end to save American developers a lot of headache
 		equalDates(
-			dt.datetime(
+			dt.datetime.fromtimestamp(
 				dt.datetime(2020, 4, 15).valueOf() -
 					dt.timedelta({ weeks: 2 }).valueOf(),
 			),

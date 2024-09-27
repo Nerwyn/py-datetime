@@ -1,13 +1,14 @@
-import * as d3TimeFormat from 'd3-time-format';
+import * as d3 from 'd3-time-format';
 import { DateParams, DatetimeParams, toSeconds } from '../models';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
 import { base } from './base';
+import { timedelta } from './timedelta';
 
 export class date extends base {
-	static readonly min = -2177434800;
-	static readonly max = 253402232400;
-	static readonly resolution = 86400;
+	static readonly min: number = -2177434800;
+	static readonly max: number = 253402232400;
+	static readonly resolution: number = 86400;
 
 	readonly year: number = 1;
 	readonly month: number = 1;
@@ -25,14 +26,6 @@ export class date extends base {
 			throw RangeError(`day ${day} is out of range for month`);
 		}
 		Object.assign(this, { year, month, day });
-	}
-
-	get jsDate() {
-		return new Date(this.year!, this.month! - 1, this.day);
-	}
-
-	str() {
-		return d3TimeFormat.timeFormat('%Y-%m-%d')(this.jsDate);
 	}
 
 	replace(
@@ -58,7 +51,10 @@ export class date extends base {
 	}
 
 	toordinal() {
-		return this.valueOf() / toSeconds.days;
+		return Math.floor(
+			(this.valueOf() + new timedelta({ days: 719163 }).total_seconds()) /
+				toSeconds.days,
+		);
 	}
 
 	weekday() {
@@ -71,21 +67,33 @@ export class date extends base {
 	}
 
 	isocalendar() {
-		const [year, week, weekday] = d3TimeFormat
+		const [year, week, weekday] = d3
 			.utcFormat('%G-%V-%u')(this.jsDate)
 			.split('-');
 		return [Number(year), Number(week), Number(weekday)];
 	}
 
+	isoformat() {
+		return d3.timeFormat('%Y-%m-%d')(this.jsDate);
+	}
+
+	str() {
+		return this.isoformat();
+	}
+
 	ctime() {
-		return d3TimeFormat.timeFormat('%a %b 00:00:00 %Y')(this.jsDate);
+		return d3.timeFormat('%a %b 00:00:00 %Y')(this.jsDate);
 	}
 
 	strftime(format: string) {
-		return d3TimeFormat.timeFormat(format)(this.jsDate);
+		return d3.timeFormat(format)(this.jsDate);
 	}
 
 	valueOf() {
 		return this.jsDate.getTime() / 1000;
+	}
+
+	get jsDate() {
+		return new Date(this.year!, this.month! - 1, this.day);
 	}
 }

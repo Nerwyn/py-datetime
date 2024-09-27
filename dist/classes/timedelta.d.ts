@@ -12,6 +12,5 @@ export declare class timedelta extends base {
     abs(): number;
     repr(): string;
     valueOf(): number;
-    totalSeconds(): number;
     total_seconds(): number;
 }
