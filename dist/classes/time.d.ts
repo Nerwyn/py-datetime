@@ -11,7 +11,7 @@ export declare class time extends base {
     constructor(hour?: number | TimeParams, minute?: number, second?: number, millisecond?: number);
     replace(hour?: number | TimeParams, minute?: number, second?: number, millisecond?: number): time;
     isoformat(timespec?: TimeSpec): string;
-    str(): string;
+    toString(): string;
     strftime(format: string): string;
     valueOf(): number;
     get jsDate(): Date;

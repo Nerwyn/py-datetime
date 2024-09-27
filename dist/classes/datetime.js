@@ -146,8 +146,7 @@ export class datetime extends base {
         }
         return this.strftime(format);
     }
-    str() {
-        // TODO change all instances of this to toString() and test
+    toString() {
         return this.isoformat(' ');
     }
     ctime() {

@@ -98,15 +98,17 @@ describe('min, max, resolution', () => {
 	});
 });
 
-describe('str', () => {
+describe('toString', () => {
 	it('should include days if more than one day', () => {
-		assert.equal(dt.timedelta({ weeks: 2 }).str(), '14 days, 0:00:00');
-		assert.equal(dt.timedelta({ hours: 25 }).str(), '1 day, 1:00:00');
+		assert.equal(dt.timedelta({ weeks: 2 }).toString(), '14 days, 0:00:00');
+		assert.equal(dt.timedelta({ hours: 25 }).toString(), '1 day, 1:00:00');
 	});
 
 	it('should not include days if less than one day', () => {
 		assert.equal(
-			dt.timedelta({ hours: 12, seconds: 24, milliseconds: 13 }).str(),
+			dt
+				.timedelta({ hours: 12, seconds: 24, milliseconds: 13 })
+				.toString(),
 			'12:00:24.013000',
 		);
 		assert.equal(
@@ -117,13 +119,16 @@ describe('str', () => {
 					seconds: 21,
 					milliseconds: 120,
 				})
-				.str(),
+				.toString(),
 			'23:22:21.120000',
 		);
 	});
 
 	it('should work with decimal values', () => {
-		assert.equal(dt.timedelta({ seconds: 2.4 }).str(), '0:00:02.400000');
-		assert.equal(dt.timedelta({ days: 2.2 }).str(), '2 days, 4:48:00');
+		assert.equal(
+			dt.timedelta({ seconds: 2.4 }).toString(),
+			'0:00:02.400000',
+		);
+		assert.equal(dt.timedelta({ days: 2.2 }).toString(), '2 days, 4:48:00');
 	});
 });

@@ -55,7 +55,7 @@ export class date extends base {
     isoformat() {
         return d3.utcFormat('%Y-%m-%d')(this.jsDate);
     }
-    str() {
+    toString() {
         return this.isoformat();
     }
     ctime() {

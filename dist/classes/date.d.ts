@@ -14,7 +14,7 @@ export declare class date extends base {
     isoweekday(): number;
     isocalendar(): number[];
     isoformat(): string;
-    str(): string;
+    toString(): string;
     ctime(): string;
     strftime(format: string): string;
     valueOf(): number;

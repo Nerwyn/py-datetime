@@ -80,7 +80,7 @@ export class date extends base {
 		return d3.utcFormat('%Y-%m-%d')(this.jsDate);
 	}
 
-	str() {
+	toString() {
 		return this.isoformat();
 	}
 

@@ -102,7 +102,7 @@ export class time extends base {
 		return this.strftime(format);
 	}
 
-	str() {
+	toString() {
 		return this.isoformat();
 	}
 

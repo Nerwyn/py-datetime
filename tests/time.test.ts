@@ -80,9 +80,9 @@ describe('isoformat', () => {
 	});
 });
 
-describe('str', () => {
+describe('toString', () => {
 	it('should be equivalent to isoformat', () => {
-		assert.equal(dt.time(5, 6, 7, 8).str(), '05:06:07.008000');
-		assert.equal(dt.time(5, 6, 7).str(), '05:06:07');
+		assert.equal(dt.time(5, 6, 7, 8).toString(), '05:06:07.008000');
+		assert.equal(dt.time(5, 6, 7).toString(), '05:06:07');
 	});
 });

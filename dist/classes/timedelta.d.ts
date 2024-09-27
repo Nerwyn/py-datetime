@@ -8,9 +8,7 @@ export declare class timedelta extends base {
     readonly seconds: number;
     readonly milliseconds: number;
     constructor(days?: number | TimedeltaParams, seconds?: number, milliseconds?: number, minutes?: number, hours?: number, weeks?: number);
-    str(): string;
-    abs(): number;
-    repr(): string;
-    valueOf(): number;
     total_seconds(): number;
+    valueOf(): number;
+    toString(): string;
 }

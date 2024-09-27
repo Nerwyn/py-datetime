@@ -59,7 +59,19 @@ export class timedelta extends base {
 		this.seconds = totalSeconds - this.days * toSeconds.days;
 	}
 
-	str() {
+	total_seconds() {
+		return (
+			this.days * toSeconds.days +
+			this.seconds +
+			this.milliseconds * toSeconds.milliseconds
+		);
+	}
+
+	valueOf() {
+		return this.total_seconds();
+	}
+
+	toString() {
 		const dayString =
 			this.days > 0
 				? `${this.days} day${this.days > 1 ? 's,' : ','}`
@@ -68,35 +80,5 @@ export class timedelta extends base {
 			`%-H:%M:%S${this.milliseconds ? '.%f' : ''}`,
 		)(new Date(this.valueOf() * 1000));
 		return `${dayString} ${timeString}`.trim();
-	}
-
-	abs() {
-		return Math.abs(this.valueOf());
-	}
-
-	repr() {
-		const units: string[] = [];
-		if (this.days) {
-			units.push(`days=${this.days}`);
-		}
-		if (this.seconds) {
-			units.push(`seconds=${this.seconds}`);
-		}
-		if (this.milliseconds) {
-			units.push(`milliseconds=${this.milliseconds}`);
-		}
-		return `datetime.timedelta(${units.join(', ')})`;
-	}
-
-	valueOf() {
-		return (
-			this.days * toSeconds.days +
-			this.seconds +
-			this.milliseconds * toSeconds.milliseconds
-		);
-	}
-
-	total_seconds() {
-		return this.valueOf();
 	}
 }

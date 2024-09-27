@@ -274,14 +274,14 @@ describe('ctime', () => {
 	});
 });
 
-describe('str', () => {
+describe('toString', () => {
 	it('should return isoformat with a space separator', () => {
 		assert.equal(
-			dt.datetime(2020, 3, 2, 5, 6, 7, 8).str(),
+			dt.datetime(2020, 3, 2, 5, 6, 7, 8).toString(),
 			'2020-03-02 05:06:07.008000',
 		);
 		assert.equal(
-			dt.datetime(2020, 3, 2, 5, 6, 7).str(),
+			dt.datetime(2020, 3, 2, 5, 6, 7).toString(),
 			'2020-03-02 05:06:07',
 		);
 	});

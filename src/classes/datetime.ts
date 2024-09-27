@@ -205,8 +205,7 @@ export class datetime extends base {
 		return this.strftime(format);
 	}
 
-	str() {
-		// TODO change all instances of this to toString() and test
+	toString() {
 		return this.isoformat(' ');
 	}
 
@@ -231,8 +230,8 @@ export class datetime extends base {
 			return new Date(this.valueOf() * 1000);
 		} else {
 			return new Date(
-				this.year!,
-				this.month! - 1,
+				this.year,
+				this.month - 1,
 				this.day || 1,
 				this.hour || 0,
 				this.minute || 0,

@@ -23,7 +23,7 @@ export declare class datetime extends base {
     isoweekday(): number;
     isocalendar(): number[];
     isoformat(sep?: string | ISOFormatParams, timespec?: TimeSpec): string;
-    str(): string;
+    toString(): string;
     ctime(): string;
     strftime(format: string): string;
     valueOf(): number;

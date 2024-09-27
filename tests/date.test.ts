@@ -116,13 +116,13 @@ describe('isocalendar', () => {
 
 describe('isoformat', () => {
 	it('should return a string representing the date in ISO 8601 format, YYYY-MM-DD', () => {
-		assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
+		assert.equal(dt.date(2020, 3, 2).isoformat(), '2020-03-02');
 	});
 });
 
-describe('str', () => {
+describe('toString', () => {
 	it('should be equivalent to isoformat', () => {
-		assert.equal(dt.date(2020, 3, 2).str(), '2020-03-02');
+		assert.equal(dt.date(2020, 3, 2).toString(), '2020-03-02');
 	});
 });
 
