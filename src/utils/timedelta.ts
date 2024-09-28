@@ -12,5 +12,5 @@ export const max = new timedelta({
 	milliseconds: 999,
 });
 
-/** The smallest possible difference between non-equal timedelta objects */
+/** The smallest possible difference between non-equal timedelta, datetime, or time objects */
 export const resolution = new timedelta({ milliseconds: 1 });

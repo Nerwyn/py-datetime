@@ -356,7 +356,7 @@ Return the UTC `datetime` corresponding to the POSIX timestamp.
 
 ### _static_method_ dt.datetime.**fromjsdate(**_jsdate_**)**
 
-Return the localdate and time corresponding to the JS Date object.
+Return the local date and time corresponding to the JS Date object.
 
 ### _static_method_ dt.datetime.**utcfromjsdate(**_jsdate_**)**
 

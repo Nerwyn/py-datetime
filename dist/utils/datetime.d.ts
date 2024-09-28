@@ -44,7 +44,7 @@ export declare function fromtimestamp(timestamp: number): datetime;
  */
 export declare function utcfromtimestamp(timestamp: number): datetime;
 /**
- * Return the localdate and time corresponding to the JS Date object.
+ * Return the local date and time corresponding to the JS Date object.
  * @param {Date} jsdate
  * @returns {datetime}
  */
