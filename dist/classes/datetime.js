@@ -2,10 +2,8 @@ import * as d3 from 'd3-time-format';
 import { date, time } from '.';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
-import { base } from './base';
-export class datetime extends base {
+export class datetime {
     constructor(year, month, day, hour = 0, minute = 0, second = 0, millisecond = 0, utc = false) {
-        super();
         this.year = 1970;
         this.month = 1;
         this.day = 1;

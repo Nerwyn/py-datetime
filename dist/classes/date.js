@@ -2,11 +2,9 @@ import * as d3 from 'd3-time-format';
 import { toSeconds } from '../models';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
-import { base } from './base';
 import { timedelta } from './timedelta';
-export class date extends base {
+export class date {
     constructor(year, month, day) {
-        super();
         this.year = 1970;
         this.month = 1;
         this.day = 1;
@@ -36,7 +34,7 @@ export class date extends base {
         return new date(args.year ?? this.year, args.month ?? this.month, args.day ?? this.day);
     }
     toordinal() {
-        return Math.floor((this.valueOf() + new timedelta({ days: 719163 }).total_seconds()) /
+        return Math.trunc((this.valueOf() + new timedelta({ days: 719163 }).total_seconds()) /
             toSeconds.days);
     }
     weekday() {

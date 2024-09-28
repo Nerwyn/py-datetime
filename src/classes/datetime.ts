@@ -8,9 +8,8 @@ import {
 } from '../models';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
-import { base } from './base';
 
-export class datetime extends base {
+export class datetime {
 	static readonly min: number = -59011416000;
 	static readonly max: number = 253402300799.999;
 	static readonly resolution: number = 0.001;
@@ -34,7 +33,6 @@ export class datetime extends base {
 		millisecond: number = 0,
 		utc: boolean = false,
 	) {
-		super();
 		const args: DatetimeParams = {
 			year: year as number,
 			month,

@@ -1,6 +1,5 @@
 import { TimeParams, TimeSpec } from '../models';
-import { base } from './base';
-export declare class time extends base {
+export declare class time {
     static readonly min: number;
     static readonly max: number;
     static readonly resolution: number;

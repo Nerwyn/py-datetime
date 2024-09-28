@@ -2,10 +2,9 @@ import * as d3 from 'd3-time-format';
 import { DateParams, DatetimeParams, toSeconds } from '../models';
 import { MAXYEAR, MINYEAR } from '../utils/datetime';
 import { isParams } from '../utils/utils';
-import { base } from './base';
 import { timedelta } from './timedelta';
 
-export class date extends base {
+export class date {
 	static readonly min: number = -2177434800;
 	static readonly max: number = 253402232400;
 	static readonly resolution: number = 86400;
@@ -15,7 +14,6 @@ export class date extends base {
 	readonly day: number = 1;
 
 	constructor(year: number, month: number, day: number) {
-		super();
 		if (!Number.isInteger(year) || year < MINYEAR || year > MAXYEAR) {
 			throw RangeError(`year ${year} is out of range`);
 		}
@@ -54,7 +52,7 @@ export class date extends base {
 	}
 
 	toordinal() {
-		return Math.floor(
+		return Math.trunc(
 			(this.valueOf() + new timedelta({ days: 719163 }).total_seconds()) /
 				toSeconds.days,
 		);

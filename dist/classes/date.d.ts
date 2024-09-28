@@ -1,6 +1,5 @@
 import { DateParams } from '../models';
-import { base } from './base';
-export declare class date extends base {
+export declare class date {
     static readonly min: number;
     static readonly max: number;
     static readonly resolution: number;

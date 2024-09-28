@@ -1,9 +1,8 @@
 import * as d3 from 'd3-time-format';
 import { TimedeltaIntervals, TimedeltaParams, toSeconds } from '../models';
 import { isParams } from '../utils/utils';
-import { base } from './base';
 
-export class timedelta extends base {
+export class timedelta {
 	static readonly min: number = -86399999913600;
 	static readonly max: number = 86399999999999.999;
 	static readonly resolution: number = 0.001;
@@ -20,7 +19,6 @@ export class timedelta extends base {
 		hours: number = 0,
 		weeks: number = 0,
 	) {
-		super();
 		let args: TimedeltaParams = {
 			days: days as number,
 			seconds,
@@ -49,14 +47,20 @@ export class timedelta extends base {
 
 		if (totalSeconds.toString().includes('.')) {
 			// To avoid floating point imprecision errors
-			this.milliseconds = Math.floor(
-				parseFloat(`0.${totalSeconds.toString().split('.')[1]}`) /
+			const totalSecondsString = totalSeconds.toString();
+			this.milliseconds = Math.trunc(
+				parseFloat(`0.${totalSecondsString.split('.')[1]}`) /
 					toSeconds.milliseconds,
 			);
-			totalSeconds = Math.floor(totalSeconds);
+			if (totalSecondsString.startsWith('-')) {
+				this.milliseconds *= -1;
+			}
+			totalSeconds = Math.trunc(totalSeconds);
 		}
-		this.days = Math.floor(totalSeconds / toSeconds.days);
+		this.days = Math.trunc(totalSeconds / toSeconds.days);
+		this.days = this.days || 0;
 		this.seconds = totalSeconds - this.days * toSeconds.days;
+		this.seconds = this.seconds || 0;
 	}
 
 	total_seconds() {

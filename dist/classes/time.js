@@ -1,10 +1,8 @@
 import * as d3 from 'd3-time-format';
 import { toSeconds } from '../models';
 import { isParams } from '../utils/utils';
-import { base } from './base';
-export class time extends base {
+export class time {
     constructor(hour = 0, minute = 0, second = 0, millisecond = 0) {
-        super();
         this.hour = 0;
         this.minute = 0;
         this.second = 0;

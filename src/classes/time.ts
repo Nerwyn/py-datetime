@@ -1,9 +1,8 @@
 import * as d3 from 'd3-time-format';
 import { TimeInterval, TimeParams, TimeSpec, toSeconds } from '../models';
 import { isParams } from '../utils/utils';
-import { base } from './base';
 
-export class time extends base {
+export class time {
 	static readonly min: number = 0;
 	static readonly max: number = 86399.999;
 	static readonly resolution: number = 0.001;
@@ -19,7 +18,6 @@ export class time extends base {
 		second: number = 0,
 		millisecond: number = 0,
 	) {
-		super();
 		let args: TimeParams = {
 			hour: hour as number,
 			minute,

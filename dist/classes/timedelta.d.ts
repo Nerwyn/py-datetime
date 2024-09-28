@@ -1,6 +1,5 @@
 import { TimedeltaParams } from '../models';
-import { base } from './base';
-export declare class timedelta extends base {
+export declare class timedelta {
     static readonly min: number;
     static readonly max: number;
     static readonly resolution: number;

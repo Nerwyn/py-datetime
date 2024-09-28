@@ -1,7 +1,6 @@
 import { date, time } from '.';
 import { DatetimeParams, ISOFormatParams, TimeSpec } from '../models';
-import { base } from './base';
-export declare class datetime extends base {
+export declare class datetime {
     static readonly min: number;
     static readonly max: number;
     static readonly resolution: number;

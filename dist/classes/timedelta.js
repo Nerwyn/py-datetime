@@ -1,10 +1,8 @@
 import * as d3 from 'd3-time-format';
 import { TimedeltaIntervals, toSeconds } from '../models';
 import { isParams } from '../utils/utils';
-import { base } from './base';
-export class timedelta extends base {
+export class timedelta {
     constructor(days = 0, seconds = 0, milliseconds = 0, minutes = 0, hours = 0, weeks = 0) {
-        super();
         this.days = 0;
         this.seconds = 0;
         this.milliseconds = 0;
@@ -31,12 +29,18 @@ export class timedelta extends base {
         }
         if (totalSeconds.toString().includes('.')) {
             // To avoid floating point imprecision errors
-            this.milliseconds = Math.floor(parseFloat(`0.${totalSeconds.toString().split('.')[1]}`) /
+            const totalSecondsString = totalSeconds.toString();
+            this.milliseconds = Math.trunc(parseFloat(`0.${totalSecondsString.split('.')[1]}`) /
                 toSeconds.milliseconds);
-            totalSeconds = Math.floor(totalSeconds);
+            if (totalSecondsString.startsWith('-')) {
+                this.milliseconds *= -1;
+            }
+            totalSeconds = Math.trunc(totalSeconds);
         }
-        this.days = Math.floor(totalSeconds / toSeconds.days);
+        this.days = Math.trunc(totalSeconds / toSeconds.days);
+        this.days = this.days || 0;
         this.seconds = totalSeconds - this.days * toSeconds.days;
+        this.seconds = this.seconds || 0;
     }
     total_seconds() {
         return (this.days * toSeconds.days +
