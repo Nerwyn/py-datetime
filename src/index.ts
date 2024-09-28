@@ -26,6 +26,8 @@ import {
 	max as dtmax,
 	min as dtmin,
 	fromjsdate,
+	MAXYEAR,
+	MINYEAR,
 	now,
 	strptime,
 	utcfromjsdate,
@@ -90,6 +92,8 @@ time.resolution = tdresolution;
 time.fromisoformat = tfromisoformat;
 
 const dt = {
+	MINYEAR,
+	MAXYEAR,
 	timedelta,
 	date,
 	datetime,

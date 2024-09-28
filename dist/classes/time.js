@@ -71,17 +71,17 @@ export class time {
         }
         return this.strftime(format);
     }
-    toString() {
-        return this.isoformat();
-    }
-    strftime(format) {
-        return d3.utcFormat(format)(this.jsDate);
-    }
     valueOf() {
         return (this.hour * toSeconds.hours +
             this.minute * toSeconds.minutes +
             this.second * toSeconds.seconds +
             this.millisecond * toSeconds.milliseconds);
+    }
+    toString() {
+        return this.isoformat();
+    }
+    strftime(format) {
+        return d3.utcFormat(format)(this.jsDate);
     }
     get jsDate() {
         return new Date(this.valueOf() * 1000);

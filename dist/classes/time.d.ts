@@ -10,8 +10,8 @@ export declare class time {
     constructor(hour?: number | TimeParams, minute?: number, second?: number, millisecond?: number);
     replace(hour?: number | TimeParams, minute?: number, second?: number, millisecond?: number): time;
     isoformat(timespec?: TimeSpec): string;
+    valueOf(): number;
     toString(): string;
     strftime(format: string): string;
-    valueOf(): number;
     get jsDate(): Date;
 }

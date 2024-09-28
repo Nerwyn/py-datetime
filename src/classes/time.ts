@@ -100,14 +100,6 @@ export class time {
 		return this.strftime(format);
 	}
 
-	toString() {
-		return this.isoformat();
-	}
-
-	strftime(format: string) {
-		return d3.utcFormat(format)(this.jsDate);
-	}
-
 	valueOf() {
 		return (
 			this.hour * toSeconds.hours +
@@ -115,6 +107,14 @@ export class time {
 			this.second * toSeconds.seconds +
 			this.millisecond * toSeconds.milliseconds
 		);
+	}
+
+	toString() {
+		return this.isoformat();
+	}
+
+	strftime(format: string) {
+		return d3.utcFormat(format)(this.jsDate);
 	}
 
 	get jsDate(): Date {

@@ -5,6 +5,8 @@ import { fromordinal as dfromordinal, fromtimestamp as dfromtimestamp, fromisoca
 import { combine, fromisocalendar as dtfromisocalendar, fromisoformat as dtfromisoformat, fromordinal as dtfromordinal, fromtimestamp as dtfromtimestamp, fromjsdate, now, strptime, utcfromjsdate, utcfromtimestamp, utcnow } from './utils/datetime';
 import { fromisoformat as tfromisoformat } from './utils/time';
 declare const dt: {
+    MINYEAR: number;
+    MAXYEAR: number;
     timedelta: {
         (days?: number | Partial<Record<"hours" | "minutes" | "seconds" | "milliseconds" | "weeks" | "days", number>> | undefined, seconds?: number | undefined, milliseconds?: number | undefined, minutes?: number | undefined, hours?: number | undefined, weeks?: number | undefined): pytimedelta;
         min: pytimedelta;

@@ -2,7 +2,7 @@ export * from './classes';
 export * from './models';
 import { date as pydate, datetime as pydatetime, time as pytime, timedelta as pytimedelta, } from './classes';
 import { fromordinal as dfromordinal, fromtimestamp as dfromtimestamp, max as dmax, min as dmin, resolution as dresolution, fromisocalendar, fromisoformat, today, } from './utils/date';
-import { combine, fromisocalendar as dtfromisocalendar, fromisoformat as dtfromisoformat, fromordinal as dtfromordinal, fromtimestamp as dtfromtimestamp, max as dtmax, min as dtmin, fromjsdate, now, strptime, utcfromjsdate, utcfromtimestamp, utcnow, } from './utils/datetime';
+import { combine, fromisocalendar as dtfromisocalendar, fromisoformat as dtfromisoformat, fromordinal as dtfromordinal, fromtimestamp as dtfromtimestamp, max as dtmax, min as dtmin, fromjsdate, MAXYEAR, MINYEAR, now, strptime, utcfromjsdate, utcfromtimestamp, utcnow, } from './utils/datetime';
 import { fromisoformat as tfromisoformat, max as tmax, min as tmin, } from './utils/time';
 import { max as tdmax, min as tdmin, resolution as tdresolution, } from './utils/timedelta';
 const timedelta = (...args) => new pytimedelta(...args);
@@ -40,6 +40,8 @@ time.max = tmax;
 time.resolution = tdresolution;
 time.fromisoformat = tfromisoformat;
 const dt = {
+    MINYEAR,
+    MAXYEAR,
     timedelta,
     date,
     datetime,

@@ -13,9 +13,9 @@ export declare class date {
     isoweekday(): number;
     isocalendar(): number[];
     isoformat(): string;
+    valueOf(): number;
     toString(): string;
     ctime(): string;
     strftime(format: string): string;
-    valueOf(): number;
     get jsDate(): Date;
 }

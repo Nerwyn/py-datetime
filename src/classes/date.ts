@@ -78,6 +78,10 @@ export class date {
 		return d3.utcFormat('%Y-%m-%d')(this.jsDate);
 	}
 
+	valueOf() {
+		return this.jsDate.getTime() / 1000;
+	}
+
 	toString() {
 		return this.isoformat();
 	}
@@ -88,10 +92,6 @@ export class date {
 
 	strftime(format: string) {
 		return d3.timeFormat(format)(this.jsDate);
-	}
-
-	valueOf() {
-		return this.jsDate.getTime() / 1000;
 	}
 
 	get jsDate() {

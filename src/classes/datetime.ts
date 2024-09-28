@@ -90,6 +90,14 @@ export class datetime {
 		Object.assign(this, args);
 	}
 
+	date() {
+		return new date(this.year, this.month, this.day);
+	}
+
+	time() {
+		return new time(this.hour, this.minute, this.second, this.millisecond);
+	}
+
 	replace(
 		year: number | DatetimeParams = this.year,
 		month: number = this.month,
@@ -122,14 +130,6 @@ export class datetime {
 			second: args.second ?? this.second,
 			millisecond: args.millisecond ?? this.millisecond,
 		});
-	}
-
-	date() {
-		return new date(this.year, this.month, this.day);
-	}
-
-	time() {
-		return new time(this.hour, this.minute, this.second, this.millisecond);
 	}
 
 	toordinal() {
@@ -203,6 +203,10 @@ export class datetime {
 		return this.strftime(format);
 	}
 
+	valueOf() {
+		return this.timestamp();
+	}
+
 	toString() {
 		return this.isoformat(' ');
 	}
@@ -217,10 +221,6 @@ export class datetime {
 		} else {
 			return d3.timeFormat(format)(this.jsDate);
 		}
-	}
-
-	valueOf() {
-		return this.timestamp();
 	}
 
 	get jsDate(): Date {

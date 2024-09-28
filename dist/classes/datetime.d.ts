@@ -13,18 +13,18 @@ export declare class datetime {
     readonly millisecond: number;
     readonly utc: boolean;
     constructor(year?: number | DatetimeParams, month?: number, day?: number, hour?: number, minute?: number, second?: number, millisecond?: number, utc?: boolean);
-    replace(year?: number | DatetimeParams, month?: number, day?: number, hour?: number, minute?: number, second?: number, millisecond?: number): datetime;
     date(): date;
     time(): time;
+    replace(year?: number | DatetimeParams, month?: number, day?: number, hour?: number, minute?: number, second?: number, millisecond?: number): datetime;
     toordinal(): number;
     timestamp(): number;
     weekday(): number;
     isoweekday(): number;
     isocalendar(): number[];
     isoformat(sep?: string | ISOFormatParams, timespec?: TimeSpec): string;
+    valueOf(): number;
     toString(): string;
     ctime(): string;
     strftime(format: string): string;
-    valueOf(): number;
     get jsDate(): Date;
 }
