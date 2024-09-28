@@ -2,6 +2,13 @@ import * as d3 from 'd3-time-format';
 import { toSeconds } from '../models';
 import { isParams } from '../utils/utils';
 export class time {
+    /**
+     * A time object represents a (local) time of day, independent of any particular day.
+     * @param {number} [hour=0]
+     * @param {number} [minute=0]
+     * @param {number} [second=0]
+     * @param {number} [millisecond=0]
+     */
     constructor(hour = 0, minute = 0, second = 0, millisecond = 0) {
         this.hour = 0;
         this.minute = 0;
@@ -36,6 +43,15 @@ export class time {
         }
         Object.assign(this, args);
     }
+    /**
+     * Return a time with the ame value,
+     * except for those attributes given new values by whichever arguments are specified.
+     * @param {number} [hour=this.hour]
+     * @param {number} [minute=this.minute]
+     * @param {number} [second=this.second]
+     * @param {number} [millisecond=this.millisecond]
+     * @returns {time}
+     */
     replace(hour = this.hour, minute = this.minute, second = this.second, millisecond = this.millisecond) {
         let args = {
             hour: hour,
@@ -49,6 +65,11 @@ export class time {
         }
         return new time(args.hour ?? this.hour, args.minute ?? this.minute, args.second ?? this.second, args.millisecond ?? this.millisecond);
     }
+    /**
+     * Return a string representing the time in ISO 8601 format.
+     * @param {TimeSpec} [timespec='auto'] Specifies the number of additional components of the time to include
+     * @returns {time}
+     */
     isoformat(timespec = 'auto') {
         let format;
         switch (timespec) {
@@ -71,22 +92,39 @@ export class time {
         }
         return this.strftime(format);
     }
+    /**
+     * Return the time in seconds.
+     * @returns {number}
+     */
     valueOf() {
         return (this.hour * toSeconds.hours +
             this.minute * toSeconds.minutes +
             this.second * toSeconds.seconds +
             this.millisecond * toSeconds.milliseconds);
     }
+    /**
+     * For a time t, t.valueOf() is equivalent to t.isoformat().
+     * @returns {string}
+     */
     toString() {
         return this.isoformat();
     }
+    /**
+     * Return a string representing the time, controlled by an explicit format string.
+     * @param {string} format
+     * @returns {string}
+     */
     strftime(format) {
         return d3.utcFormat(format)(this.jsDate);
     }
+    /** Return this object as a JS Date object */
     get jsDate() {
         return new Date(this.valueOf() * 1000);
     }
 }
+/** The earliest representable time in seconds. */
 time.min = 0;
+/** The latest representable time in seconds. */
 time.max = 86399.999;
+/** The smallest possible difference between non-equal time objects, 1ms, in seconds. */
 time.resolution = 0.001;

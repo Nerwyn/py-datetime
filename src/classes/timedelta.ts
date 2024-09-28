@@ -3,14 +3,26 @@ import { TimedeltaIntervals, TimedeltaParams, toSeconds } from '../models';
 import { isParams } from '../utils/utils';
 
 export class timedelta {
+	/** The most negative timedelta object */
 	static readonly min: number = -86399999913600;
+	/** The most positive timedelta object */
 	static readonly max: number = 86399999999999.999;
+	/** The smallest possible difference between non-equal timedelta objects */
 	static readonly resolution: number = 0.001;
 
 	readonly days: number = 0;
 	readonly seconds: number = 0;
 	readonly milliseconds: number = 0;
 
+	/**
+	 * A timedelta object represents a duration, the difference betwee two datetime or date instances.
+	 * @param {number} [days=0]
+	 * @param {number} [seconds=0]
+	 * @param {number} [milliseconds=0]
+	 * @param {number} [minutes=0]
+	 * @param {number} [hours=0]
+	 * @param {number} [weeks=0]
+	 */
 	constructor(
 		days: number | TimedeltaParams = 0,
 		seconds: number = 0,
@@ -63,6 +75,10 @@ export class timedelta {
 		this.seconds = this.seconds || 0;
 	}
 
+	/**
+	 * Return the total number of seconds contained in the duration.
+	 * @returns {number}
+	 */
 	total_seconds() {
 		return (
 			this.days * toSeconds.days +
@@ -71,10 +87,20 @@ export class timedelta {
 		);
 	}
 
+	/**
+	 * For a timedelta delta, delta.valueOf() is equivalent to delta.total_seconds().
+	 * @returns {number}
+	 */
 	valueOf() {
 		return this.total_seconds();
 	}
 
+	/**
+	 * Return the days, hours, minutes, seconds, and milliseconds of the timedelta in a string format.
+	 * If the timedelta is less than one day then days is not included.
+	 * If the timedelta does not have a millisecond component then it is also not included.
+	 * @returns {string}
+	 */
 	toString() {
 		const dayString =
 			this.days > 0

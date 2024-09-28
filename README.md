@@ -6,6 +6,8 @@ Hope you'll find it useful!
 
 This project is a fork of [py-datetime](https://github.com/tstriker/py-datetime). It ports the project to TypeScript and adds many more functions and constants from the Python datetime module.
 
+For format string specifier directives, see the [d3-time-format documentation](https://d3js.org/d3-time-format#locale_format).
+
 # Install
 
 `npm install ts-py-datetime`
@@ -168,7 +170,7 @@ For a timedelta _delta_, `delta.valueOf()` is equivalent to `delta.total_seconds
 
 ### dt.timedelta.**toString()**
 
-Return the days, hours, minutes, seconds, and milliseconds of the timedelta in a string format. If the timedelta is less than one day then days is not included. If the timdelta does not have a millisecond component then it is also not included.
+Return the days, hours, minutes, seconds, and milliseconds of the timedelta in a string format. If the timedelta is less than one day then days is not included. If the timedelta does not have a millisecond component then it is also not included.
 
 # `dt.date` Objects
 
@@ -402,7 +404,7 @@ The smallest possible difference between non-equal `datetime` objects, `timedelt
 
 ### dt.datetime.**year**
 
-Between `MINYEAR` and MAXYEAR` inclusive.
+Between `MINYEAR` and `MAXYEAR` inclusive.
 
 ### dt.datetime.**month**
 
@@ -580,7 +582,7 @@ Return a `time` corresponding to a _time_string_ in any valid ISO 8601 format.
 
 ### dt.time.**replace(**{ _hour: this.hour, minute: this.minute, second: this.second, millisecond: this.millisecond_ }**)**
 
-Return a `time` with the ame value, except forthose attributes given new values by whichever arguments are specified.
+Return a `time` with the ame value, except for those attributes given new values by whichever arguments are specified.
 
 ### dt.time.**isoformat(**_timespec_='auto'**)**
 
