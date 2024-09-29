@@ -1,11 +1,5 @@
-import { TimedeltaParams } from '../models';
+import { TimedeltaParams } from '../models/timedelta';
 export declare class timedelta {
-    /** The most negative timedelta object */
-    static readonly min: number;
-    /** The most positive timedelta object */
-    static readonly max: number;
-    /** The smallest possible difference between non-equal timedelta objects */
-    static readonly resolution: number;
     readonly days: number;
     readonly seconds: number;
     readonly milliseconds: number;
@@ -36,4 +30,12 @@ export declare class timedelta {
      * @returns {string}
      */
     toString(): string;
+    /** The most negative timedelta object, equal to -86399999913600 seconds */
+    static get min(): timedelta;
+    private get minSeconds();
+    /** The most positive timedelta object, equal to 86399999999999.999 seconds */
+    static get max(): timedelta;
+    private get maxSeconds();
+    /** The smallest possible difference between non-equal timedelta objects, equal to 0.001 seconds  */
+    static get resolution(): timedelta;
 }

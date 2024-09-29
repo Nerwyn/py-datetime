@@ -1,11 +1,6 @@
-import { DateParams } from '../models';
+import { DateParams } from '../models/date';
+import { timedelta } from './timedelta';
 export declare class date {
-    /** The earliest representable date POSIX timestamp. */
-    static readonly min: number;
-    /** The latest representable date  POSIX timestamp. */
-    static readonly max: number;
-    /** The smallest possible difference between non-equal date objects, 1 day, in seconds. */
-    static readonly resolution: number;
     readonly year: number;
     readonly month: number;
     readonly day: number;
@@ -75,4 +70,41 @@ export declare class date {
     strftime(format: string): string;
     /** Return this object as a JS Date object */
     get jsDate(): Date;
+    /** The earliest representable date POSIX timestamp, equal to -2177434800. */
+    static get min(): date;
+    /** The latest representable date  POSIX timestamp, equal to 253402232400. */
+    static get max(): date;
+    /** The smallest possible difference between non-equal date objects, 1 day, in seconds. */
+    static get resolution(): timedelta;
+    /**
+     * Return the current local date.
+     * @returns {date}
+     */
+    static today(): date;
+    /**
+     * Return the local date corresponding to the POSIX timestamp.
+     * @param {number} timestamp
+     * @returns {date}
+     */
+    static fromtimestamp(timestamp: number): date;
+    /**
+     * Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1.
+     * @param {number} ordinal
+     * @returns {date}
+     */
+    static fromordinal(ordinal: number): date;
+    /**
+     * Return a date corresponding to a date_string given in the ISO 8601 format YYYY-MM-DD.
+     * @param {string} date_string
+     * @returns {date}
+     */
+    static fromisoformat(date_string: string): date;
+    /**
+     * Return a date corresponding to the ISO calendar date specified by year, week, and day.
+     * @param {number} year
+     * @param {number} week
+     * @param {number} day
+     * @returns {date}
+     */
+    static fromisocalendar(year: number, week: number, day: number): date;
 }

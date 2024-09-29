@@ -1,12 +1,6 @@
-import { date, time } from '.';
-import { DatetimeParams, ISOFormatParams, TimeSpec } from '../models';
+import { date, time, timedelta } from '.';
+import { DatetimeParams, ISOFormatParams, TimeSpec } from '../models/datetime';
 export declare class datetime {
-    /** The earliest representable datetime POSIX timestamp. */
-    static readonly min: number;
-    /** The latest representable datetime POSIX timestamp */
-    static readonly max: number;
-    /** The smallest possible difference between non-equal datetime objects, 1 millisecond, in seconds. */
-    static readonly resolution: number;
     readonly year: number;
     readonly month: number;
     readonly day: number;
@@ -105,4 +99,88 @@ export declare class datetime {
     strftime(format: string): string;
     /** Return this object as a JS Date object */
     get jsDate(): Date;
+    /** The earliest representable datetime POSIX timestamp, equal to -59011416000 seconds. */
+    static get min(): datetime;
+    /** The latest representable datetime POSIX timestamp, equal to 253402300799.999 seconds. */
+    static get max(): datetime;
+    /** The smallest possible difference between non-equal datetime objects, 1 millisecond, in seconds. */
+    static get resolution(): timedelta;
+    /**
+     * Return the current local date and time.
+     * @returns {datetime}
+     */
+    static today(): datetime;
+    /**
+     * Return the current local date and time.
+     * Functionally equivalent to dt.datetime.today() but is considered the preferred syntax.
+     * @returns {datetime}
+     */
+    static now(): datetime;
+    /**
+     * Return the current UTC date and time.
+     * @returns {datetime}
+     */
+    static utcnow(): datetime;
+    /**
+     * Return the local date and time corresponding to the POSIX timestamp.
+     * @param {number} timestamp
+     * @returns {datetime}
+     */
+    static fromtimestamp(timestamp: number): datetime;
+    /**
+     * Return the UTC datetime corresponding to the POSIX timestamp.
+     * @param {number} timestamp
+     * @returns {datetime}
+     */
+    static utcfromtimestamp(timestamp: number): datetime;
+    /**
+     * Return the local date and time corresponding to the JS Date object.
+     * @param {Date} jsdate
+     * @returns {datetime}
+     */
+    static fromjsdate(jsdate: Date): datetime;
+    /**
+     * Return the UTC datetime corresponding to the JS Date object.
+     * @param {Date} jsdate
+     * @returns {datetime}
+     */
+    static utcfromjsdate(jsdate: Date): datetime;
+    /**
+     * Return the datetime corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has oridinal 1.
+     * @param {number} ordinal
+     * @returns {datetime}
+     */
+    static fromordinal(ordinal: number): datetime;
+    /**
+     * Return a new datetime object whose date components are equal to the given date object's,
+     * and whose time components are equal to the given time object's.
+     * If the date argument is a datetime object, its time components are ignored.
+     * @param {date | datetime} date
+     * @param {time} time
+     * @returns {datetime}
+     */
+    static combine(date: date | datetime, time: time): datetime;
+    /**
+     * Return a datetime corresponding to a date_string in any valid ISO 8601 format.
+     * @param {string} date_string
+     * @returns {datetime}
+     */
+    static fromisoformat(date_string: string): datetime;
+    /**
+     * Return a datetime corresponding to the ISO calendar date specified by the year, week, and day.
+     * The non-date components of the datetime are populated with their normal default values.
+     * @param {number} year
+     * @param {number} week
+     * @param {number} day
+     * @returns {datetime}
+     */
+    static fromisocalendar(year: number, week: number, day: number): datetime;
+    /**
+     * Return a datetime corresponding to date_string, parsed according to format.
+     * @param {string} date_string
+     * @param {string} format
+     * @param {boolean} [utc=false]
+     * @returns {datetime}
+     */
+    static strptime(date_string: string, format: string, utc?: boolean): datetime;
 }

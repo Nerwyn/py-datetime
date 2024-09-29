@@ -1,6 +1,7 @@
 import * as d3 from 'd3-time-format';
-import { toSeconds } from '../models';
+import { toSeconds } from '../models/timedelta';
 import { isParams } from '../utils/utils';
+import { timedelta } from './timedelta';
 export class time {
     /**
      * A time object represents a (local) time of day, independent of any particular day.
@@ -121,10 +122,28 @@ export class time {
     get jsDate() {
         return new Date(this.valueOf() * 1000);
     }
+    /** The earliest representable time, equal to 0 seconds. */
+    static get min() {
+        return new time(0, 0, 0, 0);
+    }
+    /** The latest representable time, equal to 86399.999 seconds */
+    static get max() {
+        return new time(23, 59, 59, 999);
+    }
+    /** The smallest possible difference between non-equal time objects, equal to 0.001 seconds. */
+    static get resolution() {
+        return timedelta.resolution;
+    }
+    /**
+     * Return a time corresponding to a time_string in any valid ISO 8601 format.
+     * @param {string} time_string
+     * @returns {time}
+     */
+    static fromisoformat(time_string) {
+        const d = d3.isoParse(`1970-01-01T${time_string}`);
+        if (d) {
+            return new time(d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds());
+        }
+        throw SyntaxError('Unable to parse date string');
+    }
 }
-/** The earliest representable time in seconds. */
-time.min = 0;
-/** The latest representable time in seconds. */
-time.max = 86399.999;
-/** The smallest possible difference between non-equal time objects, 1ms, in seconds. */
-time.resolution = 0.001;

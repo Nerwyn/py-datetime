@@ -1,15 +1,12 @@
 import * as d3 from 'd3-time-format';
-import { TimedeltaIntervals, TimedeltaParams, toSeconds } from '../models';
+import {
+	TimedeltaIntervals,
+	TimedeltaParams,
+	toSeconds,
+} from '../models/timedelta';
 import { isParams } from '../utils/utils';
 
 export class timedelta {
-	/** The most negative timedelta object */
-	static readonly min: number = -86399999913600;
-	/** The most positive timedelta object */
-	static readonly max: number = 86399999999999.999;
-	/** The smallest possible difference between non-equal timedelta objects */
-	static readonly resolution: number = 0.001;
-
 	readonly days: number = 0;
 	readonly seconds: number = 0;
 	readonly milliseconds: number = 0;
@@ -51,7 +48,7 @@ export class timedelta {
 			totalSeconds += (args[key] ?? 0) * toSeconds[key];
 		});
 
-		if (totalSeconds < timedelta.min || totalSeconds > timedelta.max) {
+		if (totalSeconds < this.minSeconds || totalSeconds > this.maxSeconds) {
 			throw RangeError(
 				'value out of range, must have magnitude less than 999999999 days',
 			);
@@ -110,5 +107,32 @@ export class timedelta {
 			`%-H:%M:%S${this.milliseconds ? '.%f' : ''}`,
 		)(new Date(this.valueOf() * 1000));
 		return `${dayString} ${timeString}`.trim();
+	}
+
+	/** The most negative timedelta object, equal to -86399999913600 seconds */
+	static get min() {
+		return new timedelta({ days: -999999999 });
+	}
+	private get minSeconds() {
+		return -86399999913600;
+	}
+
+	/** The most positive timedelta object, equal to 86399999999999.999 seconds */
+	static get max() {
+		return new timedelta({
+			days: 999999999,
+			hours: 23,
+			minutes: 59,
+			seconds: 59,
+			milliseconds: 999,
+		});
+	}
+	private get maxSeconds() {
+		return 86399999999999.999;
+	}
+
+	/** The smallest possible difference between non-equal timedelta objects, equal to 0.001 seconds  */
+	static get resolution() {
+		return new timedelta({ milliseconds: 1 });
 	}
 }

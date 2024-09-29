@@ -1,11 +1,7 @@
-import { TimeParams, TimeSpec } from '../models';
+import { TimeSpec } from '../models/datetime';
+import { TimeParams } from '../models/time';
+import { timedelta } from './timedelta';
 export declare class time {
-    /** The earliest representable time in seconds. */
-    static readonly min: number;
-    /** The latest representable time in seconds. */
-    static readonly max: number;
-    /** The smallest possible difference between non-equal time objects, 1ms, in seconds. */
-    static readonly resolution: number;
     readonly hour: number;
     readonly minute: number;
     readonly second: number;
@@ -52,4 +48,16 @@ export declare class time {
     strftime(format: string): string;
     /** Return this object as a JS Date object */
     get jsDate(): Date;
+    /** The earliest representable time, equal to 0 seconds. */
+    static get min(): time;
+    /** The latest representable time, equal to 86399.999 seconds */
+    static get max(): time;
+    /** The smallest possible difference between non-equal time objects, equal to 0.001 seconds. */
+    static get resolution(): timedelta;
+    /**
+     * Return a time corresponding to a time_string in any valid ISO 8601 format.
+     * @param {string} time_string
+     * @returns {time}
+     */
+    static fromisoformat(time_string: string): time;
 }

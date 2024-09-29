@@ -1,15 +1,11 @@
 import * as d3 from 'd3-time-format';
-import { TimeInterval, TimeParams, TimeSpec, toSeconds } from '../models';
+import { TimeSpec } from '../models/datetime';
+import { TimeInterval, TimeParams } from '../models/time';
+import { toSeconds } from '../models/timedelta';
 import { isParams } from '../utils/utils';
+import { timedelta } from './timedelta';
 
 export class time {
-	/** The earliest representable time in seconds. */
-	static readonly min: number = 0;
-	/** The latest representable time in seconds. */
-	static readonly max: number = 86399.999;
-	/** The smallest possible difference between non-equal time objects, 1ms, in seconds. */
-	static readonly resolution: number = 0.001;
-
 	readonly hour: number = 0;
 	readonly minute: number = 0;
 	readonly second: number = 0;
@@ -157,5 +153,38 @@ export class time {
 	/** Return this object as a JS Date object */
 	get jsDate(): Date {
 		return new Date(this.valueOf() * 1000);
+	}
+
+	/** The earliest representable time, equal to 0 seconds. */
+	static get min() {
+		return new time(0, 0, 0, 0);
+	}
+
+	/** The latest representable time, equal to 86399.999 seconds */
+	static get max() {
+		return new time(23, 59, 59, 999);
+	}
+
+	/** The smallest possible difference between non-equal time objects, equal to 0.001 seconds. */
+	static get resolution() {
+		return timedelta.resolution;
+	}
+
+	/**
+	 * Return a time corresponding to a time_string in any valid ISO 8601 format.
+	 * @param {string} time_string
+	 * @returns {time}
+	 */
+	static fromisoformat(time_string: string) {
+		const d = d3.isoParse(`1970-01-01T${time_string}`);
+		if (d) {
+			return new time(
+				d.getHours(),
+				d.getMinutes(),
+				d.getSeconds(),
+				d.getMilliseconds(),
+			);
+		}
+		throw SyntaxError('Unable to parse date string');
 	}
 }

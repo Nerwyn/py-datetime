@@ -1,22 +1,20 @@
 import * as d3 from 'd3-time-format';
-import { date, time } from '.';
+import { date, time, timedelta } from '.';
+import {
+	MAXYEAR,
+	MAXYEAR_ORDINAL,
+	MINYEAR,
+	MINYEAR_ORDINAL,
+} from '../constants';
 import {
 	DatetimeInterval,
 	DatetimeParams,
 	ISOFormatParams,
 	TimeSpec,
-} from '../models';
-import { MAXYEAR, MINYEAR } from '../utils/datetime';
+} from '../models/datetime';
 import { isParams } from '../utils/utils';
 
 export class datetime {
-	/** The earliest representable datetime POSIX timestamp. */
-	static readonly min: number = -59011416000;
-	/** The latest representable datetime POSIX timestamp */
-	static readonly max: number = 253402300799.999;
-	/** The smallest possible difference between non-equal datetime objects, 1 millisecond, in seconds. */
-	static readonly resolution: number = 0.001;
-
 	readonly year: number = 1970;
 	readonly month: number = 1;
 	readonly day: number = 1;
@@ -315,5 +313,178 @@ export class datetime {
 				this.millisecond || 0,
 			);
 		}
+	}
+
+	/** The earliest representable datetime POSIX timestamp, equal to -59011416000 seconds. */
+	static get min() {
+		return new datetime(MINYEAR, 1, 1);
+	}
+
+	/** The latest representable datetime POSIX timestamp, equal to 253402300799.999 seconds. */
+	static get max() {
+		return new datetime(MAXYEAR, 12, 31, 23, 59, 59, 999);
+	}
+
+	/** The smallest possible difference between non-equal datetime objects, 1 millisecond, in seconds. */
+	static get resolution() {
+		return timedelta.resolution;
+	}
+
+	/**
+	 * Return the current local date and time.
+	 * @returns {datetime}
+	 */
+	static today() {
+		return datetime.now();
+	}
+
+	/**
+	 * Return the current local date and time.
+	 * Functionally equivalent to dt.datetime.today() but is considered the preferred syntax.
+	 * @returns {datetime}
+	 */
+	static now() {
+		return datetime.fromjsdate(new Date());
+	}
+
+	/**
+	 * Return the current UTC date and time.
+	 * @returns {datetime}
+	 */
+	static utcnow() {
+		return datetime.utcfromjsdate(new Date());
+	}
+
+	/**
+	 * Return the local date and time corresponding to the POSIX timestamp.
+	 * @param {number} timestamp
+	 * @returns {datetime}
+	 */
+	static fromtimestamp(timestamp: number) {
+		const jsdate = new Date(timestamp * 1000);
+		return datetime.fromjsdate(jsdate);
+	}
+
+	/**
+	 * Return the UTC datetime corresponding to the POSIX timestamp.
+	 * @param {number} timestamp
+	 * @returns {datetime}
+	 */
+	static utcfromtimestamp(timestamp: number) {
+		const jsdate = new Date(timestamp * 1000);
+		return datetime.utcfromjsdate(jsdate);
+	}
+
+	/**
+	 * Return the local date and time corresponding to the JS Date object.
+	 * @param {Date} jsdate
+	 * @returns {datetime}
+	 */
+	static fromjsdate(jsdate: Date) {
+		return new datetime({
+			year: jsdate.getFullYear(),
+			month: jsdate.getMonth() + 1,
+			day: jsdate.getDate(),
+			hour: jsdate.getHours(),
+			minute: jsdate.getMinutes(),
+			second: jsdate.getSeconds(),
+			millisecond: jsdate.getMilliseconds(),
+		});
+	}
+
+	/**
+	 * Return the UTC datetime corresponding to the JS Date object.
+	 * @param {Date} jsdate
+	 * @returns {datetime}
+	 */
+	static utcfromjsdate(jsdate: Date) {
+		return new datetime({
+			year: jsdate.getUTCFullYear(),
+			month: jsdate.getUTCMonth() + 1,
+			day: jsdate.getUTCDate(),
+			hour: jsdate.getUTCHours(),
+			minute: jsdate.getUTCMinutes(),
+			second: jsdate.getUTCSeconds(),
+			millisecond: jsdate.getUTCMilliseconds(),
+			utc: true,
+		});
+	}
+
+	/**
+	 * Return the datetime corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has oridinal 1.
+	 * @param {number} ordinal
+	 * @returns {datetime}
+	 */
+	static fromordinal(ordinal: number) {
+		if (ordinal < MINYEAR_ORDINAL || ordinal > MAXYEAR_ORDINAL) {
+			throw RangeError(`ordinal ${ordinal} is out of range`);
+		}
+		return datetime.fromtimestamp(
+			date.min.valueOf() +
+				new timedelta({ days: ordinal - MINYEAR_ORDINAL }).valueOf(),
+		);
+	}
+
+	/**
+	 * Return a new datetime object whose date components are equal to the given date object's,
+	 * and whose time components are equal to the given time object's.
+	 * If the date argument is a datetime object, its time components are ignored.
+	 * @param {date | datetime} date
+	 * @param {time} time
+	 * @returns {datetime}
+	 */
+	static combine(date: date | datetime, time: time) {
+		return new datetime({
+			year: date.year,
+			month: date.month,
+			day: date.day,
+			hour: time.hour,
+			minute: time.minute,
+			second: time.second,
+			millisecond: time.millisecond,
+		});
+	}
+
+	/**
+	 * Return a datetime corresponding to a date_string in any valid ISO 8601 format.
+	 * @param {string} date_string
+	 * @returns {datetime}
+	 */
+	static fromisoformat(date_string: string) {
+		const d = d3.isoParse(date_string);
+		if (d) {
+			return datetime.fromjsdate(d);
+		}
+		throw SyntaxError('Unable to parse date string');
+	}
+
+	/**
+	 * Return a datetime corresponding to the ISO calendar date specified by the year, week, and day.
+	 * The non-date components of the datetime are populated with their normal default values.
+	 * @param {number} year
+	 * @param {number} week
+	 * @param {number} day
+	 * @returns {datetime}
+	 */
+	static fromisocalendar(year: number, week: number, day: number) {
+		return datetime.strptime(`${year}-${week}-${day}`, '%G-%V-%u');
+	}
+
+	/**
+	 * Return a datetime corresponding to date_string, parsed according to format.
+	 * @param {string} date_string
+	 * @param {string} format
+	 * @param {boolean} [utc=false]
+	 * @returns {datetime}
+	 */
+	static strptime(date_string: string, format: string, utc: boolean = false) {
+		const parser = utc ? d3.utcParse : d3.timeParse;
+		const parsed = parser(format)(date_string);
+		if (!parsed) {
+			throw Error(`'${date_string}' does not match format '${format}'`);
+		}
+		return utc
+			? datetime.utcfromjsdate(parsed)
+			: datetime.fromjsdate(parsed);
 	}
 }

@@ -1,7 +1,8 @@
 import * as d3 from 'd3-time-format';
-import { toSeconds } from '../models';
-import { MAXYEAR, MINYEAR } from '../utils/datetime';
+import { MAXYEAR, MAXYEAR_ORDINAL, MINYEAR, MINYEAR_ORDINAL, } from '../constants';
+import { toSeconds } from '../models/timedelta';
 import { isParams } from '../utils/utils';
+import { datetime } from './datetime';
 import { timedelta } from './timedelta';
 export class date {
     /**
@@ -122,10 +123,68 @@ export class date {
     get jsDate() {
         return new Date(this.year, this.month - 1, this.day);
     }
+    /** The earliest representable date POSIX timestamp, equal to -2177434800. */
+    static get min() {
+        return new date(MINYEAR, 1, 1);
+    }
+    /** The latest representable date  POSIX timestamp, equal to 253402232400. */
+    static get max() {
+        return new date(MAXYEAR, 12, 31);
+    }
+    /** The smallest possible difference between non-equal date objects, 1 day, in seconds. */
+    static get resolution() {
+        return new timedelta({ days: 1 });
+    }
+    /**
+     * Return the current local date.
+     * @returns {date}
+     */
+    static today() {
+        const today = datetime.now();
+        return new date(today.year, today.month, today.day);
+    }
+    /**
+     * Return the local date corresponding to the POSIX timestamp.
+     * @param {number} timestamp
+     * @returns {date}
+     */
+    static fromtimestamp(timestamp) {
+        const d = datetime.fromtimestamp(timestamp);
+        return new date(d.year, d.month, d.day);
+    }
+    /**
+     * Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1.
+     * @param {number} ordinal
+     * @returns {date}
+     */
+    static fromordinal(ordinal) {
+        if (ordinal < MINYEAR_ORDINAL || ordinal > MAXYEAR_ORDINAL) {
+            throw RangeError(`ordinal ${ordinal} is out of range`);
+        }
+        return date.fromtimestamp(date.min.valueOf() +
+            new timedelta({ days: ordinal - MINYEAR_ORDINAL }).valueOf());
+    }
+    /**
+     * Return a date corresponding to a date_string given in the ISO 8601 format YYYY-MM-DD.
+     * @param {string} date_string
+     * @returns {date}
+     */
+    static fromisoformat(date_string) {
+        const d = d3.isoParse(date_string);
+        if (d) {
+            return new date(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate());
+        }
+        throw SyntaxError('Unable to parse date string');
+    }
+    /**
+     * Return a date corresponding to the ISO calendar date specified by year, week, and day.
+     * @param {number} year
+     * @param {number} week
+     * @param {number} day
+     * @returns {date}
+     */
+    static fromisocalendar(year, week, day) {
+        const d = datetime.strptime(`${year}-${week}-${day}`, '%G-%V-%u');
+        return new date(Number(d.year), Number(d.month), Number(d.day));
+    }
 }
-/** The earliest representable date POSIX timestamp. */
-date.min = -2177434800;
-/** The latest representable date  POSIX timestamp. */
-date.max = 253402232400;
-/** The smallest possible difference between non-equal date objects, 1 day, in seconds. */
-date.resolution = 86400;
