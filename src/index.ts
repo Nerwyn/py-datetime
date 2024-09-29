@@ -1,4 +1,5 @@
 export * from './classes';
+export * from './constants';
 
 import { date, datetime, time, timedelta } from './classes';
 import {

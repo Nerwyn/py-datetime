@@ -14,8 +14,11 @@ For format string specifier directives, see the [d3-time-format documentation](h
 
 # Demo
 
+This package provides a `dt` object which wraps all classes and constants into one object, and can be used to intantiate new dates, times, datetimes, and timedeltas with Pythonic syntax.
+
 ```typescript
-import dt from 'ts-py-datetime'; // const { default: dt } = await import("./src/index.ts"); in a REPL
+import dt from 'ts-py-datetime';
+// const { default: dt } = await import("./src/index.ts"); in a REPL
 
 const now = dt.datetime.now();
 const today = dt.datetime.combine(now, dt.time());
@@ -25,6 +28,16 @@ console.log(
   'Minutes since midnight:',
   dt.timedelta(now - today).valueOf() / 60,
 );
+```
+
+You can also import the classes and constants directly, but you will have to use the `new` operator to instantiate them.
+
+```typescript
+import { date, time, datetime, timedelta } from 'ts-py-datetime';
+// const { date, time, datetime, timedelta } = await import("./src/index.ts"); in a REPL
+
+const then = new datetime(2022, 12, 11, 10, 30, 22);
+const now = datetime.now(); // static functions do not need the new operator
 ```
 
 ## Pythonic Syntax
