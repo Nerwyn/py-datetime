@@ -405,7 +405,7 @@ Return a `datetime` corresponding to _date_string_, parsed according to _format_
 
 The earliest representable `datetime`, `datetime(MINYEAR, 1, 1)`.
 
-#### datetime.**max**
+### datetime.**max**
 
 The latest representable `datetime`, `datetime(MAXYEAR, 12, 31, 23, 59, 59, 999)`.
 
