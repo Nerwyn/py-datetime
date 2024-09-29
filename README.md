@@ -48,43 +48,43 @@ In order to be as close to the Python datetime module as possible, any externall
 
 # Constants
 
-### dt.**MINYEAR**
+### **MINYEAR**
 
 The smallest year number allowed in `date` and `datetime` objects. Because of JavaScript Date limitations, it's value is 100.
 
-### dt.**MAXYEAR**
+### **MAXYEAR**
 
 The largest year number allowed in `date` and `datetime` objects. It's value is 9999.
 
 # Available Types
 
-### _class_ dt.**date**
+### _class_ **date**
 
 An idealized date, assuming the current Gregorian calendar always was, and always will be, in effect.
 
 Attributes: `year`, `month`, `day`.
 
-### _class_ dt.**time**
+### _class_ **time**
 
 An idealized time, independent of any particular day, assuming that every day has exactly 24\*60\*60 seconds (There is no notion of "leap seconds" here).
 
 Attributes: `hour`, `minute`, `second`, `millisecond`.
 
-### _class_ dt.**datetime**
+### _class_ **datetime**
 
 A combination of a date and time.
 
 Attributes: `year`, `month`, `day`, `hour`, `minute`, `second`, `millisecond`, and `utc`.
 
-### _class_ dt.**timedelta**
+### _class_ **timedelta**
 
 A duration expressing the difference between two `datetime` or `date` instances to millisecond resolution.
 
-# `dt.timedelta` Objects
+# `timedelta` Objects
 
 A `timedelta` object represents a duration, the difference betwee two `datetime` or `date` instances.
 
-## _class_ dt.**timedelta(**{ _days: 0, seconds: 0, milliseconds: 0, minutes: 0, hours: 0, weeks: 0_ }**)**
+## _class_ **timedelta(**{ _days: 0, seconds: 0, milliseconds: 0, minutes: 0, hours: 0, weeks: 0_ }**)**
 
 All arguments are optional and default to 0. Arguments may be integers or floats, and may be positive or negative.
 
@@ -124,29 +124,29 @@ If the normalized total seconds lies outside the min and max timedelta range, `R
 
 ## Class properties
 
-### dt.timedelta.**min**
+### timedelta.**min**
 
 The most negative `timedelta` object, `timedelta(-999999999)`
 
-### dt.timedelta.**max**
+### timedelta.**max**
 
 The most positive `timedelta` object, `timedelta({ days: 999999999, hours: 23, minutes: 59, seconds: 59, milliseconds: 999 })`
 
-### dt.timedelta.**resolution**
+### timedelta.**resolution**
 
 The smallest possible difference between non-equal `timedelta` objects, `timedelta({ milliseconds: 1 })`
 
 ## Instance properties (read-only):
 
-### dt.timedelta.**days**
+### timedelta.**days**
 
 Between -999,999,999 and 999,999,999 inclusive.
 
-### dt.timedelta.**seconds**
+### timedelta.**seconds**
 
 Between 0 and 86,399 inclusive.
 
-### dt.timedelta.**milliseconds**
+### timedelta.**milliseconds**
 
 Between 0 and 999 inclusive.
 
@@ -173,25 +173,25 @@ datetime {
 
 ## Instance methods
 
-### dt.timedelta.**total_seconds()**
+### timedelta.**total_seconds()**
 
 Return the total number of seconds contained in the duration.
 
-### dt.timedelta.**valueOf()**
+### timedelta.**valueOf()**
 
 For a timedelta _delta_, `delta.valueOf()` is equivalent to `delta.total_seconds()`.
 
-### dt.timedelta.**toString()**
+### timedelta.**toString()**
 
 Return the days, hours, minutes, seconds, and milliseconds of the timedelta in a string format. If the timedelta is less than one day then days is not included. If the timedelta does not have a millisecond component then it is also not included.
 
-# `dt.date` Objects
+# `date` Objects
 
 A `date` object represents a date (year, month, and day) in an idealized calendar, the current Gregorian calendar indefinitely extended in both directions.
 
 January 1 of year 1 is called day number 1, January 2 of year 1 is called day number 2, and so on.
 
-## _class_ dt.**date(**year, month, day**)**
+## _class_ **date(**year, month, day**)**
 
 All arguments are required. Arguments must be integers, in the following ranges:
 
@@ -203,25 +203,25 @@ If an argument is outside those ranges is given, `RangeError` is thrown.
 
 ## Other static method constructors
 
-### _static method_ dt.date.**today()**
+### _static method_ date.**today()**
 
 Return the current local date.
 
-### _static method_ dt.date.**fromtimestamp(**_timestamp_**)**
+### _static method_ date.**fromtimestamp(**_timestamp_**)**
 
 Return the local date corresponding to the POSIX timestamp.
 
-### _static method_ dt.date.**fromoridinal(**_ordinal_**)**
+### _static method_ date.**fromoridinal(**_ordinal_**)**
 
 Return the date corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has ordinal 1.
 
 The `MINYEAR` restriction of year 100 still applies, and any ordinal below 36160 or above 3652059 wil throw a `RangeError`.
 
-### _static method_ dt.date.**fromisoformat(**_date_string_**)**
+### _static method_ date.**fromisoformat(**_date_string_**)**
 
 Return a `date` corresponding to a _date_string_ given in the ISO 8601 format `YYYY-MM-DD`.
 
-### _static_method_ dt.date.**fromisocalendar(**_year, week, day_**)**
+### _static_method_ date.**fromisocalendar(**_year, week, day_**)**
 
 Return a `date` corresponding to the ISO calendar date specified by year, week, and day. This is the inverse of the function `date.isocalendar()`
 
@@ -229,29 +229,29 @@ _This function does not seem to work correctly, possibly due to an issue with [d
 
 ## Class properties
 
-### dt.date.**min**
+### date.**min**
 
 The earliest representable date, `date(MINYEAR, 1, 1)`.
 
-### dt.date.**max**
+### date.**max**
 
 The latest representable date, `date(MAXYEAR, 12, 31)`.
 
-### dt.date.**resolution**
+### date.**resolution**
 
 The smallest possible difference between non-equal date objects, `timedelta({ days: 1 }).
 
 ## Instance properties (read-only)
 
-### dt.date.**year**
+### date.**year**
 
 Between `MINYEAR` and `MAXYEAR` exclusive.
 
-### dt.date.**month**
+### date.**month**
 
 Between 1 and 12 inclusive.
 
-### dt.date.**day**
+### date.**day**
 
 Between 1 and the number of days in the given month of the given year.
 
@@ -277,25 +277,25 @@ true
 
 ## Instance methods
 
-### dt.date.**replace(**{ _year: this.year, month: this.month, day: this.day_ }**)**
+### date.**replace(**{ _year: this.year, month: this.month, day: this.day_ }**)**
 
 Return a date with the same value, except for those parameters given new values by whichever arguments are specified.
 
-### dt.date.**toordinal()**
+### date.**toordinal()**
 
 Return the proleptic Gregorian ordinal ofthe date, where January 1 of year 1 has ordinal 1. For any `date` object _d_, `dt.date.fromordinal(d.toordinal()) == d`
 
 The `MINYEAR` restriction of year 100 still applies, and any ordinal below 36160 or above 3652059 wil throw a `RangeError`.
 
-### dt.date.**weekday()**
+### date.**weekday()**
 
 Return the day of the week as an integer, where Monday is 0 and Sunday is 6. For example, `dt.date(2002, 12, 4).weekday() == 2`, a Wednesday.
 
-### dt.date.**isoweekday()**
+### date.**isoweekday()**
 
 Return the day of the week as an integer, where Monday is 1 and Sunday is 7. For example, `dt.date(2002, 12, 4).isoweekday() == 3`, a Wednesday.
 
-### dt.date.**isocalendar()**
+### date.**isocalendar()**
 
 Return an array with three components: `year`, `week`, and `weekday`.
 
@@ -305,33 +305,33 @@ The ISO year consists of 52 or 53 full weeks, and where a week starts on a Monda
 
 _This function does not seem to work correctly, possibly due to an issue with [d3-time-format](https://d3js.org/d3-time-format)_.
 
-### dt.date.**isoformat()**
+### date.**isoformat()**
 
 Return a string representing the date in ISO 8601 format, `YYYY-MM-DD`.
 
-### dt.date.**valueOf()**
+### date.**valueOf()**
 
 Return the POSIX timestamp of the date, assuming it's time is midnight.
 
-### dt.date.**toString()**
+### date.**toString()**
 
 For a date _d_, `d.toString()` is equivalent to `d.isoformat()`.
 
-### dt.date.**ctime()**
+### date.**ctime()**
 
 Return a string representing the date, such as `Wed Dec  4 00:00:00 2002`.
 
-### dt.date.**strftime**(_format_**)**
+### date.**strftime**(_format_**)**
 
 Return a string representing the date, controlled by an explicit format string. Format codes referring to hours, minutes, or seconds will see 0 values.
 
-# `dt.datetime` Objects
+# `datetime` Objects
 
 A `datetime` object is a single object containing all the information from a `date` object and a `time` object.
 
 Like a `date` object, `datetime` assumes the current Gregorian calendar extended in both directions; like a `time` object, `datetime` assumes there are exactly 3600\*24 seconds in every day.
 
-## _class_ dt.**datetime(**{ _year, month, day, hour: 0, minute: 0, second: 0, millisecond: 0, utc: false_ }**)**
+## _class_ **datetime(**{ _year, month, day, hour: 0, minute: 0, second: 0, millisecond: 0, utc: false_ }**)**
 
 The _year_, _month_, and _day_ arguments are required. The remaining arguments must be integers in the following ranges:
 
@@ -347,99 +347,99 @@ If _utc_ is set to true, then the datetime will be treated as UTC. Otherwise it 
 
 ## Other static method constructors
 
-### _static method_ dt.datetime.**today()**
+### _static method_ datetime.**today()**
 
 Return the current local date and time.
 
-### _static_method_ dt.datetime.**now()**
+### _static_method_ datetime.**now()**
 
 Return the current local date and time. Functionally equivalent to `dt.datetime.today()` but is considered the preferred syntax.
 
-### _static_method_ dt.datetime.**utcnow()**
+### _static_method_ datetime.**utcnow()**
 
 Return the current UTC date and time.
 
-### _static_method_ dt.datetime.**fromtimestamp(**_timestamp_**)**
+### _static_method_ datetime.**fromtimestamp(**_timestamp_**)**
 
 Return the local date and time corresponding to the POSIX timestamp.
 
-### _static_method_ dt.datetime.**utcfromtimestamp(**_timestamp_**)**
+### _static_method_ datetime.**utcfromtimestamp(**_timestamp_**)**
 
 Return the UTC `datetime` corresponding to the POSIX timestamp.
 
-### _static_method_ dt.datetime.**fromjsdate(**_jsdate_**)**
+### _static_method_ datetime.**fromjsdate(**_jsdate_**)**
 
 Return the local date and time corresponding to the JS Date object.
 
-### _static_method_ dt.datetime.**utcfromjsdate(**_jsdate_**)**
+### _static_method_ datetime.**utcfromjsdate(**_jsdate_**)**
 
 Return the UTC `datetime` corresponding to the JS Date object.
 
-### _static_method_ dt.datetime.**fromordinal(**_ordinal_**)**
+### _static_method_ datetime.**fromordinal(**_ordinal_**)**
 
 Return the `datetime` corresponding to the proleptic Gregorian ordinal, where January 1 of year 1 has oridinal 1.
 
 The `MINYEAR` restriction of year 100 still applies, and any ordinal below 36160 or above 3652059 wil throw a `RangeError`.
 
-### _static_method_ dt.datetime.**combine(**_date, time_**)**
+### _static_method_ datetime.**combine(**_date, time_**)**
 
 Return a new `datetime` object whose date components are equal to the given `date` object's, and whose time components are equal to the given `time` object's. If the _date_ argument is a `datetime` object, its time components are ignored.
 
-### _static_method_ dt.datetime.**fromisoformat(**_date_string_**)**
+### _static_method_ datetime.**fromisoformat(**_date_string_**)**
 
 Return a `datetime` corresponding to a _date_string_ in any valid ISO 8601 format.
 
-### _static_method_ dt.datetime.**fromisocalendar(**_year, month, day_**)**
+### _static_method_ datetime.**fromisocalendar(**_year, month, day_**)**
 
 Return a `datetime` corresponding to the ISO calendar date specified by the year, week, and day. The non-date components of the datetime are populated with their normal default values.
 
 _This function does not seem to work correctly, possibly due to an issue with [d3-time-format](https://d3js.org/d3-time-format)_.
 
-### _static_method_ dt.datetime.**strptime(**_date_string, format, utc_**)**
+### _static_method_ datetime.**strptime(**_date_string, format, utc_**)**
 
 Return a `datetime` corresponding to _date_string_, parsed according to _format_.
 
 ## Class properties
 
-### dt.datetime.**min**
+### datetime.**min**
 
 The earliest representable `datetime`, `datetime(MINYEAR, 1, 1)`.
 
-#### dt.datetime.**max**
+#### datetime.**max**
 
 The latest representable `datetime`, `datetime(MAXYEAR, 12, 31, 23, 59, 59, 999)`.
 
-### dt.datetime.**resolution**
+### datetime.**resolution**
 
 The smallest possible difference between non-equal `datetime` objects, `timedelta({ milliseconds: 1 })`
 
 ## Instance properties (read-only):
 
-### dt.datetime.**year**
+### datetime.**year**
 
 Between `MINYEAR` and `MAXYEAR` inclusive.
 
-### dt.datetime.**month**
+### datetime.**month**
 
 Between 1 and 12 inclusive.
 
-### dt.datetime.**day**
+### datetime.**day**
 
 Between 1 and the number of days in the given month of the given year.
 
-### dt.datetime.**hour**
+### datetime.**hour**
 
 Between 0 and 23 inclusive.
 
-### dt.datetime.**minute**
+### datetime.**minute**
 
 Between 0 and 59 inclusive.
 
-### dt.datetime.**second**
+### datetime.**second**
 
 Between 0 and 59 inclusive.
 
-### dt.datetime.**millisecond**
+### datetime.**millisecond**
 
 Between 0 and 999 inclusive.
 
@@ -474,41 +474,41 @@ true
 
 ## Instance methods
 
-### dt.datetime.**date()**
+### datetime.**date()**
 
 Return `date` object with same year, month, and day.
 
-### dt.datetime.**time()**
+### datetime.**time()**
 
 Return `time` object with same hour, minute, second, and millisecond.
 
-### dt.datetime.**replace(**{ _year: this.year, month: this.month, day: this.day, hour: this.hour, minute: this.minute, second: this.second, millisecond: this.millisecond, utc: this.utc_ }**)**
+### datetime.**replace(**{ _year: this.year, month: this.month, day: this.day, hour: this.hour, minute: this.minute, second: this.second, millisecond: this.millisecond, utc: this.utc_ }**)**
 
 Return a datetime with the same attributes, except for those attributes given new values by whichever arguments are specified.
 
-### dt.datetime.**toordinal()**
+### datetime.**toordinal()**
 
 Return the proleptic Gregorian ordinal of the date.
 
-### dt.datetime.**timestamp()**
+### datetime.**timestamp()**
 
 Return the POSIX timestamp corresponding to the `datetime` instance.
 
-### dt.datetime.**weekday()**
+### datetime.**weekday()**
 
 Return the day of the week as an integer, where Monday is 0 and Sunday is 6.
 
-### dt.datetime.**isoweekday()**
+### datetime.**isoweekday()**
 
 Return the day of the week as an integer, where Monday is 1 and Sunday is 7.
 
-### dt.datetime.**isocalendar()**
+### datetime.**isocalendar()**
 
 Return an array with three components: `year`, `week`, and `weekday`.
 
 _This function does not seem to work correctly, possibly due to an issue with [d3-time-format](https://d3js.org/d3-time-format)_.
 
-### dt.datetime.**isoformat(**{ _sep: 'T', timespec: 'auto'_ }**)**
+### datetime.**isoformat(**{ _sep: 'T', timespec: 'auto'_ }**)**
 
 Return a string representing the date and time in ISO 8601 format.
 
@@ -522,19 +522,19 @@ The optional argument _timespec_ specifies the number of additional components o
 - `seconds`: Include `hour`, `minute`, and `second` in `HH:MM:SS` format.
 - `milliseconds`: Include full time in `HH:MM:SS.fff` format.
 
-### dt.datetime.**valueOf()**
+### datetime.**valueOf()**
 
 For a datetime instance _d_, `d.valueOf()` is equivalent to `d.timestamp()`.
 
-### dt.datetime.**toString()**
+### datetime.**toString()**
 
 For a datetime instance _d_, `d.toString()` is equivalent to `d.isoformat(' ')`.
 
-### dt.datetime.**ctime()**
+### datetime.**ctime()**
 
 Return a string representing the date and time, such as `Wed Dec  4 20:30:40 2002`.
 
-### dt.datetime.**strftime(**_format_**)**
+### datetime.**strftime(**_format_**)**
 
 Return a string representing the date and time, controlled by an explicit format string.
 
@@ -542,7 +542,7 @@ Return a string representing the date and time, controlled by an explicit format
 
 A `time` object represents a (local) time of day, independent of any particular day.
 
-### _class_ dt.**time(**{ _hour: 0, minute: 0, second: 0, millisecond: 0_ }**)**
+### _class_ **time(**{ _hour: 0, minute: 0, second: 0, millisecond: 0_ }**)**
 
 All arguments are optional. The remaining arguments must be integers in the following range:
 
@@ -555,49 +555,49 @@ If an argument outside those ranges is given, `RangeError` is thrown. All defaul
 
 ## Class properties
 
-### dt.time.**min**
+### time.**min**
 
 The earliest representable `time`, `time(0, 0, 0, 0)`.
 
-### dt.time.**max**
+### time.**max**
 
 The latest representable `time`, `time(23, 59, 59, 999)`.
 
-### dt.time.**resolution**
+### time.**resolution**
 
 The smallest possible difference between non-equal `time` objects, `timedelta({ microseconds: 1 })`.
 
 ## Instance properties (read-only):
 
-### dt.time.**hour**
+### time.**hour**
 
 Between 0 and 23 inclusive.
 
-### dt.time.**minute**
+### time.**minute**
 
 Between 0 and 59 inclusive.
 
-### dt.time.**second**
+### time.**second**
 
 Between 0 and 59 inclusive.
 
-### dt.time.**millisecond**
+### time.**millisecond**
 
 Between 0 and 999 inclusive.
 
 ## Other static method constructors
 
-### _static method_ dt.time.**fromisoformat(**_time_string_**)**
+### _static method_ time.**fromisoformat(**_time_string_**)**
 
 Return a `time` corresponding to a _time_string_ in any valid ISO 8601 format.
 
 ## Instance methods
 
-### dt.time.**replace(**{ _hour: this.hour, minute: this.minute, second: this.second, millisecond: this.millisecond_ }**)**
+### time.**replace(**{ _hour: this.hour, minute: this.minute, second: this.second, millisecond: this.millisecond_ }**)**
 
 Return a `time` with the ame value, except for those attributes given new values by whichever arguments are specified.
 
-### dt.time.**isoformat(**_timespec_='auto'**)**
+### time.**isoformat(**_timespec_='auto'**)**
 
 Return a string representing the time in ISO 8601 format. The optional argument _timespec_ specifies the number of additional components of the time to include (the default is `auto`). It can be one of the following:
 
@@ -607,14 +607,14 @@ Return a string representing the time in ISO 8601 format. The optional argument 
 - `seconds`: Include `hour`, `minute`, and `second` in `HH:MM:SS` format.
 - `milliseconds`: Include full time in `HH:MM:SS.fff` format.
 
-### dt.datetime.**valueOf()**
+### datetime.**valueOf()**
 
 Return the time in seconds.
 
-### dt.time.**toString()**
+### time.**toString()**
 
 For a time _t_, `t.valueOf()` is equivalent to `t.isoformat()`.
 
-### dt.time.**strftime(**_format_**)**
+### time.**strftime(**_format_**)**
 
 Return a string representing the time, controlled by an explicit format string.
