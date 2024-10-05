@@ -1,0 +1,37 @@
+name: Publish Package to npmjs
+on:
+  release:
+    types: [published]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Set git username
+        run: git config --global user.name ${{ github.actor }}
+      - name: Set git user email
+        run: git config --global user.email "github-action-${{ github.actor }}.users.noreply.github.com"
+      - name: Install dependencies and build
+        run: npm ci
+      - name: Publish package to npm
+        run: |
+          if
+            [[ ${{ github.event.release.tag_name }} == *'alpha'* ]];
+          then
+            npm version ${{ github.event.release.tag_name }};
+            npm publish --tag alpha;
+          elif
+            [[ ${{ github.event.release.tag_name }} == *'beta'* ]];
+          then
+            npm version ${{ github.event.release.tag_name }};
+            npm publish --tag beta;
+          else
+            npm publish
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
