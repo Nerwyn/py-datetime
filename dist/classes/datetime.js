@@ -1,6 +1,7 @@
 import * as d3 from 'd3-time-format';
 import { date, time, timedelta } from '.';
 import { MAXYEAR, MAXYEAR_ORDINAL, MINYEAR, MINYEAR_ORDINAL, } from '../constants';
+import { DatetimeIntervals, } from '../models/datetime';
 import { isParams } from '../utils/utils';
 export class datetime {
     /**
@@ -38,7 +39,7 @@ export class datetime {
             Object.assign(args, year);
         }
         for (const arg in args) {
-            if (arg != 'utc' &&
+            if (DatetimeIntervals.includes(arg) &&
                 !Number.isInteger(args[arg])) {
                 throw TypeError(`Argument ${arg} value ${args[arg]} is not an integer`);
             }

@@ -8,6 +8,7 @@ import {
 } from '../constants';
 import {
 	DatetimeInterval,
+	DatetimeIntervals,
 	DatetimeParams,
 	ISOFormatParams,
 	TimeSpec,
@@ -62,7 +63,7 @@ export class datetime {
 
 		for (const arg in args) {
 			if (
-				arg != 'utc' &&
+				DatetimeIntervals.includes(arg as DatetimeInterval) &&
 				!Number.isInteger(args[arg as DatetimeInterval])
 			) {
 				throw TypeError(
