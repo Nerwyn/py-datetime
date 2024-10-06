@@ -30,10 +30,10 @@ export declare class timedelta {
      * @returns {string}
      */
     toString(): string;
-    /** The most negative timedelta object, equal to -86399999913600 seconds */
+    /** The most negative timedelta object, equal to -8640000000000 seconds */
     static get min(): timedelta;
     private get minSeconds();
-    /** The most positive timedelta object, equal to 86399999999999.999 seconds */
+    /** The most positive timedelta object, equal to 8640000000000 seconds */
     static get max(): timedelta;
     private get maxSeconds();
     /** The smallest possible difference between non-equal timedelta objects, equal to 0.001 seconds  */

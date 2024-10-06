@@ -74,31 +74,25 @@ export class timedelta {
      * @returns {string}
      */
     toString() {
-        const dayString = this.days > 0
-            ? `${this.days} day${this.days > 1 ? 's,' : ','}`
+        const dayString = this.days != 0
+            ? `${this.days} day${Math.abs(this.days) > 1 ? 's,' : ','}`
             : '';
         const timeString = d3.utcFormat(`%-H:%M:%S${this.milliseconds ? '.%f' : ''}`)(new Date(this.valueOf() * 1000));
         return `${dayString} ${timeString}`.trim();
     }
-    /** The most negative timedelta object, equal to -86399999913600 seconds */
+    /** The most negative timedelta object, equal to -8640000000000 seconds */
     static get min() {
-        return new timedelta({ days: -999999999 });
+        return new timedelta(-100000000);
     }
     get minSeconds() {
-        return -86399999913600;
+        return -8640000000000;
     }
-    /** The most positive timedelta object, equal to 86399999999999.999 seconds */
+    /** The most positive timedelta object, equal to 8640000000000 seconds */
     static get max() {
-        return new timedelta({
-            days: 999999999,
-            hours: 23,
-            minutes: 59,
-            seconds: 59,
-            milliseconds: 999,
-        });
+        return new timedelta(100000000);
     }
     get maxSeconds() {
-        return 86399999999999.999;
+        return 8640000000000;
     }
     /** The smallest possible difference between non-equal timedelta objects, equal to 0.001 seconds  */
     static get resolution() {

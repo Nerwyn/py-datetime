@@ -124,13 +124,15 @@ If the normalized total seconds lies outside the min and max timedelta range, `R
 
 ## Class properties
 
+Because of JavaScript Date limitations, the minimum and maximum timedelta values differ from Python.
+
 ### timedelta.**min**
 
-The most negative `timedelta` object, `timedelta(-999999999)`
+The most negative `timedelta` object, `timedelta(-100000000)`
 
 ### timedelta.**max**
 
-The most positive `timedelta` object, `timedelta({ days: 999999999, hours: 23, minutes: 59, seconds: 59, milliseconds: 999 })`
+The most positive `timedelta` object, `timedelta(100000000)`
 
 ### timedelta.**resolution**
 
@@ -140,7 +142,7 @@ The smallest possible difference between non-equal `timedelta` objects, `timedel
 
 ### timedelta.**days**
 
-Between -999,999,999 and 999,999,999 inclusive.
+Between -100,000,000 and 100,000,000 inclusive.
 
 ### timedelta.**seconds**
 
