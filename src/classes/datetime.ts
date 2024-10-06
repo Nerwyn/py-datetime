@@ -61,6 +61,9 @@ export class datetime {
 			Object.assign(args, year);
 		}
 
+		if (!args.year || !args.month || !args.day) {
+			throw SyntaxError('Missing required argument year, month, or day');
+		}
 		for (const arg in args) {
 			if (
 				DatetimeIntervals.includes(arg as DatetimeInterval) &&
@@ -70,10 +73,6 @@ export class datetime {
 					`Argument ${arg} value ${args[arg as DatetimeInterval]} is not an integer`,
 				);
 			}
-		}
-
-		if (!args.year || !args.month || !args.day) {
-			throw SyntaxError('Missing required argument year, month, or day');
 		}
 		if (args.year < MINYEAR || args.year > MAXYEAR) {
 			throw RangeError(`year ${args.year} is out of range`);

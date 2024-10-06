@@ -38,14 +38,14 @@ export class datetime {
             delete args.year;
             Object.assign(args, year);
         }
+        if (!args.year || !args.month || !args.day) {
+            throw SyntaxError('Missing required argument year, month, or day');
+        }
         for (const arg in args) {
             if (DatetimeIntervals.includes(arg) &&
                 !Number.isInteger(args[arg])) {
                 throw TypeError(`Argument ${arg} value ${args[arg]} is not an integer`);
             }
-        }
-        if (!args.year || !args.month || !args.day) {
-            throw SyntaxError('Missing required argument year, month, or day');
         }
         if (args.year < MINYEAR || args.year > MAXYEAR) {
             throw RangeError(`year ${args.year} is out of range`);
