@@ -40,7 +40,7 @@ export class datetime {
         for (const arg in args) {
             if (arg != 'utc' &&
                 !Number.isInteger(args[arg])) {
-                throw TypeError("'float' object cannot be interpreted as an integer");
+                throw TypeError(`Argument ${arg} value ${args[arg]} is not an integer`);
             }
         }
         if (!args.year || !args.month || !args.day) {
@@ -179,6 +179,7 @@ export class datetime {
         if (isParams(sep)) {
             delete args.sep;
             Object.assign(args, sep);
+            args.sep = args.sep ?? 'T';
         }
         let format;
         switch (args.timespec) {

@@ -20,7 +20,7 @@ export declare class datetime {
      * @param {number} [millisecond=0]
      * @param {boolean} [utc=false]
      */
-    constructor(year?: number | DatetimeParams, month?: number, day?: number, hour?: number, minute?: number, second?: number, millisecond?: number, utc?: boolean);
+    constructor(year: number | DatetimeParams, month?: number, day?: number, hour?: number, minute?: number, second?: number, millisecond?: number, utc?: boolean);
     /**
      * Return date object with same year, month, and day.
      * @returns {date}

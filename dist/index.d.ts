@@ -28,9 +28,9 @@ declare const dt: {
         fromisocalendar: typeof date.fromisocalendar;
     };
     datetime: {
-        (year?: number | Partial<Record<"year" | "month" | "day" | "hour" | "minute" | "second" | "millisecond", number> & {
+        (year: number | Partial<Record<"year" | "month" | "day" | "hour" | "minute" | "second" | "millisecond", number> & {
             utc: boolean;
-        }> | undefined, month?: number | undefined, day?: number | undefined, hour?: number | undefined, minute?: number | undefined, second?: number | undefined, millisecond?: number | undefined, utc?: boolean | undefined): datetime;
+        }>, month?: number | undefined, day?: number | undefined, hour?: number | undefined, minute?: number | undefined, second?: number | undefined, millisecond?: number | undefined, utc?: boolean | undefined): datetime;
         min: datetime;
         max: datetime;
         resolution: timedelta;

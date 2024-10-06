@@ -36,7 +36,7 @@ export class datetime {
 	 * @param {boolean} [utc=false]
 	 */
 	constructor(
-		year?: number | DatetimeParams,
+		year: number | DatetimeParams,
 		month?: number,
 		day?: number,
 		hour: number = 0,
@@ -66,7 +66,7 @@ export class datetime {
 				!Number.isInteger(args[arg as DatetimeInterval])
 			) {
 				throw TypeError(
-					"'float' object cannot be interpreted as an integer",
+					`Argument ${arg} value ${args[arg as DatetimeInterval]} is not an integer`,
 				);
 			}
 		}
@@ -238,6 +238,7 @@ export class datetime {
 		if (isParams(sep)) {
 			delete args.sep;
 			Object.assign(args, sep);
+			args.sep = args.sep ?? 'T';
 		}
 		let format: string;
 		switch (args.timespec) {
