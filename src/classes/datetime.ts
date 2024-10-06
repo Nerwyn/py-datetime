@@ -282,7 +282,7 @@ export class datetime {
 	 * @returns {string}
 	 */
 	ctime() {
-		return d3.timeFormat('%a %b %H:%M:%S %Y')(this.jsDate);
+		return d3.timeFormat('%a %b %-e %H:%M:%S %Y')(this.jsDate);
 	}
 
 	/**

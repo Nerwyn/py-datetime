@@ -268,8 +268,8 @@ describe('isoformat', () => {
 describe('ctime', () => {
 	it('should return a string representing the datetime', () => {
 		assert.equal(
-			dt.datetime(1966, 5, 22, 9, 18, 40).ctime(),
-			'Sun May 09:18:40 1966',
+			dt.datetime(1966, 5, 2, 9, 18, 40).ctime(),
+			'Mon May 2 09:18:40 1966',
 		);
 	});
 });

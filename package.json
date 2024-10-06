@@ -2,7 +2,7 @@
 	"name": "ts-py-datetime",
 	"type": "module",
 	"version": "0.10.0",
-	"description": "Datetime handling the python way (or as close as possible)",
+	"description": "Datetime handling the python way (or as close as possible), now with TypeScript",
 	"main": "./dist/index.js",
 	"scripts": {
 		"test": "ts-mocha 'tests/**/*.test.ts'",
@@ -39,10 +39,11 @@
 	},
 	"keywords": [
 		"datetime",
-		"python",
 		"date",
 		"time",
-		"timedelta"
+		"timedelta",
+		"python",
+		"typescript"
 	],
 	"author": "Tom Striker",
 	"contributors": [

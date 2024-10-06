@@ -137,7 +137,7 @@ export class date {
 	 * @returns {string}
 	 */
 	ctime() {
-		return d3.timeFormat('%a %b 00:00:00 %Y')(this.jsDate);
+		return d3.timeFormat('%a %b %-e 00:00:00 %Y')(this.jsDate);
 	}
 
 	/**

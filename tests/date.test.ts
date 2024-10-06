@@ -128,7 +128,7 @@ describe('toString', () => {
 
 describe('ctime', () => {
 	it('should return a string representing the date', () => {
-		assert.equal(dt.date(1966, 5, 22).ctime(), 'Sun May 00:00:00 1966');
+		assert.equal(dt.date(1966, 5, 2).ctime(), 'Mon May 2 00:00:00 1966');
 	});
 });
 
