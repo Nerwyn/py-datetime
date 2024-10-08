@@ -4,6 +4,9 @@
 	"version": "0.10.0",
 	"description": "Datetime handling the python way (or as close as possible), now with TypeScript",
 	"main": "./dist/index.js",
+	"files": [
+		"dist/**"
+	],
 	"scripts": {
 		"test": "ts-mocha 'tests/**/*.test.ts'",
 		"build": "tsc",
