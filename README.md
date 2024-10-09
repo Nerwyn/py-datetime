@@ -1,6 +1,6 @@
 # Python-style datetime handling lib for TypeScript
 
-This tiny lib emulates most of the main functions of [Python's datetime lib](https://docs.python.org/3.12/library/datetime.html) to simplify datetime handling in TypeScript that is notoriously cumbersome in this regard.
+This package emulates most of the main functions of [Python's datetime lib](https://docs.python.org/3.12/library/datetime.html) to simplify datetime handling in TypeScript that is notoriously cumbersome in this regard.
 It tries to stay as close to the python API as possible - ideal if you are working with both Python and TS projects.
 Hope you'll find it useful!
 
